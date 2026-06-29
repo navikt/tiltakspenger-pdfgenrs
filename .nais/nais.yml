@@ -1,0 +1,56 @@
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+  name: tiltakspenger-pdfgenrs
+  namespace: tpts
+  labels:
+    team: tpts
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "20m"
+spec:
+  image: {{ image }}
+  port: 8080
+  ingresses:
+    - {{ ingress }}
+  accessPolicy:
+    inbound:
+      rules:
+        - application: tiltakspenger-meldekort-api
+        - application: tiltakspenger-soknad-api
+        - application: tiltakspenger-saksbehandling-api
+  azure:
+    application:
+      enabled: false
+  liveness:
+    path: internal/is_alive
+    initialDelay: 10
+    timeout: 1
+    periodSeconds: 5
+    failureThreshold: 30
+  readiness:
+    path: internal/is_ready
+    initialDelay: 10
+    timeout: 1
+    periodSeconds: 5
+    failureThreshold: 30
+  prometheus:
+    enabled: true
+    path: /metrics
+  replicas:
+    min: {{ replicas }}
+    max: {{ replicas }}
+  resources:
+    limits:
+      cpu: "1"
+      memory: 2048Mi
+    requests:
+      cpu: 300m
+      memory: 1024Mi
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: java
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki

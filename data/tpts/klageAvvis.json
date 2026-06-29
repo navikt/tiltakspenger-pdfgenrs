@@ -1,0 +1,21 @@
+{
+  "personalia": {
+    "ident": "12345678901",
+    "fornavn": "Planet",
+    "etternavn": "Planetus"
+  },
+  "saksnummer": "123456789",
+  "saksbehandlerNavn": "Kåre Kropp",
+  "tilleggstekst": [
+    {
+      "tittel": "Tilleggsinformasjon",
+      "tekst": "Hei hei"
+    },
+    {
+      "tittel": "Mer informasjon",
+      "tekst": "Dette er ekstra informasjon som kan være nyttig."
+    }
+  ],
+  "forhandsvisning": true,
+  "datoForUtsending": "3. august 2023"
+}
