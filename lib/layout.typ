@@ -1,5 +1,5 @@
-#import "/templates/tpts/lib/styles.typ": *
-#import "/templates/tpts/lib/typography.typ": *
+#import "/lib/styles.typ": *
+#import "/lib/typography.typ": *
 
 #let page-setup(data) = body => {
     set page(

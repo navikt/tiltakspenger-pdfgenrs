@@ -1,5 +1,5 @@
-#import "/templates/tpts/lib/typography.typ": *
-#import "/templates/tpts/lib/styles.typ": *
+#import "/lib/typography.typ": *
+#import "/lib/styles.typ": *
 
 #let personalia(data) = body => {
     block(below: space-48)[

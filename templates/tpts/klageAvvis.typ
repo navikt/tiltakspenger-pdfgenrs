@@ -1,4 +1,4 @@
-#import "/templates/tpts/lib/mod.typ": *
+#import "/lib/mod.typ": *
 
 #let data = json("/data/tpts/klageAvvis.json")
 #show: apply-styles

@@ -11,6 +11,7 @@ services:
       - ./fonts:/app/fonts
       - ./data:/app/data
       - ./resources:/app/resources
+      - ./lib:/app/lib
     environment:
       DISABLE_PDF_GET: "false"
       DEV_MODE: "true"

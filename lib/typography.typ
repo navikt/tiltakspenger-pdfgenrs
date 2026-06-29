@@ -1,4 +1,4 @@
-#import "/templates/tpts/lib/styles.typ": *
+#import "/lib/styles.typ": *
 
 #let h1(content) = block(below: space-26)[
     #text(..h1-style)[#content]
