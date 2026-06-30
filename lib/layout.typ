@@ -18,5 +18,6 @@
             #brødtekst[Saksnummer: #data.saksnummer] #h(1fr) #brødtekst[Side #counter(page).display() av #counter(page).final().first()]
         ],
     )
+    set text(font: "Source Sans Pro", lang: "no")
     body
 }

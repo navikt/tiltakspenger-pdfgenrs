@@ -11,7 +11,6 @@
     description: title,
     author: "Team tiltakspenger",
 )
-#set text(lang: "no")
 
 #show: innholdsheader(data)
 
