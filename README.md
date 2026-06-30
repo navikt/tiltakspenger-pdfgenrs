@@ -77,6 +77,9 @@ f.eks:
 4. Når du har gjort kall må du sette responsen til å tolkes som .PDF eller laste ned responsen som en .PDF-fil
 
 
+## Styling av brev
+Vi følger de visuelle retningslinjene til Aksel, som finnes her: https://aksel.nav.no/god-praksis/artikler/visuelle-retningslinjer-for-brev
+
 ## Extra
 - docs og tutorial for typst
   - https://typst.app/docs
