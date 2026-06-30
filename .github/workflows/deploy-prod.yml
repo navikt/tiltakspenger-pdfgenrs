@@ -1,4 +1,4 @@
-name: Build, push and deploy to prod
+name: Build and deploy
 
 on:
   push:
@@ -6,6 +6,13 @@ on:
       - main
     paths-ignore:
       - '**.md'
+      - '.gitattributes'
+      - '.gitignore'
+      - '.idea/**'
+      - 'CODEOWNERS'
+      - 'docker-compose.yml'
+      - 'LICENSE'
+      - 'run_development.sh'
 
 jobs:
   build:
