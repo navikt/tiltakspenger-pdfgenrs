@@ -88,4 +88,5 @@ Vi følger de visuelle retningslinjene til Aksel, som finnes her: https://aksel.
   - known issues:
     - Dersom prosjektet åpnes i intellij fra meta-repoet, vil Kvasir klage på file-path til data/resources/styles, etc. og preview still stoppe å fungere. Dette kan løses ved å åpne prosjektet direkte i intellij, og ikke via meta-repoet.
     - Feilmeldinger fra Kvasir kan i tider være litt kryptiske. Feilen vil vises i f.eks templaten din, mens selve feilen ligger i stylingen. 
-    - Ikke alle feil vises heller. Du kan teste om du har kompileringsfeil hvis previewet ikke opppdaterer når du legger inn tekst og saver. 
+    - Ikke alle feil vises heller. Du kan teste om du har kompileringsfeil hvis previewet ikke opppdaterer når du legger inn tekst og saver.
+- Ulik pdfgen, (og tidligere pdfgenrs versjoner), så må `/templates` kun inneholde de ulike templatesene våre. Partials (components), og andre hjelpe-templates/styles etc, ligger i `/lib`
