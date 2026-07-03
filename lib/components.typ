@@ -73,12 +73,15 @@
     let finnesBeslutter = "beslutterNavn" in data
 
     block(below: space-40)[
-        #brødtekst("Med vennlig hilsen")
-        #if "kontor" in data [#brødtekst[#data.kontor]]
-        #grid(
-            columns: if finnesBeslutter { (1fr, 1fr) } else { 1fr },
-            [#if finnesBeslutter [#brødtekst[#data.beslutterNavn]]], [#brødtekst[#data.saksbehandlerNavn]],
+        #stack(
+            spacing: 3pt,
+            brødtekst("Med vennlig hilsen"),
+            grid(
+                columns: if finnesBeslutter { (1fr, 1fr) } else { 1fr },
+                [#if finnesBeslutter [#brødtekst[#data.beslutterNavn]]], [#brødtekst[#data.saksbehandlerNavn]],
+            ),
         )
+        #if "kontor" in data [#brødtekst[#data.kontor]]
     ]
     body
 }

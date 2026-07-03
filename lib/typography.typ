@@ -28,3 +28,9 @@
     #set par(leading: leading-bunntekst)
     #text(..bunntekst-style)[#content]
 ]
+
+#let navLenke(path, content) = link(path)[
+    #set text(fill: rgb("#005bb6"))
+    #content
+]
+
