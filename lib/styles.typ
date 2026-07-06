@@ -39,6 +39,9 @@ For å finne riktig linjehøyde for hver tekst bruker vi denne formelen:
 #let leading-bunntekst = space-16 - space-9
 
 #let apply-styles(body) = {
+    //typst bruker "‣" ikon for nøstede liste elementer. Denne er ikke støttet i Source Sans Pro. Vi bytter derfor ut med en vanlig punktliste.
+    set list(marker: ([•], [–]))
+
     show heading.where(level: 1): it => {
         set text(..h1-style)
         set par(leading: space-20)
