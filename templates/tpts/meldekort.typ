@@ -78,8 +78,6 @@
     ]
 ]
 
-
-
 #block(below: space-26)[
     == Fravær
     #brødtekst[
@@ -100,36 +98,36 @@
         below: space-26,
     )[
         #brødtekst[*Når skal du velge "syk"?*]
-        - Du skal velge «syk» hvis du har vært for syk til å kunne delta på tiltaksdagen. Du kan ha rett til tiltakspenger når du er syk. Det er derfor viktig at du melder om dette.
-        - Du får utbetalt full stønad de 3 første dagene du er syk. Er du syk mer enn 3 dager, får du utbetalt 75 prosent av full stønad resten av arbeidsgiverperioden. En arbeidsgiverperiode er på til sammen 16 virkedager.
-        - Du må ha sykmelding for å ha rett til tiltakspenger i mer enn 3 dager.
+        - #brødtekst[Du skal velge «syk» hvis du har vært for syk til å kunne delta på tiltaksdagen. Du kan ha rett til tiltakspenger når du er syk. Det er derfor viktig at du melder om dette.]
+        - #brødtekst[Du får utbetalt full stønad de 3 første dagene du er syk. Er du syk mer enn 3 dager, får du utbetalt 75 prosent av full stønad resten av arbeidsgiverperioden. En arbeidsgiverperiode er på til sammen 16 virkedager.]
+        - #brødtekst[Du må ha sykmelding for å ha rett til tiltakspenger i mer enn 3 dager.]
 
         #brødtekst[*Når skal du velge "sykt barn eller syk barnepasser"?*]
-        - Du skal velge «sykt barn eller syk barnepasser» hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnets barnepasser var syk.
-        - Det er de samme reglene som gjelder for sykt barn/barnepasser som ved egen sykdom. Det vil si at du har rett til full utbetaling de tre første dagene og 75 prosent resten av arbeidsgiverperioden.
-        - Du må sende legeerklæring for barnet ditt eller bekreftelse fra barnepasseren fra dag 4 for å ha rett til tiltakspenger i mer enn 3 dager.
+        - #brødtekst[Du skal velge «sykt barn eller syk barnepasser» hvis du ikke kunne delta på tiltaksdagen fordi barnet ditt eller barnets barnepasser var syk.]
+        - #brødtekst[Det er de samme reglene som gjelder for sykt barn/barnepasser som ved egen sykdom. Det vil si at du har rett til full utbetaling de tre første dagene og 75 prosent resten av arbeidsgiverperioden.]
+        - #brødtekst[Du må sende legeerklæring for barnet ditt eller bekreftelse fra barnepasseren fra dag 4 for å ha rett til tiltakspenger i mer enn 3 dager.]
 
         #brødtekst[*Når skal du velge "sterke velferdsgrunner eller jobbintervju"?*]
-        - Du skal velge dette alternativet hvis Nav har godkjent at du har fravær fra tiltaket denne dagen på grunn av:
-            - jobbintervju
-            - timeavtaler i det offentlige hjelpeapparatet
-            - begravelse eller bisettelse i den nærmeste familien din
-            - andre sterke velferdsgrunner
-        - Det er kun Nav-veilederen din som kan godkjenne fraværet, ikke tiltaksarrangøren.
+        - #brødtekst[Du skal velge dette alternativet hvis Nav har godkjent at du har fravær fra tiltaket denne dagen på grunn av:]
+            - #brødtekst[jobbintervju]
+            - #brødtekst[timeavtaler i det offentlige hjelpeapparatet]
+            - #brødtekst[begravelse eller bisettelse i den nærmeste familien din]
+            - #brødtekst[andre sterke velferdsgrunner]
+        - #brødtekst[Det er kun Nav-veilederen din som kan godkjenne fraværet, ikke tiltaksarrangøren.]
 
         #brødtekst[*Når skal du velge "annet fravær"?*]
-        - Du skal velge «annet fravær» hvis du har vært fraværende hele eller deler av den aktuelle tiltaksdagen.
-        - Du skal velge «annet fravær» hvis du ikke møter opp til avtalt tiltak eller aktivitet, eller ikke gjennomfører andre aktiviteter som er avtalt med Nav.
-        - Du skal velge «annet fravær» hvis du har arbeidet i stedet for å delta på tiltaket. For eksempel: Du har avtalt tiltakstid 09-15 og arbeidet fra 09-10 i stedet for å delta hele den avtalte tiden på tiltaket.
-        - Du skal velge «annet fravær» hvis du har hatt fri/ferie utenom planlagt ferieperiode for tiltaket.
-        - Du skal velge «annet fravær» hvis du venter på godkjenning av fravær. Du kan endre meldekortet senere når fraværet er godkjent av Nav-veilederen din.
+        - #brødtekst[Du skal velge «annet fravær» hvis du har vært fraværende hele eller deler av den aktuelle tiltaksdagen.]
+        - #brødtekst[Du skal velge «annet fravær» hvis du ikke møter opp til avtalt tiltak eller aktivitet, eller ikke gjennomfører andre aktiviteter som er avtalt med Nav.]
+        - #brødtekst[Du skal velge «annet fravær» hvis du har arbeidet i stedet for å delta på tiltaket. For eksempel: Du har avtalt tiltakstid 09-15 og arbeidet fra 09-10 i stedet for å delta hele den avtalte tiden på tiltaket.]
+        - #brødtekst[Du skal velge «annet fravær» hvis du har hatt fri/ferie utenom planlagt ferieperiode for tiltaket.]
+        - #brødtekst[Du skal velge «annet fravær» hvis du venter på godkjenning av fravær. Du kan endre meldekortet senere når fraværet er godkjent av Nav-veilederen din.]
     ]
 
     #brødtekst[Velg hva slags fravær du hadde]
-    - *Syk:* Du var for syk til å delta på tiltaksdagen.
-    - *Sykt barn eller syk barnepasser:* Du kunne ikke delta på tiltaksdagen fordi barnet ditt eller barnepasseren var syk.
-    - *Sterke velferdsgrunner eller jobbintervju:* Du har hatt fravær fra tiltaket på grunn av sterke velferdsgrunner eller jobbintervju og Nav-veilederen har godkjent fraværet.
-    - *Annet fravær:* Du har vært borte hele eller deler av tiltaksdagen, og fraværet er ikke godkjent av Nav. Dette gir ikke rett til tiltakspenger.
+    - #brødtekst[*Syk:* Du var for syk til å delta på tiltaksdagen.]
+    - #brødtekst[*Sykt barn eller syk barnepasser:* Du kunne ikke delta på tiltaksdagen fordi barnet ditt eller barnepasseren var syk.]
+    - #brødtekst[*Sterke velferdsgrunner eller jobbintervju:* Du har hatt fravær fra tiltaket på grunn av sterke velferdsgrunner eller jobbintervju og Nav-veilederen har godkjent fraværet.]
+    - #brødtekst[*Annet fravær:* Du har vært borte hele eller deler av tiltaksdagen, og fraværet er ikke godkjent av Nav. Dette gir ikke rett til tiltakspenger.]
 ]
 
 #block(below: space-26)[
