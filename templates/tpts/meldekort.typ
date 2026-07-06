@@ -11,42 +11,20 @@
     description: title,
     author: "Team tiltakspenger",
 )
+#set text(lang: "no")
 
-// Farger hentet fra Aksel
-#let ikkeBesvartFarge = (bg: rgb("#ECEEF0"), border: rgb("#AAB0BA")) /* --a-gray-100 --a-gray-400 */
-#let deltattFarge = (bg: rgb("#CCF1D6"), border: rgb("#2AA758")) /* --a-green-100 --a-green-600 */
-#let fraværFarge = (bg: rgb("#FFECCC"), border: rgb("#FFAA33")) /* --a-yellow-100 --a-yellow-400 */
-#let mottokLønnFarge = (bg: rgb("#FFC2C2"), border: rgb("#C30000")) /* -a-surface-danger-subtle -a-border-danger */
-#let ikkeTiltaksdagFarge = (
-    bg: rgb("#E6F0FF"),
-    border: rgb("#0067C5"),
-) /* --a-surface-action-subtle --a-surface-action */
-
-#let dagStatus(status) = {
-    if status == "DELTATT_UTEN_LØNN_I_TILTAKET" {
-        (farge: deltattFarge, label: "Har deltatt")
-    } else if status == "DELTATT_MED_LØNN_I_TILTAKET" {
-        (farge: mottokLønnFarge, label: "Mottok lønn")
-    } else if status == "FRAVÆR_SYK" {
-        (farge: fraværFarge, label: "Syk")
-    } else if status == "FRAVÆR_SYKT_BARN" {
-        (farge: fraværFarge, label: "Sykt barn eller syk barnepasser")
-    } else if status == "FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU" {
-        (farge: deltattFarge, label: "Sterke velferdsgrunner eller jobbintervju")
-    } else if status == "FRAVÆR_GODKJENT_AV_NAV" {
-        (farge: deltattFarge, label: "Fravær godkjent av Nav")
-    } else if status == "FRAVÆR_ANNET" {
-        (farge: mottokLønnFarge, label: "Annet fravær")
-    } else if status == "IKKE_TILTAKSDAG" {
-        (farge: ikkeTiltaksdagFarge, label: "Ikke tiltaksdag")
-    } else if status == "IKKE_RETT_TIL_TILTAKSPENGER" {
-        (farge: ikkeBesvartFarge, label: "Ikke rett til tiltakspenger")
-    } else {
-        (farge: ikkeBesvartFarge, label: "Ikke besvart")
-    }
-}
-
-#let bekreftet(content) = brødtekst[#text(fill: deltattFarge.border)[#sym.checkmark] #content]
+#let labels = (
+    "DELTATT_UTEN_LØNN_I_TILTAKET": "Har deltatt",
+    "DELTATT_MED_LØNN_I_TILTAKET": "Mottok lønn",
+    "FRAVÆR_SYK": "Syk",
+    "FRAVÆR_SYKT_BARN": "Sykt barn eller syk barnepasser",
+    "FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU": "Sterke velferdsgrunner eller jobbintervju",
+    "FRAVÆR_GODKJENT_AV_NAV": "Fravær godkjent av Nav",
+    "FRAVÆR_ANNET": "Annet fravær",
+    "IKKE_TILTAKSDAG": "Ikke tiltaksdag",
+    "IKKE_RETT_TIL_TILTAKSPENGER": "Ikke rett til tiltakspenger",
+    "IKKE_BESVART": "Ikke besvart",
+)
 
 #block(below: space-26, width: 100%)[
     #align(center)[
@@ -57,16 +35,16 @@
 
     == #data.periode.fraOgMed - #data.periode.tilOgMed (uke #(data.uke1)-#(data.uke2))
 
-    #stack(
-        spacing: 3pt,
-        brødtekst[*Fødselsnummer:* #data.fnr],
-        brødtekst[*Saksnummer:* #data.saksnummer],
-        brødtekst[*Mottatt:* #data.mottatt],
-        brødtekst[*Meldekort-ID:* #data.id],
-    )[
-        \
+    #nøkkelinfo((
+        ("Fødselsnummer:", data.fnr),
+        ("Saksnummer:", data.saksnummer),
+        ("Mottatt:", data.mottatt),
+        ("Meldekort-ID:", data.id),
+    ))
+
+    #block(below: space-26)[
         #brødtekst[
-            Ta kontakt med Nav hvis du er usikker på hvordan du skal fylle inn meldekortet (nav.no/kontaktoss).
+            Ta kontakt med Nav hvis du er usikker på hvordan du skal fylle inn meldekortet #navLenke("nav.no/kontaktoss")[(nav.no/kontaktoss)].
         ]
         #brødtekst[
             For å få utbetalt tiltakspenger må du som deltar på tiltak hos Nav, sende meldekort hver 14. dag. Vi bruker informasjonen til å regne ut hvor mye du skal ha utbetalt i tiltakspenger. Utbetalingen skjer normalt automatisk.
@@ -92,11 +70,7 @@
         Noen typer fravær gir til rett til tiltakspenger selv om du ikke har deltatt på tiltaket. Kryss av for hvilke dager det gjelder, og hvilken type fravær du har hatt.
     ]
 
-    #block(
-        fill: rgb("#F2F3F5"),
-        inset: space-16,
-        below: space-26,
-    )[
+    #shadowBox[
         #brødtekst[*Når skal du velge "syk"?*]
         - #brødtekst[Du skal velge «syk» hvis du har vært for syk til å kunne delta på tiltaksdagen. Du kan ha rett til tiltakspenger når du er syk. Det er derfor viktig at du melder om dette.]
         - #brødtekst[Du får utbetalt full stønad de 3 første dagene du er syk. Er du syk mer enn 3 dager, får du utbetalt 75 prosent av full stønad resten av arbeidsgiverperioden. En arbeidsgiverperiode er på til sammen 16 virkedager.]
@@ -158,20 +132,6 @@
 
 #block(below: space-26)[
     === Meldekortdager
-    #table(
-        columns: (35%, 65%),
-        stroke: none,
-        inset: space-9,
-        ..data
-            .dager
-            .map(d => {
-                let s = dagStatus(d.status)
-                (
-                    table.cell(fill: s.farge.bg, stroke: (bottom: 1pt + s.farge.border))[#brødtekst[#d.dag:]],
-                    table.cell(fill: s.farge.bg, stroke: (bottom: 1pt + s.farge.border))[#brødtekst[*#s.label*]],
-                )
-            })
-            .flatten()
-    )
+    #meldekortTabell(data.dager, labels)
     #bekreftet[Jeg bekrefter at disse opplysningene stemmer.]
 ]

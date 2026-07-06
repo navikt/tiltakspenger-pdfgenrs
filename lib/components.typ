@@ -85,3 +85,19 @@
     ]
     body
 }
+
+
+#let shadowBox(body) = block(
+    fill: rgb("#F2F3F5"),
+    inset: space-16,
+    below: space-26,
+)[#body]
+
+
+#let nøkkelinfo(items) = block(below: space-26)[
+    #stack(
+        dir: ttb,
+        spacing: space-6,
+        ..items.map(((label, value)) => brødtekst[*#label* #value]),
+    )
+]

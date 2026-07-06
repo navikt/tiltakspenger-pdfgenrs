@@ -4,67 +4,67 @@
   "fnr": "12345678901",
   "forhandsvisning": true,
   "periode": {
-    "fraOgMed": "30. september 2024",
-    "tilOgMed": "13. oktober 2024"
+    "fraOgMed": "30 September 2024",
+    "tilOgMed": "13 October 2024"
   },
   "uke1": "40",
   "uke2": "41",
   "mottatt": "2024-10-15 13:05:15",
   "dager": [
     {
-      "dag": "Mandag 30. september",
+      "dag": "Monday 30 september",
       "status": "DELTATT_UTEN_LØNN_I_TILTAKET"
     },
     {
-      "dag": "Tirsdag 1. oktober",
+      "dag": "Tuesday 1 October",
       "status": "FRAVÆR_SYK"
     },
     {
-      "dag": "Onsdag 2. oktober",
+      "dag": "Wednesday 2 October",
       "status": "FRAVÆR_SYKT_BARN"
     },
     {
-      "dag": "Torsdag 3. oktober",
+      "dag": "Thursday 3 October",
       "status": "FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU"
     },
     {
-      "dag": "Fredag 4. oktober",
+      "dag": "Friday 4 October",
       "status": "FRAVÆR_ANNET"
     },
     {
-      "dag": "Lørdag 5. oktober",
+      "dag": "Saturday 5 October",
       "status": "IKKE_BESVART"
     },
     {
-      "dag": "Søndag 6. oktober",
+      "dag": "Sunday 6 October",
       "status": "IKKE_BESVART"
     },
     {
-      "dag": "Mandag 7. oktober",
+      "dag": "Monday 7 October",
       "status": "IKKE_TILTAKSDAG"
     },
     {
-      "dag": "Tirsdag 8. oktober",
+      "dag": "Tuesday 8 October",
       "status": "IKKE_RETT_TIL_TILTAKSPENGER"
     },
     {
-      "dag": "Onsdag 9. oktober",
+      "dag": "Wednesday 9 October",
       "status": "DELTATT_MED_LØNN_I_TILTAKET"
     },
     {
-      "dag": "Torsdag 10. oktober",
+      "dag": "Thursday 10 October",
       "status": "DELTATT_MED_LØNN_I_TILTAKET"
     },
     {
-      "dag": "Fredag 11. oktober",
+      "dag": "Friday 11 October",
       "status": "FRAVÆR_GODKJENT_AV_NAV"
     },
     {
-      "dag": "Lørdag 12. oktober",
+      "dag": "Saturday 12 October",
       "status": "IKKE_BESVART"
     },
     {
-      "dag": "Søndag 13. oktober",
+      "dag": "Sunday 13 October",
       "status": "IKKE_BESVART"
     }
   ]
