@@ -5,31 +5,12 @@
 #show: page-setup(data)
 
 #let title = "Employment status form for employment scheme benefits"
+#show: dokument(title, lang: "en")
 
-#set document(
-    title: title,
-    description: title,
-    author: "Team tiltakspenger",
-)
-#set text(lang: "en")
-
-#let labels = (
-    "DELTATT_UTEN_LØNN_I_TILTAKET": "Participated",
-    "DELTATT_MED_LØNN_I_TILTAKET": "Received pay",
-    "FRAVÆR_SYK": "Sick",
-    "FRAVÆR_SYKT_BARN": "Sick child or sick child carer",
-    "FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU": "Strong welfare reasons or job interview",
-    "FRAVÆR_GODKJENT_AV_NAV": "Absence approved by Nav",
-    "FRAVÆR_ANNET": "Other absence",
-    "IKKE_TILTAKSDAG": "No employment scheme activity",
-    "IKKE_RETT_TIL_TILTAKSPENGER": "Not entitled",
-    "IKKE_BESVART": "No report",
-)
+#let labels = meldekortLabelsEn
 
 #block(below: space-26, width: 100%)[
-    #align(center)[
-        #image("/resources/img.png", height: space-16, alt: "NAV logo")
-    ]
+    #senterlogo
 
     = #title
 

@@ -1,0 +1,71 @@
+{
+  "id": "meldekort_01JCQV1M22WR1D9VGC43MSRP0P",
+  "saksnummer": "3424234132",
+  "fnr": "12345678901",
+  "forhandsvisning": false,
+  "periode": {
+    "fraOgMed": "30. september 2024",
+    "tilOgMed": "13. oktober 2024"
+  },
+  "uke1": "40",
+  "uke2": "41",
+  "mottatt": "2024-10-15 13:05:15",
+  "dager": [
+    {
+      "dag": "Mandag 30. september",
+      "status": "DELTATT_UTEN_LØNN_I_TILTAKET"
+    },
+    {
+      "dag": "Tirsdag 1. oktober",
+      "status": "FRAVÆR_SYK"
+    },
+    {
+      "dag": "Onsdag 2. oktober",
+      "status": "FRAVÆR_SYKT_BARN"
+    },
+    {
+      "dag": "Torsdag 3. oktober",
+      "status": "FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU"
+    },
+    {
+      "dag": "Fredag 4. oktober",
+      "status": "FRAVÆR_ANNET"
+    },
+    {
+      "dag": "Lørdag 5. oktober",
+      "status": "IKKE_BESVART"
+    },
+    {
+      "dag": "Søndag 6. oktober",
+      "status": "IKKE_BESVART"
+    },
+    {
+      "dag": "Mandag 7. oktober",
+      "status": "IKKE_TILTAKSDAG"
+    },
+    {
+      "dag": "Tirsdag 8. oktober",
+      "status": "IKKE_RETT_TIL_TILTAKSPENGER"
+    },
+    {
+      "dag": "Onsdag 9. oktober",
+      "status": "DELTATT_MED_LØNN_I_TILTAKET"
+    },
+    {
+      "dag": "Torsdag 10. oktober",
+      "status": "DELTATT_MED_LØNN_I_TILTAKET"
+    },
+    {
+      "dag": "Fredag 11. oktober",
+      "status": "FRAVÆR_GODKJENT_AV_NAV"
+    },
+    {
+      "dag": "Lørdag 12. oktober",
+      "status": "IKKE_BESVART"
+    },
+    {
+      "dag": "Søndag 13. oktober",
+      "status": "IKKE_BESVART"
+    }
+  ]
+}

@@ -6,18 +6,10 @@
 #show: page-setup(data)
 
 #let title = "Utbetalingsvedtak"
-
-#set document(
-    title: title,
-    description: title,
-    author: "Team tiltakspenger",
-)
-#set text(lang: "no")
+#show: dokument(title)
 
 #block(below: space-26, width: 100%)[
-    #align(center)[
-        #image("/resources/img.png", height: space-16, alt: "NAV logo")
-    ]
+    #senterlogo
 
     = #title
 

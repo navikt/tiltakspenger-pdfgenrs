@@ -5,13 +5,7 @@
 #show: page-setup(data)
 
 #let title = "Vedtaksbrev for Tiltakspenger"
-
-#set document(
-    title: title,
-    description: title,
-    author: "Team tiltakspenger",
-)
-#set text(lang: "no")
+#show: dokument(title)
 #show: innholdsheader(data)
 
 = Vedtaket ditt om tiltakspenger er endret

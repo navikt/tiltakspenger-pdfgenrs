@@ -1,6 +1,20 @@
 #import "/lib/typography.typ": *
 #import "/lib/styles.typ": *
 
+#let dokument(title, lang: "no") = body => {
+    set document(
+        title: title,
+        description: title,
+        author: "Team tiltakspenger",
+    )
+    set text(lang: lang)
+    body
+}
+
+#let senterlogo = align(center)[
+    #image("/resources/img.png", height: space-16, alt: "NAV logo")
+]
+
 #let personalia(data) = body => {
     block(below: space-48)[
         #stack(

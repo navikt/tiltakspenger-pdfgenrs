@@ -5,31 +5,12 @@
 #show: page-setup(data)
 
 #let title = "Meldekort for tiltakspenger"
+#show: dokument(title)
 
-#set document(
-    title: title,
-    description: title,
-    author: "Team tiltakspenger",
-)
-#set text(lang: "no")
-
-#let labels = (
-    "DELTATT_UTEN_LØNN_I_TILTAKET": "Har deltatt",
-    "DELTATT_MED_LØNN_I_TILTAKET": "Mottok lønn",
-    "FRAVÆR_SYK": "Syk",
-    "FRAVÆR_SYKT_BARN": "Sykt barn eller syk barnepasser",
-    "FRAVÆR_STERKE_VELFERDSGRUNNER_ELLER_JOBBINTERVJU": "Sterke velferdsgrunner eller jobbintervju",
-    "FRAVÆR_GODKJENT_AV_NAV": "Fravær godkjent av Nav",
-    "FRAVÆR_ANNET": "Annet fravær",
-    "IKKE_TILTAKSDAG": "Ikke tiltaksdag",
-    "IKKE_RETT_TIL_TILTAKSPENGER": "Ikke rett til tiltakspenger",
-    "IKKE_BESVART": "Ikke besvart",
-)
+#let labels = meldekortLabelsNo
 
 #block(below: space-26, width: 100%)[
-    #align(center)[
-        #image("/resources/img.png", height: space-16, alt: "NAV logo")
-    ]
+    #senterlogo
 
     = #title
 

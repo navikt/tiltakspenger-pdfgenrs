@@ -5,13 +5,7 @@
 #show: page-setup(data)
 
 #let title = "Opprettholdelsesbrev Tiltakspenger"
-
-#set document(
-    title: title,
-    description: title,
-    author: "Team tiltakspenger",
-)
-#set text(lang: "no")
+#show: dokument(title)
 #show: innholdsheader(data)
 
 #block(below: space-26)[

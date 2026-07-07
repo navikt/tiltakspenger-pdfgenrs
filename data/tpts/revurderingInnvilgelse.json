@@ -1,0 +1,67 @@
+{
+  "personalia": {
+    "ident": "50485211165",
+    "fornavn": "Ola",
+    "etternavn": "Nordmann"
+  },
+  "saksnummer": "202501301001",
+  "saksbehandlerNavn": "Saksbehandler Navn",
+  "beslutterNavn": "Saksbehandler Navn",
+  "kontor": "Nav Tiltak Oslo",
+  "harBarnetillegg": true,
+  "satser": [
+    {
+      "år": 2024,
+      "ordinær": 285,
+      "barnetillegg": 53
+    },
+    {
+      "år": 2025,
+      "ordinær": 298,
+      "barnetillegg": 55
+    }
+  ],
+  "tilleggstekst": "Dette er en vurdering",
+  "forhandsvisning": true,
+  "datoForUtsending": "31. januar 2025",
+  "innvilgelsesperioder": {
+    "antallDagerTekst": "fem dager",
+    "perioder": [
+      {
+        "fraOgMed": "1. november 2024",
+        "tilOgMed": "28. februar 2025"
+      },
+      {
+        "fraOgMed": "1. april 2025",
+        "tilOgMed": "30. april 2025"
+      },
+      {
+        "fraOgMed": "2. mai 2025",
+        "tilOgMed": "31. mai 2025"
+      }
+    ]
+  },
+  "barnetillegg": [
+    {
+      "antallBarnTekst": "ett",
+      "periode": {
+        "fraOgMed": "1. november 2024",
+        "tilOgMed": "28. februar 2025"
+      }
+    },
+    {
+      "antallBarnTekst": "to",
+      "periode":  {
+        "fraOgMed": "1. april 2025",
+        "tilOgMed": "30. april 2025"
+      }
+    },
+    {
+      "antallBarnTekst": "tre",
+      "periode":  {
+        "fraOgMed": "2. mai 2025",
+        "tilOgMed": "31. mai 2025"
+      }
+    }
+  ]
+}
