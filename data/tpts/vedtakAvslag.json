@@ -1,0 +1,22 @@
+{
+  "personalia": {
+    "ident": "12345678901",
+    "fornavn": "Planet",
+    "etternavn": "Planetus"
+  },
+  "saksnummer": "123456789",
+  "saksbehandlerNavn": "Kåre Kropp",
+  "beslutterNavn": "Pelle Parafin",
+  "tilleggstekst": "Hei hei",
+  "avslagsgrunnerSize": 2,
+  "avslagsgrunner": [
+    "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK",
+    "LIVSOPPHOLDYTELSE"
+  ],
+  "harSøktMedBarn": true,
+  "hjemlerTekst": "Dette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften §§ 2, 3, 7, 8, 9 og 11.",
+  "forhandsvisning": true,
+  "avslagFraOgMed": "01.01.2023",
+  "avslagTilOgMed": "10.01.2023",
+  "datoForUtsending": "3. august 2023"
+}
