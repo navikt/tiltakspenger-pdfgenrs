@@ -1,0 +1,335 @@
+{
+  "meldekortId": "meldekort_01JCQV1M22WR1D9VGC43MSRP0P",
+  "saksnummer": "3424234132",
+  "periode": {
+    "fraOgMed": "26. desember 2022",
+    "tilOgMed": "6. januar 2023"
+  },
+  "erAutomatiskBehandlet": false,
+  "saksbehandlerNavn": "Sak S. Behandleren",
+  "beslutterNavn": "Bes B. Lutteren",
+  "tiltak": [
+    "Arbeidsmarkedsopplæring (gruppe)",
+    "Jobbklubb"
+  ],
+  "iverksattTidspunkt": "7. april 2025 14:36:18",
+  "fødselsnummer": "50218274152",
+  "totaltBelop": 2198,
+  "totalDifferanse": -338,
+  "brevTekst": "Bruker hadde registrert at han var syk, men deltok på tiltak disse dagene.",
+  "forhandsvisning": true,
+  "meldeperioder": [
+    {
+      "korrigering": false,
+      "periode": {
+        "fraOgMed": "26. desember 2022",
+        "tilOgMed": "1. januar 2023"
+      },
+      "beløp": 1690,
+      "beløpDiff": 1690,
+      "harBarnetillegg": true,
+      "dager": [
+        {
+          "dato": "mandag 26. desember",
+          "status": {
+            "forrige": null,
+            "gjeldende": "Deltatt",
+            "harEndring": true
+          },
+          "beløp": {
+            "forrige": null,
+            "gjeldende": 285,
+            "harEndring": true
+          },
+          "barnetillegg": {
+            "forrige": null,
+            "gjeldende": 53,
+            "harEndring": true
+          },
+          "prosent": {
+            "forrige": null,
+            "gjeldende": 100,
+            "harEndring": true
+          },
+          "harEndring": true
+        },
+        {
+          "dato": "tirsdag 27. desember",
+          "status": {
+            "forrige": null,
+            "gjeldende": "Deltatt",
+            "harEndring": true
+          },
+          "beløp": {
+            "forrige": null,
+            "gjeldende": 285,
+            "harEndring": true
+          },
+          "barnetillegg": {
+            "forrige": null,
+            "gjeldende": 53,
+            "harEndring": true
+          },
+          "prosent": {
+            "forrige": null,
+            "gjeldende": 100,
+            "harEndring": true
+          },
+          "harEndring": true
+        },
+        {
+          "dato": "onsdag 28. desember",
+          "status": {
+            "forrige": null,
+            "gjeldende": "Deltatt",
+            "harEndring": true
+          },
+          "beløp": {
+            "forrige": null,
+            "gjeldende": 285,
+            "harEndring": true
+          },
+          "barnetillegg": {
+            "forrige": null,
+            "gjeldende": 53,
+            "harEndring": true
+          },
+          "prosent": {
+            "forrige": null,
+            "gjeldende": 100,
+            "harEndring": true
+          },
+          "harEndring": true
+        },
+        {
+          "dato": "torsdag 29. desember",
+          "status": {
+            "forrige": null,
+            "gjeldende": "Deltatt",
+            "harEndring": true
+          },
+          "beløp": {
+            "forrige": null,
+            "gjeldende": 285,
+            "harEndring": true
+          },
+          "barnetillegg": {
+            "forrige": null,
+            "gjeldende": 53,
+            "harEndring": true
+          },
+          "prosent": {
+            "forrige": null,
+            "gjeldende": 100,
+            "harEndring": true
+          },
+          "harEndring": true
+        },
+        {
+          "dato": "fredag 30. desember",
+          "status": {
+            "forrige": null,
+            "gjeldende": "Deltatt",
+            "harEndring": true
+          },
+          "beløp": {
+            "forrige": null,
+            "gjeldende": 285,
+            "harEndring": true
+          },
+          "barnetillegg": {
+            "forrige": null,
+            "gjeldende": 53,
+            "harEndring": true
+          },
+          "prosent": {
+            "forrige": null,
+            "gjeldende": 100,
+            "harEndring": true
+          },
+          "harEndring": true
+        },
+        {
+          "dato": "lørdag 31. desember",
+          "status": {
+            "forrige": null,
+            "gjeldende": "Ikke tiltaksdag",
+            "harEndring": true
+          },
+          "beløp": {
+            "forrige": null,
+            "gjeldende": 0,
+            "harEndring": true
+          },
+          "barnetillegg": {
+            "forrige": null,
+            "gjeldende": 0,
+            "harEndring": true
+          },
+          "prosent": {
+            "forrige": null,
+            "gjeldende": 0,
+            "harEndring": true
+          },
+          "harEndring": true
+        },
+        {
+          "dato": "søndag 1. januar",
+          "status": {
+            "forrige": null,
+            "gjeldende": "Ikke tiltaksdag",
+            "harEndring": true
+          },
+          "beløp": {
+            "forrige": null,
+            "gjeldende": 0,
+            "harEndring": true
+          },
+          "barnetillegg": {
+            "forrige": null,
+            "gjeldende": 0,
+            "harEndring": true
+          },
+          "prosent": {
+            "forrige": null,
+            "gjeldende": 0,
+            "harEndring": true
+          },
+          "harEndring": true
+        }
+      ]
+    },
+    {
+      "korrigering": true,
+      "periode": {
+        "fraOgMed": "2. januar 2023",
+        "tilOgMed": "6. januar 2023"
+      },
+      "beløp": 508,
+      "beløpDiff": -338,
+      "harBarnetillegg": true,
+      "dager": [
+        {
+          "dato": "mandag 2. januar",
+          "status": {
+            "forrige": "Syk",
+            "gjeldende": "Deltatt",
+            "harEndring": true
+          },
+          "beløp": {
+            "forrige": 0,
+            "gjeldende": 285,
+            "harEndring": true
+          },
+          "barnetillegg": {
+            "forrige": 0,
+            "gjeldende": 53,
+            "harEndring": true
+          },
+          "prosent": {
+            "forrige": 0,
+            "gjeldende": 100,
+            "harEndring": true
+          },
+          "harEndring": true
+        },
+        {
+          "dato": "tirsdag 3. januar",
+          "status": {
+            "forrige": "Deltatt",
+            "gjeldende": "Ikke tiltaksdag",
+            "harEndring": true
+          },
+          "beløp": {
+            "forrige": 285,
+            "gjeldende": 0,
+            "harEndring": true
+          },
+          "barnetillegg": {
+            "forrige": 53,
+            "gjeldende": 0,
+            "harEndring": true
+          },
+          "prosent": {
+            "forrige": 100,
+            "gjeldende": 0,
+            "harEndring": true
+          },
+          "harEndring": true
+        },
+        {
+          "dato": "onsdag 4. januar",
+          "status": {
+            "forrige": "Deltatt",
+            "gjeldende": "Ikke besvart",
+            "harEndring": true
+          },
+          "beløp": {
+            "forrige": 285,
+            "gjeldende": 0,
+            "harEndring": true
+          },
+          "barnetillegg": {
+            "forrige": 53,
+            "gjeldende": 0,
+            "harEndring": true
+          },
+          "prosent": {
+            "forrige": 100,
+            "gjeldende": 0,
+            "harEndring": true
+          },
+          "harEndring": true
+        },
+        {
+          "dato": "torsdag 5. januar",
+          "status": {
+            "forrige": "Deltatt",
+            "gjeldende": "Deltatt",
+            "harEndring": false
+          },
+          "beløp": {
+            "forrige": 285,
+            "gjeldende": 285,
+            "harEndring": false
+          },
+          "barnetillegg": {
+            "forrige": 53,
+            "gjeldende": 53,
+            "harEndring": false
+          },
+          "prosent": {
+            "forrige": 100,
+            "gjeldende": 100,
+            "harEndring": false
+          },
+          "harEndring": false
+        },
+        {
+          "dato": "fredag 6. januar",
+          "status": {
+            "forrige": "Deltatt",
+            "gjeldende": "Deltatt",
+            "harEndring": false
+          },
+          "beløp": {
+            "forrige": 285,
+            "gjeldende": 143,
+            "harEndring": true
+          },
+          "barnetillegg": {
+            "forrige": 53,
+            "gjeldende": 27,
+            "harEndring": true
+          },
+          "prosent": {
+            "forrige": 100,
+            "gjeldende": 50,
+            "harEndring": true
+          },
+          "harEndring": true
+        }
+      ]
+    }
+  ]
+}
