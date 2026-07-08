@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>pdfgenrs devtools</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>pdfgenrs</h1>
+    <label for="template">Brev</label>
+    <select id="template"></select>
+    <nav id="mode">
+      <button type="button" data-mode="form" class="active">Skjema</button>
+      <button type="button" data-mode="json">JSON</button>
+    </nav>
+    <button type="button" id="reset">Tilbakestill</button>
+    <button type="button" id="generate">Generer PDF</button>
+    <span id="status"></span>
+  </header>
+  <main>
+    <section id="editor">
+      <form id="form"></form>
+      <textarea id="json" hidden spellcheck="false"></textarea>
+      <p id="error" hidden></p>
+    </section>
+    <section id="preview">
+      <iframe id="pdf" title="PDF-forhåndsvisning (pdfgenrs)"></iframe>
+      <!-- LEGACY PDFGEN (overgangsfase): slett iframen under når pdfgen fjernes -->
+      <iframe id="pdf-legacy" title="PDF-forhåndsvisning (gammel pdfgen)" hidden></iframe>
+    </section>
+  </main>
+  <script src="app.js"></script>
+  <!-- LEGACY PDFGEN (overgangsfase): slett script-taggen under når pdfgen fjernes -->
+  <script src="legacy.js"></script>
+</body>
+</html>

@@ -13,6 +13,14 @@ Flagget `--build` brukes for å bygge imaget på nytt som vil si at applikasjone
 * Pdfgen er også en del av scriptet `up.sh` som ligger i metarepo og starter opp ved kjøring av det.
 
 
+## Utviklerverktøy: forhåndsvise brev i nettleseren
+Kjør `./run_devtools.sh` og åpne http://localhost:8087. Der kan du velge brev, justere
+flettedataene i et skjema (eller som rå JSON) og se PDF-en oppdatere seg fortløpende.
+Starter også pdfgenrs selv om den ikke allerede kjører.
+
+Se [devtools/brev-preview/README.md](devtools/brev-preview/README.md) for detaljer.
+
+
 ## Gjøre kall mot tiltakspenger-pdfgen lokalt
 PDFene kan testes lokalt på `http://localhost:8085/api/v1/genpdf/<application>/<template>`, f.eks.
 http://localhost:8085/api/v1/genpdf/tpts/vedtakInnvilgelse
