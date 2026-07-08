@@ -98,6 +98,11 @@ meldeperioder i én behandling, samt korrigeringer.
     )
 }
 
+// Saksbehandlere: beslutter - saksbehandler, med rød placeholder når navn mangler
+#let mv-navn(navn, manglerTekst) = if navn != none [#navn] else [#placeholder(manglerTekst)]
+
+#let meldekortvedtakSaksbehandlere(data) = brødtekst[*Saksbehandlere:* #mv-navn(data.beslutterNavn, "ingen beslutter tildelt") - #mv-navn(data.saksbehandlerNavn, "ingen saksbehandler tildelt")]
+
 // Utfall av korrigeringen: Resultat - Økning/Reduksjon/Ingen endring - beløp
 #let meldekortvedtakUtfall(beløpDiff) = block(below: space-26)[
     #grid(

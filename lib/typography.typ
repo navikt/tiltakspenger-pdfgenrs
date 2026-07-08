@@ -34,3 +34,6 @@
     #content
 ]
 
+// Rød markør for manglende data, kun ment å være synlig i utvikling/forhåndsvisning
+#let placeholder(t) = text(fill: red)[#t]
+

@@ -6,8 +6,6 @@ Komponenter for utbetalingsvedtak (V1) — én meldekortperiode per behandling,
 med støtte for korrigering (forrige/gjeldende-verdier og blyantikon).
 */
 
-#let placeholder(t) = text(fill: red)[#t]
-
 // --a-surface-subtle, brukt for å markere endrede dager ved korrigering
 #let uv-endret-fill = rgb("#F2F3F5")
 #let uv-stroke = (bottom: 1pt + black)

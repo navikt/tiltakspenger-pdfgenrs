@@ -20,22 +20,26 @@
 
     // Sammendrag med informasjon om hver meldeperiode
     #block(below: space-26)[
-        #stack(
-            dir: ttb,
-            spacing: space-9,
-            ..data.meldeperioder.map(mp => {
-                if mp.korrigering {
-                    stack(
-                        dir: ttb,
-                        spacing: space-6,
-                        brødtekst[Totalt utbetalt for perioden #mp.periode.fraOgMed - #mp.periode.tilOgMed: *#mp.beløpDiff kroner*],
-                        brødtekst[Ny beregning for perioden #mp.periode.fraOgMed - #mp.periode.tilOgMed: *#mp.beløp kroner*],
-                    )
-                } else {
-                    brødtekst[Totalt utbetalt for perioden #mp.periode.fraOgMed - #mp.periode.tilOgMed: *#mp.beløp kroner*]
-                }
-            }),
-        )
+        #if data.meldeperioder.len() == 0 [
+            #placeholder[Ingen meldeperioder]
+        ] else [
+            #stack(
+                dir: ttb,
+                spacing: space-9,
+                ..data.meldeperioder.map(mp => {
+                    if mp.korrigering {
+                        stack(
+                            dir: ttb,
+                            spacing: space-6,
+                            brødtekst[Totalt utbetalt for perioden #mp.periode.fraOgMed - #mp.periode.tilOgMed: *#mp.beløpDiff kroner*],
+                            brødtekst[Ny beregning for perioden #mp.periode.fraOgMed - #mp.periode.tilOgMed: *#mp.beløp kroner*],
+                        )
+                    } else {
+                        brødtekst[Totalt utbetalt for perioden #mp.periode.fraOgMed - #mp.periode.tilOgMed: *#mp.beløp kroner*]
+                    }
+                }),
+            )
+        ]
     ]
 ]
 
@@ -68,7 +72,7 @@
     #if data.erAutomatiskBehandlet [
         #brødtekst[Automatisk behandlet]
     ] else [
-        #brødtekst[*Saksbehandlere:* #data.beslutterNavn - #data.saksbehandlerNavn]
+        #meldekortvedtakSaksbehandlere(data)
     ]
 ]
 
