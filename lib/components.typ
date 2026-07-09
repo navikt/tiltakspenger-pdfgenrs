@@ -11,10 +11,12 @@
     body
 }
 
-#let senterlogo = align(center)[
+// Logo: venstrestilt, 16pt høy (én linje i baselinegrid) og 48pt luft under (Aksel)
+#let brevlogo = block(below: space-48)[
     #image("/resources/img.png", height: space-16, alt: "NAV logo")
 ]
 
+// Ren tekst i grid-cellene: brødtekst (withSpacing) er for flyt-avsnitt og skal ikke brukes i celler (jf. casedetails.typ i lib/pensjonsbrev).
 #let personalia(data) = body => {
     block(below: space-48)[
         #stack(
@@ -22,11 +24,11 @@
             grid(
                 columns: (20%, 1fr),
                 gutter: 0.5em,
-                [#brødtekst[Navn:]], [#brødtekst[#data.personalia.fornavn #data.personalia.etternavn]],
-                [#brødtekst[Fødselsnummer:]], [#brødtekst[#data.personalia.ident]],
-                [#brødtekst[Saksnummer:]], [#brødtekst[#data.saksnummer]],
+                [Navn:], [#data.personalia.fornavn #data.personalia.etternavn],
+                [Fødselsnummer:], [#data.personalia.ident],
+                [Saksnummer:], [#data.saksnummer],
             ),
-            [#align(right + bottom)[#brødtekst[#data.datoForUtsending]]],
+            [#align(right + bottom)[#data.datoForUtsending]],
         )
     ]
     body
@@ -34,19 +36,33 @@
 
 #let innholdsheader(data) = body => {
     [
-        #block(below: space-48)[
-            #image(
-                "/resources/img.png",
-                height: space-16,
-                alt: "NAV logo",
-            )
-        ]
+        #brevlogo
         #show: personalia(data)
         #body
     ]
 }
 
+/*
+Personinfo for innsendte dokumenter (meldekort/søknad): samme layout som utgående brev (personalia), men med mottatt-tidspunkt der utgående har utsendingsdato.
+Labels er parametre siden innsendte dokumenter også finnes på engelsk.
+*/
+#let personaliaInnsendt(rader, mottatt) = block(below: space-48)[
+    #stack(
+        dir: ltr,
+        grid(
+            columns: (auto, 1fr),
+            gutter: 0.5em,
+            ..rader.map(((label, verdi)) => ([#label], [#verdi])).flatten(),
+        ),
+        [#align(right + bottom)[#mottatt]],
+    )
+]
 
+
+/*
+Felles hale for alle utgående vedtaksbrev — skal være identisk fra og med «Du har rett til å klage».
+Tekstene er fasit fra pdfgen (partials/klagerett.hbs, base.hbs og partials/sporsmal.hbs).
+*/
 #let vedtaksinfo = body => [
     #block(below: space-26)[
         #h2("Du har rett til å klage")
@@ -60,14 +76,17 @@
 
         #brødtekst("Hvis du sender klage i posten, må du signere klagen.")
 
-        #brødtekst("Mer informasjon om klagerettigheter finner du på nav.no")
+        #brødtekst("Mer informasjon om klagerettigheter finner du på nav.no/klagerettigheter.")
+    ]
+
+    #block(below: space-26)[
+        #h2("Du har rett til innsyn")
+        #brødtekst("Du har rett til å se dokumentene i saken din. Dette følger av forvaltningsloven § 18. Du kan kontakte saksbehandler på nav.no eller på telefon om du vil se dokumentene i saken din. Du kan lese mer om innsynsretten på nav.no/personvernerklaering.")
     ]
 
     #block(below: space-26)[
         #h2("Du har rettigheter knyttet til personopplysningene dine")
-        #brødtekst("Du har rett til å se dokumentene i saken din. Dette følger av forvaltningsloven § 18. Du kan kontakte saksbehandler på nav.no eller på telefon om du vil se dokumentene i saken din. Du kan lese mer om innsynsretten på nav.no/personvernerklaering.")
-
-        #brødtekst("Nav kan veilede deg på telefon om hvordan du sender en klage. Nav-kontoret ditt kan også hjelpe deg med å skrive en klage.")
+        #brødtekst("Du finner informasjon om hvordan Nav behandler personopplysningene dine, og hvilke rettigheter du har, på nav.no/personvernerklaering#hvordan.")
     ]
 
     #block(below: space-26)[
@@ -83,26 +102,44 @@
 ]
 
 
-#let signatur(data) = body => {
-    let finnesBeslutter = "beslutterNavn" in data
+/*
+Felles signatur for alle utgående brev.
+Avstandene følger closing.typ i lib/pensjonsbrev (13pt mellom hilsen og navn, 26pt før kontor), med 32pt luft før og 40pt etter signaturen.
+Beslutter er nullable og vises kun når den finnes — da til venstre, med saksbehandler til høyre.
+*/
+#let signatur-navn(navn) = if navn != none [#navn] else [#placeholder("ingen saksbehandler tildelt")]
 
-    block(below: space-40)[
-        #stack(
-            spacing: 3pt,
-            brødtekst("Med vennlig hilsen"),
-            grid(
-                columns: if finnesBeslutter { (1fr, 1fr) } else { 1fr },
-                [#if finnesBeslutter [#brødtekst[#data.beslutterNavn]]], [#brødtekst[#data.saksbehandlerNavn]],
-            ),
-        )
-        #if "kontor" in data [#brødtekst[#data.kontor]]
+// Tomme/blanke navn regnes som manglende, slik Handlebars' {{#if}} gjorde i gammel pdfgen.
+#let navn-eller-none(navn) = if navn == none or (type(navn) == str and navn.trim() == "") { none } else { navn }
+
+// Avsenderenheten er hardkodet fordi kun ett kontor behandler tiltakspengesaker.
+#let avsenderenhet = "Nav Tiltak Oslo"
+
+#let signatur(data) = body => {
+    let beslutterNavn = navn-eller-none(data.at("beslutterNavn", default: none))
+    let saksbehandlerNavn = navn-eller-none(data.at("saksbehandlerNavn", default: none))
+
+    block(above: space-32, below: space-40)[
+        Med vennlig hilsen
+        #block(above: 13pt)[
+            #if beslutterNavn != none [
+                #grid(
+                    columns: (1fr, 1fr),
+                    [#beslutterNavn], [#signatur-navn(saksbehandlerNavn)],
+                )
+            ] else [
+                #signatur-navn(saksbehandlerNavn)
+            ]
+        ]
+        // Aksel krever avsenderenhet i alle signerte brev
+        #block(above: space-26)[#avsenderenhet]
     ]
     body
 }
 
 
 #let shadowBox(body) = block(
-    fill: rgb("#F2F3F5"),
+    fill: surface-subtle,
     inset: space-16,
     below: space-26,
 )[#body]
@@ -112,6 +149,6 @@
     #stack(
         dir: ttb,
         spacing: space-6,
-        ..items.map(((label, value)) => brødtekst[*#label* #value]),
+        ..items.map(((label, value)) => [*#label* #value]),
     )
 ]

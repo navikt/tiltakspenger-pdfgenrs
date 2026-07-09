@@ -10,18 +10,20 @@
 #let labels = meldekortLabelsNo
 
 #block(below: space-26, width: 100%)[
-    #senterlogo
+    #brevlogo
+
+    #personaliaInnsendt(
+        (
+            ("Fødselsnummer:", data.fnr),
+            ("Saksnummer:", data.saksnummer),
+            ("Meldekort-ID:", data.id),
+        ),
+        [Mottatt: #data.mottatt],
+    )
 
     = #title
 
-    == #data.periode.fraOgMed - #data.periode.tilOgMed (uke #(data.uke1)-#(data.uke2))
-
-    #nøkkelinfo((
-        ("Fødselsnummer:", data.fnr),
-        ("Saksnummer:", data.saksnummer),
-        ("Mottatt:", data.mottatt),
-        ("Meldekort-ID:", data.id),
-    ))
+    #h2([#data.periode.fraOgMed - #data.periode.tilOgMed (uke #(data.uke1)-#(data.uke2))])
 
     #block(below: space-26)[
         #brødtekst[
@@ -38,7 +40,7 @@
 ]
 
 #block(below: space-26)[
-    == Fravær
+    #h2([Fravær])
     #brødtekst[
         Hvis du ikke har vært syk eller hatt annet fravær fra tiltaket i denne perioden, svarer du «nei». Hvis du har vært syk eller hatt annet fravær hele eller deler av dager, svarer du «ja». Deretter oppgir du hvilke dager det gjelder, og hvilken type fravær du har hatt.
     ]
@@ -46,7 +48,7 @@
     #brødtekst[Nei, jeg har ikke vært syk eller hatt annet fravær]
     #brødtekst[Ja, jeg har vært syk eller hatt annet fravær]
 
-    === Slik fyller du ut fravær
+    #h3([Slik fyller du ut fravær])
     #brødtekst[
         Noen typer fravær gir til rett til tiltakspenger selv om du ikke har deltatt på tiltaket. Kryss av for hvilke dager det gjelder, og hvilken type fravær du har hatt.
     ]
@@ -86,7 +88,7 @@
 ]
 
 #block(below: space-26)[
-    == Lønn
+    #h2([Lønn])
     #brødtekst[
         Hvis du får lønn (ikke tiltakspenger) som en del av tiltaket ditt, svarer du "ja". Deretter oppgir du hvilke dager det gjelder.
     ]
@@ -97,7 +99,7 @@
 ]
 
 #block(below: space-26)[
-    == Oppmøte
+    #h2([Oppmøte])
     #brødtekst[
         Kryss av for de dagene du har deltatt på tiltaket som avtalt. Kryss også av for «deltok» hvis dagen er en offentlig fridag og du ikke får deltatt fordi tiltaket er stengt.
     ]
@@ -105,14 +107,14 @@
 ]
 
 #block(below: space-26)[
-    == Oppsummering
+    #h2([Oppsummering])
     #brødtekst[
         Her er en oppsummering av det du har fylt ut i meldekortet for denne perioden. Sjekk at det er korrekt før du sender inn. Du kan gå tilbake og rette opp hvis noe er feil.
     ]
 ]
 
 #block(below: space-26)[
-    === Meldekortdager
+    #h3([Meldekortdager])
     #meldekortTabell(data.dager, labels)
     #bekreftet[Jeg bekrefter at disse opplysningene stemmer.]
 ]

@@ -9,7 +9,7 @@
 #show: dokument(title)
 
 #block(below: space-26, width: 100%)[
-    #senterlogo
+    #brevlogo
 
     = #title
 
@@ -45,7 +45,7 @@
 
 #if "brevTekst" in data and data.brevTekst != none [
     #shadowBox[
-        #h3("Slik har vi vurdert saken din")
+        #h2("Slik har vi vurdert saken din")
         #brødtekst[#data.brevTekst]
     ]
 ]
@@ -68,17 +68,15 @@
     #brødtekst[*Iverksatt:* #data.iverksattTidspunkt]
 ]
 
-#block(below: space-26)[
-    #if data.erAutomatiskBehandlet [
+#if data.erAutomatiskBehandlet [
+    #block(below: space-26)[
         #brødtekst[Automatisk behandlet]
-    ] else [
-        #meldekortvedtakSaksbehandlere(data)
     ]
 ]
 
 #if data.tiltak.len() > 0 [
     #block(below: space-26)[
-        #h4("Tiltak")
+        #h3("Tiltak")
         #stack(
             dir: ttb,
             spacing: space-6,
@@ -87,5 +85,5 @@
     ]
 ]
 
-#meldekortvedtakKlagerett
-#meldekortvedtakSporsmal
+#show: vedtaksinfo
+#show: if data.erAutomatiskBehandlet { body => body } else { signatur(data) }

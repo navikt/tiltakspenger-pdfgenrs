@@ -10,22 +10,24 @@
 #let labels = meldekortLabelsNo
 
 #block(below: space-26, width: 100%)[
-    #senterlogo
+    #brevlogo
+
+    #personaliaInnsendt(
+        (
+            ("Fødselsnummer:", data.fnr),
+            ("Saksnummer:", data.saksnummer),
+            ("Meldekort-ID:", data.id),
+        ),
+        [Mottatt: #data.mottatt],
+    )
 
     = Meldekort for tiltakspenger
 
-    == #data.periode.fraOgMed - #data.periode.tilOgMed (uke #(data.uke1)-#(data.uke2))
-
-    #nøkkelinfo((
-        ("Fødselsnummer:", data.fnr),
-        ("Saksnummer:", data.saksnummer),
-        ("Mottatt:", data.mottatt),
-        ("Meldekort-ID:", data.id),
-    ))
+    #h2([#data.periode.fraOgMed - #data.periode.tilOgMed (uke #(data.uke1)-#(data.uke2))])
 ]
 
 #block(below: space-26)[
-    == Endre meldekort
+    #h2([Endre meldekort])
 
     #shadowBox[
         #h3("Når skal jeg velge mottatt lønn?")
@@ -64,14 +66,14 @@
 ]
 
 #block(below: space-26)[
-    == Slik endrer du meldekortet
+    #h2([Slik endrer du meldekortet])
     #brødtekst[
         Nedenfor ser du hva du har tidligere registrert i meldekortet. Endre valgene på de dagene som er feilregistrert. Etter du har sendt inn endringen vil endringen saksbehandles før det eventuelt blir endringer i utbetalingen din.
     ]
 ]
 
 #block(below: space-26)[
-    === Oppsummering av endret meldekort
+    #h3([Oppsummering av endret meldekort])
     #meldekortTabell(data.dager, labels)
     #bekreftet[Jeg bekrefter at disse opplysningene stemmer.]
 ]

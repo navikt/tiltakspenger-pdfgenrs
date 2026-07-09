@@ -10,7 +10,9 @@
   "saksbehandlerNavn": "Kåre Kropp",
   "beslutterNavn": "Pelle Parafin",
   "stansFraOgMedDato": "1. januar 2025",
-  "valgtHjemmelTekst": ["du mottar en annen stønad til livsopphold. Deltakere som mottar andre stønader til livsopphold, har ikke rett til tiltakspenger og barnetillegg etter forskrift om tiltakspenger § 7."],
+  "valgtHjemmelTekst": [
+    "du mottar en annen stønad til livsopphold. Deltakere som mottar andre stønader til livsopphold, har ikke rett til tiltakspenger og barnetillegg etter forskrift om tiltakspenger § 7."
+  ],
   "tilleggstekst": "Vi har vurdert saken din på nytt.",
   "forhandsvisning": true
 }

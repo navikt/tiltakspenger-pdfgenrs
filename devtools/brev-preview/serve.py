@@ -10,15 +10,17 @@ Bruk:
 
 Miljøvariabler:
     DEVTOOLS_PORT       port for denne serveren (default 8087)
-    PDFGEN_URL          overstyr pdfgenrs-adressen (default: prøver 8084 og 8085)
-    LEGACY_PDFGEN_URL   overstyr gammel pdfgen-adresse (default: prøver 8081 og 8085)
+    PDFGEN_URL          overstyr pdfgenrs-adressen (default: 8084)
+    LEGACY_PDFGEN_URL   overstyr gammel pdfgen-adresse (default: 8081)
 """
 import json
 import os
+import re
 import subprocess
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
@@ -28,8 +30,7 @@ PDFGEN_CANDIDATES = (
     [os.environ["PDFGEN_URL"]]
     if os.environ.get("PDFGEN_URL")
     else [
-        "http://localhost:8084",  # metarepoets docker-compose.yml
-        "http://localhost:8085",  # dette repoets docker-compose.yml / run_development.sh
+        "http://localhost:8084",  # både metarepoets og dette repoets docker-compose.yml
     ]
 )
 
@@ -61,8 +62,7 @@ LEGACY_CANDIDATES = (
     [os.environ["LEGACY_PDFGEN_URL"]]
     if os.environ.get("LEGACY_PDFGEN_URL")
     else [
-        "http://localhost:8081",  # metarepoets docker-compose.yml
-        "http://localhost:8085",  # pdfgen-repoets docker-compose.yml / run_development.sh
+        "http://localhost:8081",  # både metarepoets og pdfgen-repoets docker-compose.yml
     ]
 )
 legacy_url = None
@@ -129,6 +129,16 @@ class Handler(SimpleHTTPRequestHandler):
             self._respond(200, "application/json", json.dumps(names).encode())
         elif self.path == "/api/legacy/templates":  # LEGACY PDFGEN: slett denne elif-blokken
             self._respond(200, "application/json", json.dumps(legacy_templates()).encode())
+        elif self.path.startswith("/api/legacy/data/"):  # LEGACY PDFGEN: slett denne elif-blokken
+            # Malnavnet kommer fra URL-en; valider mot tegn-allowlist og sjekk at stien blir værende i datamappen.
+            name = os.path.basename(urllib.parse.unquote(self.path[len("/api/legacy/data/"):]))
+            data_dir = os.path.realpath(os.path.join(LEGACY_REPO, "data", "tpts"))
+            data_file = os.path.realpath(os.path.join(data_dir, name + ".json"))
+            if re.fullmatch(r"[\w-]+", name) and data_file.startswith(data_dir + os.sep) and os.path.isfile(data_file):
+                with open(data_file, "rb") as f:
+                    self._respond(200, "application/json", f.read())
+            else:
+                self.send_error(404)
         else:
             super().do_GET()
 
@@ -144,9 +154,14 @@ class Handler(SimpleHTTPRequestHandler):
         if target is None:
             self._respond(502, "text/plain; charset=utf-8", f"{name} kjører ikke.".encode())
             return
+        # Stien kommer fra URL-en; slipp kun gjennom /genpdf/<app>/<mal> så requesten ikke kan styres andre steder.
+        genpdf_path = urllib.parse.unquote(genpdf_path)
+        if not re.fullmatch(r"/genpdf/[\w-]+/[\w-]+", genpdf_path):
+            self.send_error(404)
+            return
         body = self.rfile.read(int(self.headers.get("Content-Length", 0)))
         req = urllib.request.Request(
-            target + "/api/v1" + genpdf_path,
+            target + "/api/v1" + urllib.parse.quote(genpdf_path),
             data=body,
             headers={"Content-Type": "application/json"},
             method="POST",

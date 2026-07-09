@@ -5,7 +5,8 @@ services:
       dockerfile: Dockerfile
     image: tiltakspenger-pdfgenrs:latest
     ports:
-      - "8085:8080"
+      # Samme port som i metarepoets docker-compose; 8085 er reservert for nais login.
+      - "8084:8080"
     volumes:
       - ./templates:/app/templates
       - ./fonts:/app/fonts

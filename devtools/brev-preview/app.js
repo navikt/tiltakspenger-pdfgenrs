@@ -10,6 +10,10 @@ let generateSeq = 0;
 // LEGACY PDFGEN (overgangsfase): leses av legacy.js, slett når pdfgen fjernes
 window.brevPreview = { get current() { return current; } };
 
+// LEGACY PDFGEN (overgangsfase): maler som ikke er migrert til pdfgenrs ennå,
+// vises med flettedata fra pdfgen-repoet. Slett når pdfgen fjernes.
+let legacyOnly = new Set();
+
 function el(tag, className, text) {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -121,6 +125,18 @@ function showError(message) {
 
 async function generate() {
   clearTimeout(generateTimer);
+  // LEGACY PDFGEN: ikke migrert ennå -> vis kun gammel pdfgen (src-endringen trigger legacy-panelet)
+  if (legacyOnly.has($("template").value)) {
+    ++generateSeq;
+    showError(null);
+    if (pdfObjectUrl) {
+      URL.revokeObjectURL(pdfObjectUrl);
+      pdfObjectUrl = null;
+    }
+    $("pdf").src = "about:blank";
+    $("status").textContent = "Ikke migrert til pdfgenrs ennå — viser kun gammel pdfgen.";
+    return;
+  }
   const seq = ++generateSeq;
   $("status").textContent = "Genererer …";
   try {
@@ -151,7 +167,9 @@ async function generate() {
 async function loadTemplate() {
   const name = $("template").value;
   localStorage.setItem("devtools-template", name);
-  defaults = await (await fetch(`/data/tpts/${name}.json`)).json();
+  // LEGACY PDFGEN: umigrerte maler har flettedataene sine i pdfgen-repoet
+  const dataUrl = legacyOnly.has(name) ? `/api/legacy/data/${name}` : `/data/tpts/${name}.json`;
+  defaults = await (await fetch(dataUrl)).json();
   current = structuredClone(defaults);
   render();
   generate();
@@ -160,8 +178,18 @@ async function loadTemplate() {
 async function init() {
   const names = await (await fetch("/api/templates")).json();
   for (const name of names) $("template").append(new Option(name, name));
+  // LEGACY PDFGEN: vis også maler som kun finnes i gammel pdfgen (ikke migrert ennå)
+  try {
+    const legacyNames = await (await fetch("/api/legacy/templates")).json();
+    legacyOnly = new Set(legacyNames.filter((n) => !names.includes(n)));
+    for (const name of [...legacyOnly].sort()) {
+      $("template").append(new Option(`${name} (kun i pdfgen)`, name));
+    }
+  } catch {
+    legacyOnly = new Set();
+  }
   const saved = localStorage.getItem("devtools-template");
-  if (names.includes(saved)) $("template").value = saved;
+  if (names.includes(saved) || legacyOnly.has(saved)) $("template").value = saved;
 
   $("template").onchange = loadTemplate;
   $("generate").onclick = generate;

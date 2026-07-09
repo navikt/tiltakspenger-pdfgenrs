@@ -44,7 +44,7 @@
 ]
 
 #block(below: space-32)[
-    == Har du spørsmål?
+    #h2([Har du spørsmål?])
     #brødtekst[
         Du finner mer informasjon på #navLenke("nav.no")[nav.no]
     ]
@@ -57,5 +57,23 @@
         Hvis du ikke finner svar på nav.no, kan du ringe oss på telefon 55 55 33 33, hverdager 09.00-15.00.
     ]
 ]
+
+#show: signatur(data)
+
+// Side 2: oversendelsesbrevet til Nav Klageinstans, med logo og personalia på nytt som i pdfgen.
+#pagebreak()
+
+#show: innholdsheader(data)
+
+#block(below: space-26)[
+    = Oversendelsesbrev til Nav Klageinstans - Tiltakspenger
+]
+
+#for tillegg in data.tilleggstekst {
+    block(below: space-26)[
+        #h2(tillegg.tittel)
+        #brødtekst[#tillegg.tekst.split("\n").join(linebreak())]
+    ]
+}
 
 #show: signatur(data)

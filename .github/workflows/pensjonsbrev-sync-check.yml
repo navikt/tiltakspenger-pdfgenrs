@@ -1,0 +1,20 @@
+# Sjekker at lib/pensjonsbrev/ er 1-1 med Typst-oppsettet i navikt/pensjonsbrev.
+# Kjøres i bygget og ukentlig, slik at vi oppdager når upstream endrer seg og kan hente inn endringene bevisst med ./sync-pensjonsbrev.sh.
+name: Sjekk at lib/pensjonsbrev er i synk med upstream
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 5 * * 1' # mandag morgen: fang opp upstream-endringer uten egne pushes
+
+jobs:
+  sync-check:
+    name: Diff mot navikt/pensjonsbrev
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Diff lib/pensjonsbrev mot upstream
+        run: ./sync-pensjonsbrev.sh --check

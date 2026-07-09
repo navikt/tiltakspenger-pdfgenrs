@@ -10,18 +10,20 @@
 #let labels = meldekortLabelsEn
 
 #block(below: space-26, width: 100%)[
-    #senterlogo
+    #brevlogo
+
+    #personaliaInnsendt(
+        (
+            ("Norwegian national identification number:", data.fnr),
+            ("Case number:", data.saksnummer),
+            ("Employment status form ID:", data.id),
+        ),
+        [Received: #data.mottatt],
+    )
 
     = #title
 
-    == #data.periode.fraOgMed - #data.periode.tilOgMed (week #(data.uke1)-#(data.uke2))
-
-    #nøkkelinfo((
-        ("Norwegian national identification number:", data.fnr),
-        ("Case number:", data.saksnummer),
-        ("Received:", data.mottatt),
-        ("Employment status form ID:", data.id),
-    ))
+    #h2([#data.periode.fraOgMed - #data.periode.tilOgMed (week #(data.uke1)-#(data.uke2))])
     #block(below: space-26)[
         #brødtekst[
             Please contact Nav if you are not sure how to fill out the employment status form #navLenke("nav.no/kontaktoss")[(nav.no/kontaktoss)].
@@ -37,7 +39,7 @@
 ]
 
 #block(below: space-26)[
-    == Absence
+    #h2([Absence])
     #brødtekst[
         If you have not been sick or absent for other reasons this period, please answer "no". If you have been sick or absent for other reasons for an entire day or part of a day with employment scheme activities, please answer "yes". Then specify which days you were absent, as well as the type of absence.
     ]
@@ -45,7 +47,7 @@
     #brødtekst[No, I have not been sick or absent for other reasons]
     #brødtekst[Yes, I have been sick or absent for other reasons]
 
-    === How to specify your absence
+    #h3([How to specify your absence])
     #brødtekst[
         Some types of absence mean you are entitled to employment scheme benefits even if you did not participate. Please select the day(s) you were absent, as well as the type of absence.
     ]
@@ -85,7 +87,7 @@
 ]
 
 #block(below: space-26)[
-    == Pay
+    #h2([Pay])
     #brødtekst[
         If you are receiving pay (not employment scheme benefits) as part of your participation, answer "yes". Then specify which days you are receiving pay for.
     ]
@@ -96,7 +98,7 @@
 ]
 
 #block(below: space-26)[
-    == Attendance
+    #h2([Attendance])
     #brødtekst[
         Please select the days you participated in activities as agreed. You should select "participated" if the day was a public holiday and you did not participate because the employment scheme was closed.
     ]
@@ -104,14 +106,14 @@
 ]
 
 #block(below: space-26)[
-    == Summary
+    #h2([Summary])
     #brødtekst[
         Below is a summary of the information you reported on your employment status form this period. Please make sure it is correct before you submit the form. You can go back and correct any incorrect information.
     ]
 ]
 
 #block(below: space-26)[
-    === Employment status form days
+    #h3([Employment status form days])
     #meldekortTabell(data.dager, labels)
     #bekreftet[I confirm that the above information is correct.]
 ]
