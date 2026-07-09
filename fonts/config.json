@@ -1,14 +1,21 @@
 [
   {
-    "family": "Source Sans Pro",
-    "path": "SourceSansPro-Regular.ttf",
+    "family": "Source Sans 3",
+    "path": "SourceSans3-Regular.ttf",
     "weight": 400,
     "style": "NORMAL",
     "subset": false
   },
   {
-    "family": "Source Sans Pro",
-    "path": "SourceSansPro-Bold.ttf",
+    "family": "Source Sans 3",
+    "path": "SourceSans3-SemiBold.ttf",
+    "weight": 600,
+    "style": "NORMAL",
+    "subset": false
+  },
+  {
+    "family": "Source Sans 3",
+    "path": "SourceSans3-Bold.ttf",
     "weight": 700,
     "style": "NORMAL",
     "subset": false

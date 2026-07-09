@@ -1,0 +1,123 @@
+{
+  "id": "soknad_01JCQV1M22WR1D9VGC43MSRP0P",
+  "acr": "Level4",
+  "versjon": "4",
+  "personopplysninger": {
+    "ident": "12345678901",
+    "fornavn": "Grei",
+    "etternavn": "Asterisk"
+  },
+  "vedleggsnavn": [
+    "arbeidsavtale.pdf",
+    "legeerklaering.png"
+  ],
+  "innsendingTidspunkt": "2025-01-05T12:30:15",
+  "spørsmålsbesvarelser": {
+    "kvalifiseringsprogram": {
+      "deltar": true,
+      "periode": {
+        "fra": "2025-01-01",
+        "til": "2025-02-28"
+      }
+    },
+    "introduksjonsprogram": {
+      "deltar": false,
+      "periode": null
+    },
+    "institusjonsopphold": {
+      "borPåInstitusjon": true,
+      "periode": {
+        "fra": "2025-01-01",
+        "til": "2025-02-28"
+      }
+    },
+    "tiltak": {
+      "aktivitetId": "123",
+      "periode": {
+        "fra": "2025-01-01",
+        "til": "2025-03-31"
+      },
+      "arenaRegistrertPeriode": {
+        "fra": "2025-01-01",
+        "til": "2025-03-31"
+      },
+      "arrangør": "Testarrangør AS",
+      "type": "ARBTREN",
+      "typeNavn": "Arbeidstrening",
+      "gjennomforingId": null,
+      "visningsnavn": "Arbeidstrening hos Testarrangør AS"
+    },
+    "barnetillegg": {
+      "manueltRegistrerteBarnSøktBarnetilleggFor": [
+        {
+          "fornavn": "Anna",
+          "mellomnavn": "Petronella",
+          "etternavn": "Filledokke",
+          "fødselsdato": "2020-05-17",
+          "oppholdInnenforEøs": true
+        }
+      ],
+      "registrerteBarnSøktBarnetilleggFor": [
+        {
+          "fnr": "01012099999",
+          "fornavn": "Titten",
+          "mellomnavn": null,
+          "etternavn": "Tei",
+          "fødselsdato": "2018-03-01",
+          "oppholdInnenforEøs": false
+        },
+        {
+          "fnr": null,
+          "fornavn": null,
+          "mellomnavn": null,
+          "etternavn": null,
+          "fødselsdato": "2022-11-24",
+          "oppholdInnenforEøs": true
+        }
+      ]
+    },
+    "mottarAndreUtbetalinger": true,
+    "sykepenger": {
+      "mottar": true,
+      "periode": {
+        "fra": "2025-01-01",
+        "til": "2025-01-14"
+      }
+    },
+    "gjenlevendepensjon": {
+      "mottar": false,
+      "periode": null
+    },
+    "alderspensjon": {
+      "mottar": true,
+      "fraDato": "2024-12-01"
+    },
+    "supplerendestønadover67": {
+      "mottar": null,
+      "periode": null
+    },
+    "supplerendestønadflyktninger": {
+      "mottar": true,
+      "periode": {
+        "fra": "2025-01-01",
+        "til": "2025-02-28"
+      }
+    },
+    "pensjonsordning": {
+      "mottar": true,
+      "periode": {
+        "fra": "2025-01-01",
+        "til": "2025-03-31"
+      }
+    },
+    "etterlønn": {
+      "mottar": false
+    },
+    "jobbsjansen": {
+      "mottar": false,
+      "periode": null
+    },
+    "harBekreftetAlleOpplysninger": true,
+    "harBekreftetÅSvareSåGodtManKan": true
+  }
+}

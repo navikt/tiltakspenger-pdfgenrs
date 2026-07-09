@@ -7,7 +7,6 @@
   "saksnummer": "202501301001",
   "saksbehandlerNavn": "Saksbehandler Navn",
   "beslutterNavn": "Saksbehandler Navn",
-  "kontor": "Nav Tiltak Oslo",
   "harBarnetillegg": true,
   "satser": [
     {
@@ -51,14 +50,14 @@
     },
     {
       "antallBarnTekst": "to",
-      "periode":  {
+      "periode": {
         "fraOgMed": "1. april 2025",
         "tilOgMed": "30. april 2025"
       }
     },
     {
       "antallBarnTekst": "tre",
-      "periode":  {
+      "periode": {
         "fraOgMed": "2. mai 2025",
         "tilOgMed": "31. mai 2025"
       }

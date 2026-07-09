@@ -14,21 +14,17 @@ Fra repo-rota:
 
 Åpne deretter http://localhost:8087.
 
-Scriptet trenger bare Python 3 (kun stdlib, ingen avhengigheter). Det finner en
-kjørende pdfgenrs på port 8084 (metarepoets docker-compose) eller 8085 (dette
-repoets), og starter den selv med `docker compose up -d --build` om ingen av dem
-svarer.
+Scriptet trenger bare Python 3 (kun stdlib, ingen avhengigheter).
+Det finner en kjørende pdfgenrs på port 8084, og starter den selv med `docker compose up -d --build` om den ikke svarer.
 
 ## Overgangsfase: gammel pdfgen side om side
 
 Så lenge `../tiltakspenger-pdfgen` finnes (utsjekket meta-repo), vises PDF-en fra
 gammel pdfgen ved siden av den nye, generert fra de samme flettedataene, slik at
-det er lett å sammenlikne brevene. Scriptet finner en kjørende pdfgen på port 8081
-(metarepoets docker-compose) eller 8085, og prøver å starte den med
-`docker compose up -d --build` i pdfgen-repoet om den ikke svarer
-(tilsvarer `../tiltakspenger-pdfgen/run_development.sh`, bare detached).
+det er lett å sammenlikne brevene. Scriptet finner en kjørende pdfgen på port 8081, og prøver å starte den med `docker compose up -d --build` i pdfgen-repoet om den ikke svarer (tilsvarer `../tiltakspenger-pdfgen/run_development.sh`, bare detached).
 
 Brev som ikke finnes i gammel pdfgen merkes med «finnes ikke i pdfgen».
+Brev som ennå ikke er migrert til pdfgenrs vises i mallisten som «(kun i pdfgen)» — flettedataene hentes da fra pdfgen-repoet og kun det gamle panelet rendres.
 
 ### Slette legacy-støtten når pdfgen fjernes
 
@@ -47,8 +43,8 @@ grep -rn "LEGACY PDFGEN" devtools/brev-preview
 | Variabel            | Default                 | Beskrivelse                                        |
 |---------------------|-------------------------|----------------------------------------------------|
 | `DEVTOOLS_PORT`     | `8087`                  | Port for devtools-siden                            |
-| `PDFGEN_URL`        | prøver `8084` og `8085` | Adresse til pdfgenrs-serveren                      |
-| `LEGACY_PDFGEN_URL` | prøver `8081` og `8085` | Adresse til gammel pdfgen (LEGACY PDFGEN, se over) |
+| `PDFGEN_URL`        | `http://localhost:8084` | Adresse til pdfgenrs-serveren                      |
+| `LEGACY_PDFGEN_URL` | `http://localhost:8081` | Adresse til gammel pdfgen (LEGACY PDFGEN, se over) |
 
 ## Hvordan det henger sammen
 

@@ -10,22 +10,24 @@
 #let labels = meldekortLabelsEn
 
 #block(below: space-26, width: 100%)[
-    #senterlogo
+    #brevlogo
+
+    #personaliaInnsendt(
+        (
+            ("Norwegian national identification number:", data.fnr),
+            ("Case number:", data.saksnummer),
+            ("Employment status form ID:", data.id),
+        ),
+        [Received: #data.mottatt],
+    )
 
     = Employment status form for employment scheme benefits
 
-    == #data.periode.fraOgMed - #data.periode.tilOgMed (week #(data.uke1)-#(data.uke2))
-
-    #nøkkelinfo((
-        ("Norwegian national identification number:", data.fnr),
-        ("Case number:", data.saksnummer),
-        ("Received:", data.mottatt),
-        ("Employment status form ID:", data.id),
-    ))
+    #h2([#data.periode.fraOgMed - #data.periode.tilOgMed (week #(data.uke1)-#(data.uke2))])
 ]
 
 #block(below: space-26)[
-    == Edit employment status form
+    #h2([Edit employment status form])
 
     #shadowBox[
         #h3("When do I select \"received pay\"?")
@@ -65,14 +67,14 @@
 ]
 
 #block(below: space-26)[
-    == How to edit your employment status form
+    #h2([How to edit your employment status form])
     #brødtekst[
         Below, you can see what you previously registered in the employment status form. Update the selections on the days where the information is incorrect. After you submit the changes, they will be processed before any adjustments are made to your payment.
     ]
 ]
 
 #block(below: space-26)[
-    === Summary of edited employment status form
+    #h3([Summary of edited employment status form])
     #meldekortTabell(data.dager, labels)
     #bekreftet[I confirm that the above information is correct.]
 ]

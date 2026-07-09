@@ -1,39 +1,43 @@
 #import "/lib/styles.typ": *
 #import "/lib/typography.typ": *
+#import "/lib/spraak.typ": språkinnstillinger-nb
+#import "/lib/pensjonsbrev/content/table.typ": letter-table
 
 /*
-Komponenter for utbetalingsvedtak (V1) — én meldekortperiode per behandling,
-med støtte for korrigering (forrige/gjeldende-verdier og blyantikon).
+Komponenter for utbetalingsvedtak (V1) — én meldekortperiode per behandling, med støtte for korrigering (forrige/gjeldende-verdier og blyantikon).
 */
 
-// --a-surface-subtle, brukt for å markere endrede dager ved korrigering
-#let uv-endret-fill = rgb("#F2F3F5")
-#let uv-stroke = (bottom: 1pt + black)
 
-#let uv-forrige-og-gjeldende(felt, suffix) = [#felt.forrige#suffix #h(space-9) *#felt.gjeldende#suffix*]
+#let uv-forrige-og-gjeldende(felt, suffix) = [#felt.forrige#suffix #h(space-6) *#felt.gjeldende#suffix*]
 
-#let uv-dag-rad(dag, harBarnetillegg) = {
-    let endret = dag.harEndretSeg
-    let fyll = if endret { uv-endret-fill } else { none }
-    let c(body) = table.cell(fill: fyll, stroke: uv-stroke)[#body]
-    let ct(body) = table.cell(fill: fyll, stroke: uv-stroke)[#brødtekst[#body]]
+/*
+Celleinnhold for én dag.
+Tabellstilen (sebrastriper, header, linjer) kommer fra letter-table i lib/pensjonsbrev — endrede dager markeres derfor kun med blyantikon og fet korrigert verdi, ikke med egen bakgrunnsfarge.
+*/
+#let uv-dag-rad(dag, korrigering, harBarnetillegg) = {
+    let c(body) = body
+    let ct(body) = body
 
     let celler = ()
 
-    celler.push(c(
-        if dag.status.harEndretSeg [
-            #image("/resources/pencil.svg", height: space-11, alt: "Korrigert")
-        ] else []
-    ))
+    // Ikon- og Korrigert-kolonnene finnes kun i korrigeringstabeller
+    if korrigering {
+        celler.push(c(
+            if dag.status.harEndretSeg [
+                #image("/resources/pencil.svg", height: space-11, alt: "Korrigert")
+            ] else []
+        ))
+    }
 
     celler.push(ct[#dag.dato])
 
-    if dag.status.harEndretSeg {
+    // Forrige/gjeldende i hver sin kolonne finnes kun i korrigeringstabeller (som har Korrigert-kolonnen)
+    if korrigering and dag.status.harEndretSeg {
         celler.push(ct[#dag.status.forrige])
         celler.push(ct[*#dag.status.gjeldende*])
     } else {
         celler.push(ct[#dag.status.gjeldende])
-        celler.push(ct[])
+        if korrigering { celler.push(ct[]) }
     }
 
     if dag.beløp.harEndretSeg {
@@ -59,30 +63,27 @@ med støtte for korrigering (forrige/gjeldende-verdier og blyantikon).
     celler
 }
 
-#let uv-tabell(meldeperiode) = {
+#let uv-tabell(meldeperiode, korrigering) = {
     let harBarnetillegg = meldeperiode.harBarnetillegg
 
-    let cols = (auto, 1fr, auto, auto, auto)
+    // Alle kolonner sizes etter innhold; ikon- og Korrigert-kolonnene finnes kun ved korrigering
+    let cols = if korrigering { (auto, auto, auto, auto, auto) } else { (auto, auto, auto) }
     if harBarnetillegg { cols.push(auto) }
     cols.push(auto)
 
-    let hdr(body) = table.cell(stroke: uv-stroke)[#brødtekst[*#body*]]
-    let header = (
-        hdr[],
-        hdr[Dato],
-        hdr[Status],
-        hdr[],
-        hdr[Beløp],
-    )
-    if harBarnetillegg { header.push(hdr[Barnetillegg]) }
-    header.push(hdr[Prosent])
+    let header = if korrigering {
+        ([], [Dato], [Status], [Korrigert], [Beløp])
+    } else {
+        ([Dato], [Status], [Beløp])
+    }
+    if harBarnetillegg { header.push([Barnetillegg]) }
+    header.push([Prosent])
 
-    table(
+    letter-table(
+        språkinnstillinger-nb,
+        column-align: left + horizon,
         columns: cols,
-        align: left + horizon,
-        stroke: none,
-        inset: (x: space-6, y: space-9),
-        table.header(..header),
-        ..meldeperiode.dager.map(dag => uv-dag-rad(dag, harBarnetillegg)).flatten(),
+        ..header,
+        ..meldeperiode.dager.map(dag => uv-dag-rad(dag, korrigering, harBarnetillegg)).flatten(),
     )
 }
