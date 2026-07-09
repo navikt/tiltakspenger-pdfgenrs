@@ -14,7 +14,6 @@ docker run \
         -v $CURRENT_PATH/resources:/app/resources \
         -p 8084:8080 \
         -e DEV_MODE=true \
-        -e JDK_JAVA_OPTIONS \
         -it \
         --rm \
         "$CONTAINER_NAME"
