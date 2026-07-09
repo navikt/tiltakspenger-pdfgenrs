@@ -14,7 +14,4 @@ services:
       - ./resources:/app/resources
       - ./lib:/app/lib
     environment:
-      DISABLE_PDF_GET: "false"
       DEV_MODE: "true"
-      ENABLE_HTML_ENDPOINT: "true"
-      JDK_JAVA_OPTIONS: ${JDK_JAVA_OPTIONS}
