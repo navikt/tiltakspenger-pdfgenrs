@@ -18,7 +18,7 @@ jobs:
       IMAGE: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Build and push docker image
         # Versjonsoversikt (tag -> SHA): https://github.com/nais/docker-build-push/tags
