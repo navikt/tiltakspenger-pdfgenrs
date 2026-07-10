@@ -10,15 +10,17 @@
 
 = Vi har avvist klagen din på vedtak om tiltakspenger
 
-#(
-    data
-        .tilleggstekst
-        .map(item => [
-            #h2[#item.tittel]
-            #brødtekst[#item.tekst]
-        ])
-        .join()
-)
+#block(above: space-26, below: space-26)[
+    #(
+        data
+            .tilleggstekst
+            .map(item => [
+                #h2[#item.tittel]
+                #brødtekst[#item.tekst]
+            ])
+            .join()
+    )
+]
 
 #show: vedtaksinfo
 #show: signatur(data)
