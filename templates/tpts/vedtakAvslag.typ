@@ -12,11 +12,13 @@
 
 #avslagsgrunner(data)
 
-#if "tilleggstekst" in data and data.tilleggstekst != none [
-    #block(above: space-26, below: space-6)[
-        #h2("Slik har vi vurdert saken din")
+#block(above: space-26, below: space-26)[
+    #if "tilleggstekst" in data and data.tilleggstekst != none [
+        #block(above: space-26, below: space-6)[
+            #h2("Slik har vi vurdert saken din")
+        ]
+        #brødtekst[#data.tilleggstekst.split("\n").join(linebreak())]
     ]
-    #brødtekst[#data.tilleggstekst.split("\n").join(linebreak())]
 ]
 
 #show: vedtaksinfo

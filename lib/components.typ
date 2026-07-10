@@ -54,8 +54,8 @@ Labels er parametre siden innsendte dokumenter også finnes på engelsk.
             gutter: 0.5em,
             ..rader.map(((label, verdi)) => ([#label], [#verdi])).flatten(),
         ),
-        [#align(right + bottom)[#mottatt]],
     )
+    #align(right + bottom)[#mottatt]
 ]
 
 
