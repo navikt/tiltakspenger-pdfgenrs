@@ -4,6 +4,8 @@
 services:
   pdfgenrs:
     build: .
+    # Upstream-imaget publiseres kun for linux/amd64 (jf. navikt/pdfgenrs-test).
+    platform: linux/amd64
 
   test:
     build: test

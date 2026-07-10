@@ -1,5 +1,12 @@
 name: Build and deploy
 
+# Raske påfølgende pushes ga overlappende NAIS-rollouts i dev, der den første deployen
+# timet ut på readiness-proben mens den neste tok over (falsk rød kjøring 2026-07-10).
+# Kjør deployene serielt; ved flere ventende kjøringer vinner den nyeste.
+concurrency:
+  group: build-and-deploy
+  cancel-in-progress: false
+
 on:
   push:
     branches:
