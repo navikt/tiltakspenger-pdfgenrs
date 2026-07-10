@@ -18,7 +18,9 @@ Ikke redefiner størrelser eller avstander her — endringer skal skje oppstrøm
     #text(size: 9pt)[#content]
 ]
 
-#let navLenke(path, content) = link(path)[
+// Lenker må ha eksplisitt scheme for at PDF-visere skal åpne dem;
+// uten scheme blir URI-annotasjonen tolket som relativ («nav.no» åpner ingenting).
+#let navLenke(path, content) = link(if path.starts-with("http") { path } else { "https://" + path })[
     #set text(fill: rgb("#005bb6"))
     #content
 ]

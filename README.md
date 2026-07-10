@@ -18,12 +18,14 @@ Flagget `--build` brukes for å bygge imaget på nytt, som vil si at applikasjon
 
 Kjør `./run_tests.sh`.
 Alt kjører i Docker (en pdfgenrs-container og en testrunner-container), så det trengs ingen verktøy på maskinen utover Docker.
-Testene rendrer alle datasettene i `data/tpts/` og kanttilfellevariantene i `test/data/`, og sjekker at:
+Testene rendrer alle datasettene i `data/tpts/`, kanttilfellevariantene i `test/data/` og genererte avslagsvarianter (hver avslagsgrunn alene med/uten barnetillegg + alle i punktliste, se `AVSLAGSGRUNNER` i `test/run-tests.py`), og sjekker at:
 
 * alle maler kompilerer og svarer 200 med en gyldig PDF
 * alle sider er A4 og dokumentet har minst én side
 * utgående vedtaksbrev inneholder den felles halen og signaturen (fasit-tekster som «Du har rett til å klage» og «Nav Tiltak Oslo»)
 * varianter oppfører seg riktig (placeholder ved manglende saksbehandler, ingen signatur ved automatisk behandling, osv.)
+* alle URL-er i brevteksten er klikkbare lenker (`navLenke`) med gyldig `https://`-URI i PDF-annotasjonen
+* ingen tegn rendres oppå hverandre (fanger layoutkollisjoner, f.eks. dato plassert over annen tekst)
 
 Innholdskravene ligger i [test/run-tests.py](test/run-tests.py).
 Varianter i `test/data/` følger navnekonvensjonen `<mal>--<variant>.json` og rendres mot malen før `--`.

@@ -1,0 +1,13 @@
+# Kjører brevtestene på pull requests, slik at PR-er får en sjekk før merge.
+# Samme reusable workflow (.test.yml) som deploy-workflowene bruker som deploy-gate.
+name: Test brevmaler (PR)
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    name: Test brevmaler
+    uses: ./.github/workflows/.test.yml
+    permissions:
+      contents: read
