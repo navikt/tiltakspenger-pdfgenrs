@@ -1,0 +1,25 @@
+# Kjører brevtestene (test/run-tests.py) i Docker, samme oppsett som ./run_tests.sh lokalt.
+# Brukes som deploy-gate fra deploy-dev.yml og deploy-prod.yml.
+name: Test brevmaler
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    name: Test brevmaler
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Kjør brevtestene
+        run: ./run_tests.sh
+      - name: Last opp debugfiler
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-debug
+          path: build/test/
+          if-no-files-found: ignore

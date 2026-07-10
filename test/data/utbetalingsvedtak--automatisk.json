@@ -6,12 +6,12 @@
     "tom": "19. februar 2023"
   },
   "saksbehandler": {
-    "type": "MANUELL",
-    "navn": "Ingrid Bakke"
+    "type": "AUTOMATISK",
+    "navn": null
   },
   "beslutter": {
-    "type": "MANUELL",
-    "navn": "Martin Holm"
+    "type": "AUTOMATISK",
+    "navn": null
   },
   "tiltak": [
     {

@@ -1,12 +1,12 @@
 {
   "personalia": {
     "ident": "25508631114",
-    "fornavn": "William",
-    "etternavn": "Edvardsen"
+    "fornavn": "Emil",
+    "etternavn": "Aremark"
   },
-  "saksnummer": "202602041001",
-  "saksbehandlerNavn": "Saksbehandler Saksbehandleren",
-  "beslutterNavn": "Beslutter Beslutteren",
+  "saksnummer": "202501011001",
+  "saksbehandlerNavn": "Ingrid Bakke",
+  "beslutterNavn": "Martin Holm",
   "datoForUtsending": "13. februar 2026",
   "tilleggstekst": "Vi har vurdert saken din på nytt.",
   "forhandsvisning": true,
@@ -15,7 +15,7 @@
     "tilOgMed": "31. januar 2026"
   },
   "valgtHjemmelTekst": [
-    "du ikke lenger deltar på arbeidsmarkedstiltak. Du må være deltaker i et arbeidsmarkedstiltak for å ha rett til å få tiltakspenger. Dette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften § 2."
+    "Vilkåret om deltakelse i arbeidsmarkedstiltak er ikke oppfylt i denne perioden.\n\nDu må være deltaker i et arbeidsmarkedstiltak for å ha rett til å få tiltakspenger og barnetillegg.\n\nDette kommer frem av arbeidsmarkedsloven § 13, tiltakspengeforskriften § 2."
   ],
   "barnetillegg": true
 }

@@ -14,6 +14,22 @@ Flagget `--build` brukes for å bygge imaget på nytt, som vil si at applikasjon
 
 * Pdfgenrs er også en del av scriptet `up.sh` som ligger i metarepo og starter opp ved kjøring av det.
 
+## Teste brevmalene
+
+Kjør `./run_tests.sh`.
+Alt kjører i Docker (en pdfgenrs-container og en testrunner-container), så det trengs ingen verktøy på maskinen utover Docker.
+Testene rendrer alle datasettene i `data/tpts/` og kanttilfellevariantene i `test/data/`, og sjekker at:
+
+* alle maler kompilerer og svarer 200 med en gyldig PDF
+* alle sider er A4 og dokumentet har minst én side
+* utgående vedtaksbrev inneholder den felles halen og signaturen (fasit-tekster som «Du har rett til å klage» og «Nav Tiltak Oslo»)
+* varianter oppfører seg riktig (placeholder ved manglende saksbehandler, ingen signatur ved automatisk behandling, osv.)
+
+Innholdskravene ligger i [test/run-tests.py](test/run-tests.py).
+Varianter i `test/data/` følger navnekonvensjonen `<mal>--<variant>.json` og rendres mot malen før `--`.
+Ved feil legges responsene i `build/test/` for feilsøking.
+Testene kjøres også i CI (`.github/workflows/.test.yml`) og stopper deploy hvis de feiler.
+
 ## Utviklerverktøy: forhåndsvise brev i nettleseren
 
 Kjør `./run_devtools.sh` og åpne http://localhost:8087.

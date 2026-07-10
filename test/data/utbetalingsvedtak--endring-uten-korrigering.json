@@ -31,7 +31,7 @@
   "fødselsnummer": "25508631114",
   "totaltBelop": 4508,
   "forhandsvisning": true,
-  "korrigering": true,
+  "korrigering": false,
   "brevTekst": "Bruker hadde registrert at han var syk, men deltok på tiltak disse dagene.",
   "sammenligningAvBeregninger": {
     "meldeperioder": [

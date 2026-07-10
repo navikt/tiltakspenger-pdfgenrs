@@ -1,12 +1,12 @@
 {
   "personalia": {
-    "ident": "12345678901",
-    "fornavn": "Planet",
-    "etternavn": "Planetus"
+    "ident": "25508631114",
+    "fornavn": "Emil",
+    "etternavn": "Aremark"
   },
-  "saksnummer": "123456789",
-  "saksbehandlerNavn": "Kåre Kropp",
-  "beslutterNavn": "Pelle Parafin",
+  "saksnummer": "202501011001",
+  "saksbehandlerNavn": "Ingrid Bakke",
+  "beslutterNavn": "Martin Holm",
   "tilleggstekst": "Hei hei",
   "avslagsgrunnerSize": 2,
   "avslagsgrunner": [

@@ -1,0 +1,19 @@
+# Testoppsett: bygger pdfgenrs-imaget og kjører test/run-tests.py mot det i en egen container.
+# Ingen host-porter, så det kolliderer ikke med et kjørende utviklingsmiljø.
+# Kjøres via ./run_tests.sh.
+services:
+  pdfgenrs:
+    build: .
+
+  test:
+    build: test
+    depends_on:
+      - pdfgenrs
+    environment:
+      PDFGENRS_URL: http://pdfgenrs:8080
+    volumes:
+      - ./data:/repo/data:ro
+      - ./templates:/repo/templates:ro
+      - ./test:/repo/test:ro
+      - ./build:/repo/build
+    command: python /repo/test/run-tests.py

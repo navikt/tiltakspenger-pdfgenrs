@@ -55,6 +55,17 @@ Typografi, avstander, tabeller og sideoppsett kommer fra et delt Typst-oppsett s
 - **Migreringsissue:** <https://github.com/navikt/tiltakspenger-pdfgenrs/issues/8> — status, sjekkliste og fremgangsmåte for 1-til-1-migreringen fra gammel pdfgen.
 - **Gammel pdfgen (fasit under migreringen):** [`../tiltakspenger-pdfgen`](../tiltakspenger-pdfgen) — `.hbs`-malene der er fasit for innhold og struktur til de er verifisert og repoet slettes.
 
+## Teste brevmalene
+
+Kjør `./run_tests.sh` etter malendringer — alt kjører i Docker og krever ingen verktøy på maskinen.
+Testene rendrer alle datasett i `data/tpts/` og kanttilfellevariantene i `test/data/`, og asserterer HTTP 200, gyldig PDF, A4, felles hale og signatur i utgående brev (se `INNHOLDSKRAV` i `test/run-tests.py`).
+Nye brev og nye kanttilfeller skal ha testdata: standarddatasett i `data/tpts/<mal>.json`, varianter i `test/data/<mal>--<variant>.json`.
+Testdataene bruker en fast, virkelighetsnær testfamilie — ingen tulleord/tullenavn, og syntetiske identer (+40 på måned) så ingen privatpersoner kan treffes.
+Kanoniske verdier (gjelder også `tiltakspenger-pdfgen/data/tpts/`): bruker Emil Aremark (fnr `25508631114`), barn Nora/Jakob/Oskar Johan Aremark, saksbehandler Ingrid Bakke, beslutter Martin Holm, saksnummer `202501011001`, tiltaksarrangør Aremark Snekkerverksted AS.
+Tekstene i `valgtHjemmelTekst` (stans/opphør) skal speile fasit-testene i `tiltakspenger-saksbehandling-api` (`BrevRevurderingStansDTOTest`/`BrevOmgjøringOpphørDTOTest`) — endres brevtekstene der, oppdater testdataene her.
+Endrer du felleskomponentene (signatur, vedtaksinfo), oppdater innholdskravene i samme endring.
+Testene er deploy-gate i CI (`.github/workflows/.test.yml`).
+
 ## Verifisere brev visuelt mot gammel pdfgen (for agenter)
 
 Slik sammenlignes en mal 1-til-1 mot gammel pdfgen (brukt ved migreringsverifisering av `meldekortvedtak`):

@@ -6,7 +6,7 @@
   },
   "saksnummer": "202501011001",
   "saksbehandlerNavn": "Ingrid Bakke",
-  "beslutterNavn": "Martin Holm",
+  "beslutterNavn": "",
   "harBarnetillegg": true,
   "satser": [
     {
@@ -20,7 +20,7 @@
       "barnetillegg": 55
     }
   ],
-  "tilleggstekst": "Dette er en vurdering",
+  "tilleggstekst": "Dette er en vurdering\n\n Dette er en ny linje med mer informasjon.\n\n Dette er enda en ny linje med mer informasjon.",
   "forhandsvisning": true,
   "datoForUtsending": "31. januar 2025",
   "innvilgelsesperioder": {

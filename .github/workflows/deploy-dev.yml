@@ -4,6 +4,12 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    name: Test brevmaler
+    uses: ./.github/workflows/.test.yml
+    permissions:
+      contents: read
+
   build:
     name: Build docker image
     uses: ./.github/workflows/.build-image.yml
@@ -13,7 +19,7 @@ jobs:
 
   deploy:
     name: Deploy to NAIS (dev)
-    needs: build
+    needs: [build, test]
     uses: ./.github/workflows/.deploy-to-nais.yml
     permissions:
       contents: read

@@ -3,9 +3,9 @@
   "acr": "Level4",
   "versjon": "4",
   "personopplysninger": {
-    "ident": "12345678901",
-    "fornavn": "Grei",
-    "etternavn": "Asterisk"
+    "ident": "25508631114",
+    "fornavn": "Emil",
+    "etternavn": "Aremark"
   },
   "vedleggsnavn": [
     "arbeidsavtale.pdf",
@@ -41,36 +41,36 @@
         "fra": "2025-01-01",
         "til": "2025-03-31"
       },
-      "arrangør": "Testarrangør AS",
+      "arrangør": "Aremark Snekkerverksted AS",
       "type": "ARBTREN",
       "typeNavn": "Arbeidstrening",
       "gjennomforingId": null,
-      "visningsnavn": "Arbeidstrening hos Testarrangør AS"
+      "visningsnavn": "Arbeidstrening hos Aremark Snekkerverksted AS"
     },
     "barnetillegg": {
       "manueltRegistrerteBarnSøktBarnetilleggFor": [
         {
-          "fornavn": "Anna",
-          "mellomnavn": "Petronella",
-          "etternavn": "Filledokke",
+          "fornavn": "Oskar",
+          "mellomnavn": "Johan",
+          "etternavn": "Aremark",
           "fødselsdato": "2020-05-17",
           "oppholdInnenforEøs": true
         }
       ],
       "registrerteBarnSøktBarnetilleggFor": [
         {
-          "fnr": "01012099999",
-          "fornavn": "Titten",
+          "fnr": "01431812345",
+          "fornavn": "Nora",
           "mellomnavn": null,
-          "etternavn": "Tei",
+          "etternavn": "Aremark",
           "fødselsdato": "2018-03-01",
           "oppholdInnenforEøs": false
         },
         {
           "fnr": null,
-          "fornavn": null,
+          "fornavn": "Jakob",
           "mellomnavn": null,
-          "etternavn": null,
+          "etternavn": "Aremark",
           "fødselsdato": "2022-11-24",
           "oppholdInnenforEøs": true
         }
