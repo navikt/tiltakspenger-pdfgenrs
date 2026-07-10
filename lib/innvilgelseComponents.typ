@@ -6,7 +6,7 @@
 #let meldekortinfo = body => [
     #block(below: space-26)[
         #h2("Du må sende meldekort")
-        #brødtekst("Du må sende inn meldekort hver 14. dag. Logg inn på nav.no for å se når du skal sende neste meldekort og hvilken periode meldekortet gjelder for. Du er på en ny meldekortløsning for tiltakspenger. Du finner informasjonen du trenger når du åpner det nye meldekortet. Informasjonen om utfylling av meldekort på nav.no gjelder for den gamle løsningen og passer derfor ikke helt for ditt meldekort.")
+        #brødtekst[Du må sende inn meldekort hver 14. dag. Logg inn på #navLenke("nav.no")[nav.no] for å se når du skal sende neste meldekort og hvilken periode meldekortet gjelder for. Du er på en ny meldekortløsning for tiltakspenger. Du finner informasjonen du trenger når du åpner det nye meldekortet. Informasjonen om utfylling av meldekort på #navLenke("nav.no")[nav.no] gjelder for den gamle løsningen og passer derfor ikke helt for ditt meldekort.]
 
         #brødtekst("På meldekortet må du gi oss opplysninger om hvilke dager du har deltatt i tiltaket som avtalt og hvilke avtalte tiltaksdager du har hatt fravær eller mottatt lønn. Dersom du har hatt fravær må du i tillegg oppgi grunnen til at du ikke deltok i tiltaket som avtalt. Nav trenger dette for å beregne hvor mye du skal ha i tiltakspenger.")
 
@@ -19,13 +19,13 @@
 
     #block(below: space-26)[
         #h2("Når får du pengene?")
-        #brødtekst("Når du har sendt meldekortet på nav.no, blir pengene vanligvis utbetalt til kontoen din etter to til tre virkedager. Hvis du sender meldekort i posten, kan det ta noe lengre tid. Dersom Nav trenger mer informasjon fra deg, for eksempel dokumentasjon ved sykefravær, kan det ta noe lenger tid før pengene blir utbetalt. Du skal ikke betale skatt av tiltakspengene.")
+        #brødtekst[Når du har sendt meldekortet på #navLenke("nav.no")[nav.no,] blir pengene vanligvis utbetalt til kontoen din etter to til tre virkedager. Hvis du sender meldekort i posten, kan det ta noe lengre tid. Dersom Nav trenger mer informasjon fra deg, for eksempel dokumentasjon ved sykefravær, kan det ta noe lenger tid før pengene blir utbetalt. Du skal ikke betale skatt av tiltakspengene.]
 
-        #brødtekst("Du kan se alle utbetalingene dine på nav.no/minside. Der kan du også endre kontonummer. Hvis du har reservert deg mot digital kommunikasjon fra det offentlige, får du utbetalingsmelding i posten.")
+        #brødtekst[Du kan se alle utbetalingene dine på #navLenke("nav.no/minside")[nav.no/minside.] Der kan du også endre kontonummer. Hvis du har reservert deg mot digital kommunikasjon fra det offentlige, får du utbetalingsmelding i posten.]
 
         #brødtekst("Du kan også melde fra om endring i kontonummer via post.")
 
-        #brødtekst("Les mer om utbetaling på nav.no/utbetalinger.")
+        #brødtekst[Les mer om utbetaling på #navLenke("nav.no/utbetalinger")[nav.no/utbetalinger.]]
     ]
 
     #block(below: space-26)[
@@ -45,7 +45,7 @@
 
         #brødtekst("Hvis du har fått utbetalt for mye fordi du ikke har meldt fra om endringer i din livssituasjon, må du vanligvis betale tilbake pengene. Det er derfor viktig at du selv følger med på utbetalinger fra Nav og melder fra om eventuelle feil.")
 
-        #brødtekst("Hvis du flytter og endrer adresse kan du endre dette på skatteetaten.no/person/folkeregister.")
+        #brødtekst[Hvis du flytter og endrer adresse kan du endre dette på #navLenke("skatteetaten.no/person/folkeregister")[skatteetaten.no/person/folkeregister.]]
     ]
     #body
 ]

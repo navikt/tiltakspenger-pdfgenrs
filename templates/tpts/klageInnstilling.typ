@@ -34,27 +34,27 @@
 
 
     #brødtekst[
-        Du finner oversikt over saksbehandlingstidene på nav.no/saksbehandlingstider. Du får beskjed fra Nav Klageinstans, dersom de trenger mer tid.
+        Du finner oversikt over saksbehandlingstidene på #navLenke("nav.no/saksbehandlingstider")[nav.no/saksbehandlingstider.] Du får beskjed fra Nav Klageinstans, dersom de trenger mer tid.
     ]
 
 
     #brødtekst[
-        Du kan sende merknader og dokumentasjon til Nav Klageinstans. Du kan logge deg inn på nav.no/kontakt og sende skriftlig melding der. Hvis du ønsker å ettersende dokumentasjon, kan du gå til nav.no/klage og trykke på "Ettersend dokumentasjon" for det saken gjelder.
+        Du kan sende merknader og dokumentasjon til Nav Klageinstans. Du kan logge deg inn på #navLenke("nav.no/kontakt")[nav.no/kontakt] og sende skriftlig melding der. Hvis du ønsker å ettersende dokumentasjon, kan du gå til #navLenke("nav.no/klage")[nav.no/klage] og trykke på "Ettersend dokumentasjon" for det saken gjelder.
     ]
 ]
 
 #block(below: space-32)[
     #h2([Har du spørsmål?])
     #brødtekst[
-        Du finner mer informasjon på #navLenke("nav.no")[nav.no]
+        Du finner mer informasjon på #navLenke("nav.no")[nav.no.]
     ]
 
     #brødtekst[
-        På nav.no/kontakt kan du chatte eller skrive til oss.
+        På #navLenke("nav.no/kontakt")[nav.no/kontakt] kan du chatte eller skrive til oss.
     ]
 
     #brødtekst[
-        Hvis du ikke finner svar på nav.no, kan du ringe oss på telefon 55 55 33 33, hverdager 09.00-15.00.
+        Hvis du ikke finner svar på #navLenke("nav.no")[nav.no,] kan du ringe oss på telefon 55 55 33 33, hverdager 09.00-15.00.
     ]
 ]
 

@@ -27,7 +27,7 @@
 
     #block(below: space-26)[
         #brødtekst[
-            Ta kontakt med Nav hvis du er usikker på hvordan du skal fylle inn meldekortet #navLenke("nav.no/kontaktoss")[(nav.no/kontaktoss)].
+            Ta kontakt med Nav hvis du er usikker på hvordan du skal fylle inn meldekortet #navLenke("nav.no/kontaktoss")[(nav.no/kontaktoss).]
         ]
         #brødtekst[
             For å få utbetalt tiltakspenger må du som deltar på tiltak hos Nav, sende meldekort hver 14. dag. Vi bruker informasjonen til å regne ut hvor mye du skal ha utbetalt i tiltakspenger. Utbetalingen skjer normalt automatisk.

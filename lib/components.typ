@@ -66,7 +66,7 @@ Tekstene er fasit fra pdfgen (partials/klagerett.hbs, base.hbs og partials/spors
 #let vedtaksinfo = body => [
     #block(below: space-26)[
         #h2("Du har rett til å klage")
-        #brødtekst("Hvis du mener vedtaket er feil, kan du klage innen 6 uker fra den datoen vedtaket har kommet fram til deg. Dette følger av arbeidsmarkedsloven § 17. Du finner skjema og informasjon på nav.no/klage.")
+        #brødtekst[Hvis du mener vedtaket er feil, kan du klage innen 6 uker fra den datoen vedtaket har kommet fram til deg. Dette følger av arbeidsmarkedsloven § 17. Du finner skjema og informasjon på #navLenke("nav.no/klage")[nav.no/klage.]]
 
         #brødtekst("Nav kan veilede deg på telefon om hvordan du sender en klage. Nav-kontoret ditt kan også hjelpe deg med å skrive en klage.")
 
@@ -76,17 +76,17 @@ Tekstene er fasit fra pdfgen (partials/klagerett.hbs, base.hbs og partials/spors
 
         #brødtekst("Hvis du sender klage i posten, må du signere klagen.")
 
-        #brødtekst("Mer informasjon om klagerettigheter finner du på nav.no/klagerettigheter.")
+        #brødtekst[Mer informasjon om klagerettigheter finner du på #navLenke("nav.no/klagerettigheter")[nav.no/klagerettigheter.]]
     ]
 
     #block(below: space-26)[
         #h2("Du har rett til innsyn")
-        #brødtekst("Du har rett til å se dokumentene i saken din. Dette følger av forvaltningsloven § 18. Du kan kontakte saksbehandler på nav.no eller på telefon om du vil se dokumentene i saken din. Du kan lese mer om innsynsretten på nav.no/personvernerklaering.")
+        #brødtekst[Du har rett til å se dokumentene i saken din. Dette følger av forvaltningsloven § 18. Du kan kontakte saksbehandler på #navLenke("nav.no")[nav.no] eller på telefon om du vil se dokumentene i saken din. Du kan lese mer om innsynsretten på #navLenke("nav.no/personvernerklaering")[nav.no/personvernerklaering.]]
     ]
 
     #block(below: space-26)[
         #h2("Du har rettigheter knyttet til personopplysningene dine")
-        #brødtekst("Du finner informasjon om hvordan Nav behandler personopplysningene dine, og hvilke rettigheter du har, på nav.no/personvernerklaering#hvordan.")
+        #brødtekst[Du finner informasjon om hvordan Nav behandler personopplysningene dine, og hvilke rettigheter du har, på #navLenke("nav.no/personvernerklaering#hvordan")[nav.no/personvernerklaering\#hvordan.]]
     ]
 
     #block(below: space-26)[
@@ -96,7 +96,7 @@ Tekstene er fasit fra pdfgen (partials/klagerett.hbs, base.hbs og partials/spors
 
     #block(below: space-32)[
         #h2("Har du spørsmål?")
-        #brødtekst("Du finner mer informasjon om tiltakspenger på nav.no/tiltakspenger. På nav.no/kontakt kan du chatte eller skrive til oss. Hvis du ikke finner svar på nav.no kan du ringe oss på telefon 55 55 33 33, hverdager 09.00-15.00.")
+        #brødtekst[Du finner mer informasjon om tiltakspenger på #navLenke("nav.no/tiltakspenger")[nav.no/tiltakspenger.] På #navLenke("nav.no/kontakt")[nav.no/kontakt] kan du chatte eller skrive til oss. Hvis du ikke finner svar på #navLenke("nav.no")[nav.no] kan du ringe oss på telefon 55 55 33 33, hverdager 09.00-15.00.]
     ]
     #body
 ]
