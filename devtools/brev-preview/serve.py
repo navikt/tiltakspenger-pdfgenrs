@@ -3,6 +3,7 @@
 
 Serverer devtools/brev-preview-siden og proxyer PDF-generering til pdfgenrs-serveren
 (som verken sender CORS-headere eller kan serve statiske filer selv).
+Versjonssammenligning (pdfgenrs mot pdfgenrs på en annen git-ref) ligger i versions.py.
 Kun Python-stdlib, ingen avhengigheter.
 
 Bruk:
@@ -16,6 +17,7 @@ Miljøvariabler:
 import json
 import os
 import re
+import signal
 import subprocess
 import sys
 import time
@@ -24,7 +26,9 @@ import urllib.parse
 import urllib.request
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
-REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import versions
+from common import REPO_ROOT, is_alive
+
 PORT = int(os.environ.get("DEVTOOLS_PORT", "8087"))
 PDFGEN_CANDIDATES = (
     [os.environ["PDFGEN_URL"]]
@@ -37,21 +41,36 @@ PDFGEN_CANDIDATES = (
 pdfgen_url = None
 
 
-def is_alive(base_url):
-    try:
-        urllib.request.urlopen(base_url, timeout=1)
-        return True
-    except urllib.error.HTTPError:
-        return True  # serveren svarte; statuskode er uinteressant
-    except OSError:
-        return False
-
-
 def find_pdfgen():
     global pdfgen_url
     if pdfgen_url is None:
         pdfgen_url = next((url for url in PDFGEN_CANDIDATES if is_alive(url)), None)
     return pdfgen_url
+
+
+def serves_working_tree(url):
+    """Sjekker at containeren bak url-en faktisk volum-monterer dette repoet.
+
+    Metarepoets compose kjører pdfgenrs på samme port, men UTEN volumer - da er
+    malene bakt inn i imaget ved build, og forhåndsvisningen ville stille vist
+    en gammel versjon i stedet for arbeidskatalogen.
+    Returnerer None når det ikke lar seg avgjøre (ikke en lokal container e.l.).
+    """
+    port = urllib.parse.urlparse(url).port
+    ps = subprocess.run(
+        ["docker", "ps", "--filter", f"publish={port}", "--format", "{{.Names}}"],
+        capture_output=True, text=True,
+    )
+    names = ps.stdout.split()
+    if ps.returncode != 0 or not names:
+        return None
+    mounts = subprocess.run(
+        ["docker", "inspect", names[0], "--format", "{{range .Mounts}}{{.Source}}\n{{end}}"],
+        capture_output=True, text=True,
+    )
+    if mounts.returncode != 0:
+        return None
+    return any(line.startswith(REPO_ROOT) for line in mounts.stdout.splitlines())
 
 
 # --- LEGACY PDFGEN (overgangsfase) -----------------------------------------
@@ -127,6 +146,8 @@ class Handler(SimpleHTTPRequestHandler):
             data_dir = os.path.join(REPO_ROOT, "data", "tpts")
             names = sorted(f[:-5] for f in os.listdir(data_dir) if f.endswith(".json"))
             self._respond(200, "application/json", json.dumps(names).encode())
+        elif self.path == "/api/refs":
+            self._respond(200, "application/json", json.dumps(versions.list_refs()).encode())
         elif self.path == "/api/legacy/templates":  # LEGACY PDFGEN: slett denne elif-blokken
             self._respond(200, "application/json", json.dumps(legacy_templates()).encode())
         elif self.path.startswith("/api/legacy/data/"):  # LEGACY PDFGEN: slett denne elif-blokken
@@ -143,10 +164,25 @@ class Handler(SimpleHTTPRequestHandler):
             super().do_GET()
 
     def do_POST(self):
+        ref_proxy = re.fullmatch(r"/api/ref/([0-9a-f]{40})(/genpdf/.*)", self.path)
         if self.path.startswith("/api/legacy/genpdf/"):  # LEGACY PDFGEN: slett denne if-blokken
             self._proxy_genpdf(find_legacy(), self.path[len("/api/legacy"):], "gammel pdfgen")
         elif self.path.startswith("/api/genpdf/"):
             self._proxy_genpdf(find_pdfgen(), self.path[len("/api"):], "pdfgenrs")
+        elif self.path == "/api/ref/prepare":
+            body = self.rfile.read(int(self.headers.get("Content-Length", 0)))
+            try:
+                sha = versions.prepare_ref(json.loads(body)["ref"])
+                self._respond(200, "application/json", json.dumps({"sha": sha}).encode())
+            except versions.RefError as e:
+                self._respond(400, "text/plain; charset=utf-8", str(e).encode())
+        elif ref_proxy:
+            sha, genpdf_path = ref_proxy.groups()
+            target = versions.instance_url(sha)
+            if target is None:
+                self._respond(502, "text/plain; charset=utf-8", "Ukjent versjons-instans - last siden på nytt.".encode())
+            else:
+                self._proxy_genpdf(target, genpdf_path, f"pdfgenrs @ {sha[:12]}")
         else:
             self.send_error(404)
 
@@ -186,8 +222,23 @@ class Handler(SimpleHTTPRequestHandler):
 
 
 def main():
+    # sys.exit -> atexit -> versions.py rydder containere/worktrees, også ved `kill`
+    signal.signal(signal.SIGTERM, lambda *_: sys.exit(0))
+    global pdfgen_url
     if find_pdfgen() is None:
         start_pdfgen()
+    # Ikke stol blindt på containeren vi fant: uten repo-volumer (metarepoets
+    # compose) viser den en innbakt gammel versjon, ikke arbeidskatalogen.
+    # PDFGEN_URL satt eksplisitt betyr at brukeren vet hva de gjør.
+    if pdfgen_url and not os.environ.get("PDFGEN_URL") and serves_working_tree(pdfgen_url) is False:
+        print(f"ADVARSEL: containeren på {pdfgen_url} monterer ikke dette repoet")
+        print("(sannsynligvis metarepoets compose, som baker malene inn i imaget ved build).")
+        try:
+            pdfgen_url = versions.worktree_url()
+            print("Starter derfor en egen pdfgenrs for arbeidskatalogen.")
+        except versions.RefError as e:
+            print(f"Klarte ikke å starte egen pdfgenrs for arbeidskatalogen ({e}) - "
+                  f"forhåndsvisningen kan vise en utdatert versjon!")
     if pdfgen_url:
         print(f"pdfgenrs: {pdfgen_url}")
     else:
@@ -197,6 +248,8 @@ def main():
         start_legacy()
     print(f"pdfgen (gammel): {legacy_url or 'kjører ikke'}")
     print(f"Devtools:  http://localhost:{PORT}")
+    print("Containere devtoolsen starter heter pdfgenrs-devtools-* (porter "
+          f"{versions.CONTAINER_PORTS.start}-{versions.CONTAINER_PORTS.stop - 1}) og fjernes ved avslutning.")
     try:
         ThreadingHTTPServer(("127.0.0.1", PORT), Handler).serve_forever()
     except KeyboardInterrupt:

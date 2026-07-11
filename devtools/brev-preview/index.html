@@ -19,6 +19,17 @@
     <button type="button" id="reset">Tilbakestill</button>
     <button type="button" id="generate">Generer PDF</button>
     <span id="status"></span>
+    <!-- VERSJONSSAMMENLIGNING: pdfgenrs mot pdfgenrs på en annen git-ref -->
+    <span id="compare-rs-nav" hidden>
+      <label><input type="checkbox" id="compare-rs"> Sammenlign versjoner</label>
+      <span id="compare-rs-controls" hidden>
+        <select id="ref-a-select" title="Arbeidskatalogen, en gren eller en commit"></select>
+        <input id="ref-a-input" hidden placeholder="gren/tagg/commit-sha" title="Git-ref; tøm feltet for å gå tilbake til listen">
+        mot
+        <select id="ref-b-select" title="Arbeidskatalogen, en gren eller en commit"></select>
+        <input id="ref-b-input" hidden placeholder="gren/tagg/commit-sha" title="Git-ref; tøm feltet for å gå tilbake til listen">
+      </span>
+    </span>
   </header>
   <main>
     <section id="editor">
@@ -27,12 +38,27 @@
       <p id="error" hidden></p>
     </section>
     <section id="preview">
-      <iframe id="pdf" title="PDF-forhåndsvisning (pdfgenrs)"></iframe>
-      <!-- LEGACY PDFGEN (overgangsfase): slett iframen under når pdfgen fjernes -->
-      <iframe id="pdf-legacy" title="PDF-forhåndsvisning (gammel pdfgen)" hidden></iframe>
+      <figure>
+        <figcaption id="caption-a" hidden><span class="label"></span><span class="err"></span></figcaption>
+        <iframe id="pdf" title="PDF-forhåndsvisning (pdfgenrs)"></iframe>
+      </figure>
+      <!-- VERSJONSSAMMENLIGNING: pdfgenrs på valgt git-ref -->
+      <figure id="figure-b" hidden>
+        <figcaption id="caption-b"><span class="label"></span><span class="err"></span></figcaption>
+        <iframe id="pdf-b" title="PDF-forhåndsvisning (pdfgenrs på valgt ref)"></iframe>
+      </figure>
+      <!-- LEGACY PDFGEN (overgangsfase): slett figuren under når pdfgen fjernes -->
+      <figure id="figure-legacy" hidden>
+        <figcaption><span class="label">pdfgen (gammel)</span><span class="err"></span></figcaption>
+        <iframe id="pdf-legacy" title="PDF-forhåndsvisning (gammel pdfgen)"></iframe>
+      </figure>
     </section>
   </main>
+  <script src="panel.js"></script>
+  <script src="form.js"></script>
   <script src="app.js"></script>
+  <!-- VERSJONSSAMMENLIGNING: pdfgenrs mot pdfgenrs -->
+  <script src="compare.js"></script>
   <!-- LEGACY PDFGEN (overgangsfase): slett script-taggen under når pdfgen fjernes -->
   <script src="legacy.js"></script>
 </body>

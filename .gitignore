@@ -99,3 +99,6 @@ gradle-app.setting
 # Ignore Gradle build output directory
 build
 /.env
+
+# Python-bytekode fra devtools/brev-preview
+__pycache__/

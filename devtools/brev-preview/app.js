@@ -1,118 +1,50 @@
+// Kjernen: flettedata-state, mal-valg, skjema/JSON-redigering og hovedpanelet.
+// Ekstra paneler (compare.js, legacy.js) kobler seg på via window.brevPreview.
 const $ = (id) => document.getElementById(id);
 
 let defaults = null; // original flettedata fra data/tpts
 let current = null; // gjeldende (redigerte) flettedata
 let mode = "form";
-let pdfObjectUrl = null;
 let generateTimer = null;
 let generateSeq = 0;
-
-// LEGACY PDFGEN (overgangsfase): leses av legacy.js, slett når pdfgen fjernes
-window.brevPreview = { get current() { return current; } };
+let lastGenerate = null; // {template, body, legacyOnly} - så paneler som kobler seg på sent får siste generering
+const generateHooks = []; // kalles med (template, body, {legacyOnly}) ved hver generering
+let mainTarget = null; // compare.js overstyrer hvor hovedpanelet genereres (async (template) -> url)
 
 // LEGACY PDFGEN (overgangsfase): maler som ikke er migrert til pdfgenrs ennå,
 // vises med flettedata fra pdfgen-repoet. Slett når pdfgen fjernes.
 let legacyOnly = new Set();
 
-function el(tag, className, text) {
-  const node = document.createElement(tag);
-  if (className) node.className = className;
-  if (text !== undefined) node.textContent = text;
-  return node;
-}
+const mainPanel = pdfPanel($("pdf"), showError);
+
+window.brevPreview = {
+  get current() {
+    return current;
+  },
+  legacyActive: false, // settes av legacy.js (LEGACY PDFGEN)
+  compareActive: false, // settes av compare.js
+  setMainCaption,
+  setMainTarget(fn) {
+    mainTarget = fn;
+  },
+  onGenerate(fn) {
+    generateHooks.push(fn);
+    if (lastGenerate) fn(lastGenerate.template, lastGenerate.body, lastGenerate);
+  },
+  generate,
+  scheduleGenerate,
+};
 
 function scheduleGenerate() {
   clearTimeout(generateTimer);
   generateTimer = setTimeout(generate, 400);
 }
 
-/* ---- skjema generert fra JSON-strukturen ---- */
-
-function buildEditor(value, set) {
-  if (Array.isArray(value)) return buildArray(value);
-  if (value !== null && typeof value === "object") return buildObject(value);
-  return buildScalar(value, set);
-}
-
-function buildObject(obj) {
-  const wrap = el("div", "object");
-  for (const key of Object.keys(obj)) {
-    const nested = obj[key] !== null && typeof obj[key] === "object";
-    const row = el("div", nested ? "row nested" : "row");
-    row.append(el("span", "key", key));
-    row.append(buildEditor(obj[key], (v) => (obj[key] = v)));
-    wrap.append(row);
-  }
-  return wrap;
-}
-
-function buildArray(arr) {
-  const wrap = el("div", "array");
-  const render = () => {
-    wrap.replaceChildren();
-    arr.forEach((item, i) => {
-      const box = el("div", "item");
-      const remove = el("button", "small", "Fjern");
-      remove.type = "button";
-      remove.onclick = () => {
-        arr.splice(i, 1);
-        render();
-        scheduleGenerate();
-      };
-      box.append(buildEditor(item, (v) => (arr[i] = v)), remove);
-      wrap.append(box);
-    });
-    const add = el("button", "small", "+ Legg til");
-    add.type = "button";
-    add.onclick = () => {
-      arr.push(structuredClone(arr[arr.length - 1] ?? ""));
-      render();
-      scheduleGenerate();
-    };
-    wrap.append(add);
-  };
-  render();
-  return wrap;
-}
-
-function buildScalar(value, set) {
-  let input;
-  if (typeof value === "boolean") {
-    input = el("input");
-    input.type = "checkbox";
-    input.checked = value;
-    input.oninput = () => {
-      set(input.checked);
-      scheduleGenerate();
-    };
-  } else if (typeof value === "number") {
-    input = el("input");
-    input.type = "number";
-    input.step = "any";
-    input.value = value;
-    input.oninput = () => {
-      set(input.value === "" ? 0 : Number(input.value));
-      scheduleGenerate();
-    };
-  } else {
-    const text = value ?? "";
-    input = text.length > 60 || text.includes("\n") ? el("textarea") : el("input");
-    input.value = text;
-    input.oninput = () => {
-      set(input.value);
-      scheduleGenerate();
-    };
-  }
-  return input;
-}
-
-/* ---- visning ---- */
-
 function render() {
   $("form").hidden = mode !== "form";
   $("json").hidden = mode !== "json";
   if (mode === "form") {
-    $("form").replaceChildren(buildEditor(current, (v) => (current = v)));
+    $("form").replaceChildren(buildEditor(current, (v) => (current = v), scheduleGenerate));
   } else {
     $("json").value = JSON.stringify(current, null, 2);
   }
@@ -120,48 +52,36 @@ function render() {
 
 function showError(message) {
   $("error").hidden = !message;
-  $("error").textContent = message ?? "";
+  $("error").textContent = message || "";
+}
+
+function setMainCaption(label) {
+  $("caption-a").hidden = !label;
+  $("caption-a").querySelector(".label").textContent = label || "";
 }
 
 async function generate() {
   clearTimeout(generateTimer);
-  // LEGACY PDFGEN: ikke migrert ennå -> vis kun gammel pdfgen (src-endringen trigger legacy-panelet)
-  if (legacyOnly.has($("template").value)) {
-    ++generateSeq;
-    showError(null);
-    if (pdfObjectUrl) {
-      URL.revokeObjectURL(pdfObjectUrl);
-      pdfObjectUrl = null;
-    }
-    $("pdf").src = "about:blank";
+  if (current === null) return; // init er ikke ferdig ennå
+  const template = $("template").value;
+  lastGenerate = { template, body: JSON.stringify(current), legacyOnly: legacyOnly.has(template) };
+  for (const fn of generateHooks) fn(template, lastGenerate.body, lastGenerate);
+  const seq = ++generateSeq;
+  // LEGACY PDFGEN: ikke migrert ennå -> vis kun gammel pdfgen (via legacy.js sin hook)
+  if (lastGenerate.legacyOnly) {
+    mainPanel.blank();
     $("status").textContent = "Ikke migrert til pdfgenrs ennå — viser kun gammel pdfgen.";
     return;
   }
-  const seq = ++generateSeq;
   $("status").textContent = "Genererer …";
   try {
-    const res = await fetch(`/api/genpdf/tpts/${$("template").value}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(current),
-    });
+    const url = mainTarget ? await mainTarget(template) : `/api/genpdf/tpts/${template}`;
     if (seq !== generateSeq) return; // en nyere generering er underveis
-    if (!res.ok) {
-      showError(`${res.status}: ${await res.text()}`);
-      $("status").textContent = "";
-      return;
-    }
-    showError(null);
-    if (pdfObjectUrl) URL.revokeObjectURL(pdfObjectUrl);
-    pdfObjectUrl = URL.createObjectURL(await res.blob());
-    $("pdf").src = pdfObjectUrl;
-    $("status").textContent = "";
+    await mainPanel.load(url, lastGenerate.body);
   } catch (e) {
-    if (seq === generateSeq) {
-      showError(String(e));
-      $("status").textContent = "";
-    }
+    showError(String(e)); // f.eks. klargjøring av valgt versjon feilet
   }
+  if (seq === generateSeq) $("status").textContent = "";
 }
 
 async function loadTemplate() {

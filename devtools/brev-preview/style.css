@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+/* display-reglene under (flex/grid) må ikke overstyre hidden-attributtet */
+[hidden] {
+  display: none !important;
+}
+
 body {
   margin: 0;
   height: 100vh;
@@ -35,6 +40,34 @@ header h1 {
   border-color: #0067c5;
 }
 
+/* VERSJONSSAMMENLIGNING: modus-valg og ref-felter i headeren */
+#compare-rs-nav {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+#compare-rs-nav label {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+}
+
+#compare-rs-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+#compare-rs-controls select,
+#compare-rs-controls input {
+  flex: none;
+  width: 14rem;
+}
+
 main {
   flex: 1;
   display: grid;
@@ -60,6 +93,31 @@ main {
   height: 100%;
   border: 0;
   background: #808080;
+}
+
+#preview figure {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+}
+
+#preview figure + figure {
+  border-left: 1px solid #555;
+}
+
+#preview figcaption {
+  padding: 0.15rem 0.5rem;
+  font-size: 12px;
+  background: #e5e5e5;
+  border-bottom: 1px solid #ccc;
+}
+
+#preview figcaption .err {
+  color: #b91c1c;
+  margin-left: 0.5rem;
+  white-space: pre-wrap;
 }
 
 #json {
@@ -138,31 +196,4 @@ button {
 button.small {
   margin-top: 0.25rem;
   font-size: 12px;
-}
-
-/* --- LEGACY PDFGEN (overgangsfase): slett resten av fila når pdfgen fjernes --- */
-
-#preview figure {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  margin: 0;
-}
-
-#preview figure + figure {
-  border-left: 1px solid #555;
-}
-
-#preview figcaption {
-  padding: 0.15rem 0.5rem;
-  font-size: 12px;
-  background: #e5e5e5;
-  border-bottom: 1px solid #ccc;
-}
-
-#preview figcaption .err {
-  color: #b91c1c;
-  margin-left: 0.5rem;
-  white-space: pre-wrap;
 }
