@@ -111,6 +111,7 @@ Typografi, avstander, tabeller og sideoppsett kommer fra et delt Typst-oppsett s
 - Bygget kjører en likhetssjekk mot oppstrøms ([`.github/workflows/pensjonsbrev-sync-check.yml`](.github/workflows/pensjonsbrev-sync-check.yml)), som også kjøres ukentlig for å fange opp oppstrøms endringer.
   Ved avvik: kjør `./sync-pensjonsbrev.sh` og verifiser brevene på nytt.
 - Oppsettet bygger videre på Aksels visuelle retningslinjer for brev (https://aksel.nav.no/god-praksis/artikler/visuelle-retningslinjer-for-brev), men inneholder nyere designvalg som ennå ikke er reflektert der.
+- Se også som sier mye om innhold og språk: https://navno.sharepoint.com/sites/fag-og-ytelser-Standarder-i-ytelsesforvaltningen/SitePages/Standard-for-brev-i-NAV.aspx
 
 ### TODO: gjenstående diff mot det delte oppsettet
 
