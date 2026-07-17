@@ -21,18 +21,23 @@ spec:
   azure:
     application:
       enabled: false
+  # Prober følger felles mal, se «Delte konvensjoner» i navikt/tiltakspenger AGENTS.md. Avvik skal begrunnes med kommentar her.
+  startup:
+    path: internal/is_alive
+    initialDelay: 5
+    periodSeconds: 5
+    failureThreshold: 60
+    timeout: 3
   liveness:
     path: internal/is_alive
-    initialDelay: 10
-    timeout: 1
-    periodSeconds: 5
-    failureThreshold: 30
+    periodSeconds: 10
+    failureThreshold: 3
+    timeout: 3
   readiness:
     path: internal/is_ready
-    initialDelay: 10
-    timeout: 1
     periodSeconds: 5
-    failureThreshold: 30
+    failureThreshold: 1
+    timeout: 3
   prometheus:
     enabled: true
     path: /metrics
