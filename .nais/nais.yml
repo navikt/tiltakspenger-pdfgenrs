@@ -40,7 +40,7 @@ spec:
     timeout: 3
   prometheus:
     enabled: true
-    path: /metrics
+    path: /internal/metrics
   replicas:
     min: {{ replicas }}
     max: {{ replicas }}
