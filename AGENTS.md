@@ -49,6 +49,9 @@ Typografi, avstander, tabeller og sideoppsett kommer fra et delt Typst-oppsett s
 - **Typst-dokumentasjon:** <https://typst.app/docs/> — malspråket alt i `templates/` og `lib/` er skrevet i.
 - **Serveren (upstream):** <https://github.com/navikt/pdfgenrs> — endepunkter, miljøvariabler og hvordan JSON-payload flettes inn.
   Serveren leverer kun PDF og HTML, ingen bildeutgang.
+- **Standard for brev i Nav:** <https://github.com/navikt/tiltakspenger-interndokumentasjon/tree/main/brevstandard> — kravene til språk, struktur, begrunnelser, signatur og standardtekster, gjengitt ordrett fra intranettet fordi originalen ikke er tilgjengelig utenfor Nav.
+  `faste-standardtekster-i-brev.md` og `krav-til-signatur-i-brev.md` der er fasit for `vedtaksinfo`- og `signatur`-komponentene i `lib/components.typ`.
+  Repoet er privat og krever Nav-tilgang; ligger gjengivelsene her i stedet, er de kommet feil sted.
 - **Visuelle retningslinjer for brev (Aksel):** <https://aksel.nav.no/god-praksis/artikler/visuelle-retningslinjer-for-brev> — bakgrunn for brevdesignet.
   Merk at det vendorerte oppsettet i `lib/pensjonsbrev/` inneholder nyere designvalg som ennå ikke er reflektert i artikkelen; ved konflikt er `lib/pensjonsbrev/` fasit.
 - **Design tokens (Aksel):** <https://aksel.nav.no/grunnleggende/styling/design-tokens> — fargene/avstandene i `lib/` refererer Aksel-tokens (f.eks. `--a-surface-subtle`); slå opp verdier her.
