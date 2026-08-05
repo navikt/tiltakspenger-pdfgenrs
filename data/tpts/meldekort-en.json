@@ -2,17 +2,16 @@
   "id": "meldekort_01JCQV1M22WR1D9VGC43MSRP0P",
   "saksnummer": "202501011001",
   "fnr": "25508631114",
-  "forhandsvisning": false,
   "periode": {
     "fraOgMed": "30 September 2024",
     "tilOgMed": "13 October 2024"
   },
-  "uke1": "40",
-  "uke2": "41",
-  "mottatt": "2024-10-15 13:05:15",
+  "uke1": 40,
+  "uke2": 41,
+  "mottatt": "15.10.2024 13:05",
   "dager": [
     {
-      "dag": "Monday 30 september",
+      "dag": "Monday 30 September",
       "status": "DELTATT_UTEN_LØNN_I_TILTAKET"
     },
     {

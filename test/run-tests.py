@@ -77,6 +77,8 @@ INNHOLDSKRAV = {
     "vedtakInnvilgelse--tom-beslutter": {"forbyr": ["ingen saksbehandler tildelt"]},
     "vedtakInnvilgelse--tom-saksbehandler": {"krever": ["ingen saksbehandler tildelt"]},
     "meldekortvedtak--automatisk": {"krever": ["Automatisk behandlet"], "forbyr": ["Med vennlig hilsen", "Nav Tiltak Oslo"]},
+    # Opphør der alle valgte hjemler krever fritekst: valgtHjemmelTekst er null og begrunnelsen står kun i tilleggsteksten.
+    "vedtakOpphør--kun-fritekst": {"krever": ["Slik har vi vurdert saken din", "tiltakspengeforskriften § 3"]},
 }
 # Datasett der standardkravene for utgående brev ikke gjelder: automatisk behandlede vedtak har ingen signatur, og klageInnstilling har egen kravliste.
 UTEN_STANDARDKRAV = {"klageInnstilling", "meldekortvedtak--automatisk"}

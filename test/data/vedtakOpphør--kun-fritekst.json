@@ -1,0 +1,19 @@
+{
+  "personalia": {
+    "ident": "25508631114",
+    "fornavn": "Emil",
+    "etternavn": "Aremark"
+  },
+  "saksnummer": "202501011001",
+  "saksbehandlerNavn": "Ingrid Bakke",
+  "beslutterNavn": "Martin Holm",
+  "datoForUtsending": "13. februar 2026",
+  "tilleggstekst": "Du har ikke fylt 18 år i perioden vedtaket gjelder for. Du må ha fylt 18 år for å ha rett til tiltakspenger.\n\nDette kommer frem av tiltakspengeforskriften § 3.",
+  "forhandsvisning": false,
+  "vedtaksperiode": {
+    "fraOgMed": "19. januar 2026",
+    "tilOgMed": "31. januar 2026"
+  },
+  "valgtHjemmelTekst": null,
+  "barnetillegg": true
+}
