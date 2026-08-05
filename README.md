@@ -42,9 +42,17 @@ Se [devtools/brev-preview/README.md](devtools/brev-preview/README.md) for detalj
 
 ## Demo i dev
 
-Samme forhåndsvisning kjører som egen nais-app i dev: <https://tiltakspenger-pdfgenrs-demo.intern.dev.nav.no> (krever naisdevice).
-Der kan hvem som helst på teamet velge et brev, redigere flettedataene og se PDF-en — uten repo, Docker eller Python lokalt.
+Samme forhåndsvisning kjører som egen nais-app i dev, på to adresser:
+
+- <https://tiltakspenger-pdfgenrs-demo.ansatt.dev.nav.no> — for alle i Nav, uten naisdevice.
+- <https://tiltakspenger-pdfgenrs-demo.intern.dev.nav.no> — krever naisdevice.
+
+Der kan hvem som helst velge et brev, redigere flettedataene og se PDF-en — uten repo, Docker eller Python lokalt.
 Utgangspunktet er datasettene i `data/tpts/`, som derfor skal vise et helt, normalt brev.
+
+Appen har ingen egen autentisering, og trenger det ikke: `ansatt`-domenet sender deg til Entra-innlogging i kanten før trafikken når appen.
+Det er verifisert fra 4G utenfor Nav-nett, men står ikke i Nais-dokumentasjonen — test på nytt før du bygger om på antakelsen.
+Samme oppsett som demoen i `tiltakspenger-soknad`.
 
 Demoen finnes **kun i dev**:
 

@@ -11,7 +11,13 @@ spec:
   image: {{ image }}
   port: 8087
   ingresses:
+    # Krever naisdevice.
     - https://tiltakspenger-pdfgenrs-demo.intern.dev.nav.no
+    # Når som helst fra hvor som helst, uten naisdevice. Appen trenger ingen egen
+    # autentisering: ansatt-domenet sender deg til Entra-innlogging i kanten, før
+    # trafikken når hit. Verifisert 2026-08-05 fra 4G utenfor Nav-nett.
+    # Nais-dokumentasjonen sier ikke hvor det håndheves, så ikke bygg om dette uten å teste på nytt.
+    - https://tiltakspenger-pdfgenrs-demo.ansatt.dev.nav.no
   accessPolicy:
     outbound:
       rules:
