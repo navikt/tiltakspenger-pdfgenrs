@@ -9,10 +9,13 @@ Kun Python-stdlib, ingen avhengigheter.
 Bruk:
     ./run_devtools.sh               ->  http://localhost:8087
 
+Samme server kjører også som demo-app i dev, se .nais/nais-demo.yml.
+Der finnes hverken docker eller git, så versjonssammenligning og oppstart av pdfgenrs
+er slått av; frontenden skjuler funksjonen selv når /api/refs ikke svarer.
+
 Miljøvariabler:
     DEVTOOLS_PORT       port for denne serveren (default 8087)
     PDFGEN_URL          overstyr pdfgenrs-adressen (default: 8084)
-    LEGACY_PDFGEN_URL   overstyr gammel pdfgen-adresse (default: 8081)
 """
 import json
 import os
@@ -30,6 +33,9 @@ import versions
 from common import REPO_ROOT, is_alive
 
 PORT = int(os.environ.get("DEVTOOLS_PORT", "8087"))
+# Nais setter NAIS_APP_NAME i alle containere. Der finnes hverken docker eller git,
+# så alt som trenger dem er av. Bryteren står i koden, ikke som egen miljøvariabel.
+IS_NAIS = "NAIS_APP_NAME" in os.environ
 PDFGEN_CANDIDATES = (
     [os.environ["PDFGEN_URL"]]
     if os.environ.get("PDFGEN_URL")
@@ -73,52 +79,6 @@ def serves_working_tree(url):
     return any(line.startswith(REPO_ROOT) for line in mounts.stdout.splitlines())
 
 
-# --- LEGACY PDFGEN (overgangsfase) -----------------------------------------
-# Viser gammel pdfgen side om side med pdfgenrs. Slett alt som er merket
-# "LEGACY PDFGEN" (grep etter det) når tiltakspenger-pdfgen fjernes.
-LEGACY_REPO = os.path.join(os.path.dirname(REPO_ROOT), "tiltakspenger-pdfgen")
-LEGACY_CANDIDATES = (
-    [os.environ["LEGACY_PDFGEN_URL"]]
-    if os.environ.get("LEGACY_PDFGEN_URL")
-    else [
-        "http://localhost:8081",  # både metarepoets og pdfgen-repoets docker-compose.yml
-    ]
-)
-legacy_url = None
-
-
-def find_legacy():
-    global legacy_url
-    if legacy_url is None:
-        legacy_url = next((url for url in LEGACY_CANDIDATES if is_alive(url)), None)
-    return legacy_url
-
-
-def start_legacy():
-    if not os.path.isdir(LEGACY_REPO):
-        print(f"Fant ikke {LEGACY_REPO} - hopper over gammel pdfgen.")
-        return
-    print("Fant ingen kjørende pdfgen (gammel) - prøver å starte med docker compose ...")
-    try:
-        subprocess.run(["docker", "compose", "up", "-d", "--build"], cwd=LEGACY_REPO, check=True)
-    except (OSError, subprocess.CalledProcessError) as e:
-        print(f"Klarte ikke å starte gammel pdfgen ({e}).")
-        print("Start den selv, f.eks. ../tiltakspenger-pdfgen/run_development.sh")
-        return
-    for _ in range(30):
-        if find_legacy():
-            return
-        time.sleep(1)
-
-
-def legacy_templates():
-    template_dir = os.path.join(LEGACY_REPO, "templates", "tpts")
-    if not os.path.isdir(template_dir):
-        return []
-    return sorted(f[:-4] for f in os.listdir(template_dir) if f.endswith(".hbs"))
-# --- LEGACY PDFGEN slutt ----------------------------------------------------
-
-
 def start_pdfgen():
     print("Fant ingen kjørende pdfgenrs - prøver å starte med docker compose ...")
     try:
@@ -135,6 +95,8 @@ def start_pdfgen():
 
 class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
+        # Repo-rota serveres fordi siden leser flettedataene i data/tpts direkte.
+        # I demo-imaget inneholder rota kun devtools/brev-preview og data/tpts.
         super().__init__(*args, directory=REPO_ROOT, **kwargs)
 
     def do_GET(self):
@@ -142,34 +104,24 @@ class Handler(SimpleHTTPRequestHandler):
             self.send_response(302)
             self.send_header("Location", "/devtools/brev-preview/index.html")
             self.end_headers()
+        elif self.path in ("/internal/isAlive", "/internal/isReady"):
+            # Prober for demo-appen. Readiness sier ikke noe om pdfgenrs: er den nede,
+            # er siden fortsatt brukbar og feilen vises der den oppstår.
+            self._respond(200, "text/plain; charset=utf-8", b"OK")
         elif self.path == "/api/templates":
             data_dir = os.path.join(REPO_ROOT, "data", "tpts")
             names = sorted(f[:-5] for f in os.listdir(data_dir) if f.endswith(".json"))
             self._respond(200, "application/json", json.dumps(names).encode())
-        elif self.path == "/api/refs":
+        elif self.path == "/api/refs" and not IS_NAIS:
             self._respond(200, "application/json", json.dumps(versions.list_refs()).encode())
-        elif self.path == "/api/legacy/templates":  # LEGACY PDFGEN: slett denne elif-blokken
-            self._respond(200, "application/json", json.dumps(legacy_templates()).encode())
-        elif self.path.startswith("/api/legacy/data/"):  # LEGACY PDFGEN: slett denne elif-blokken
-            # Malnavnet kommer fra URL-en; valider mot tegn-allowlist og sjekk at stien blir værende i datamappen.
-            name = os.path.basename(urllib.parse.unquote(self.path[len("/api/legacy/data/"):]))
-            data_dir = os.path.realpath(os.path.join(LEGACY_REPO, "data", "tpts"))
-            data_file = os.path.realpath(os.path.join(data_dir, name + ".json"))
-            if re.fullmatch(r"[\w-]+", name) and data_file.startswith(data_dir + os.sep) and os.path.isfile(data_file):
-                with open(data_file, "rb") as f:
-                    self._respond(200, "application/json", f.read())
-            else:
-                self.send_error(404)
         else:
             super().do_GET()
 
     def do_POST(self):
-        ref_proxy = re.fullmatch(r"/api/ref/([0-9a-f]{40})(/genpdf/.*)", self.path)
-        if self.path.startswith("/api/legacy/genpdf/"):  # LEGACY PDFGEN: slett denne if-blokken
-            self._proxy_genpdf(find_legacy(), self.path[len("/api/legacy"):], "gammel pdfgen")
-        elif self.path.startswith("/api/genpdf/"):
+        ref_proxy = None if IS_NAIS else re.fullmatch(r"/api/ref/([0-9a-f]{40})(/genpdf/.*)", self.path)
+        if self.path.startswith("/api/genpdf/"):
             self._proxy_genpdf(find_pdfgen(), self.path[len("/api"):], "pdfgenrs")
-        elif self.path == "/api/ref/prepare":
+        elif self.path == "/api/ref/prepare" and not IS_NAIS:
             body = self.rfile.read(int(self.headers.get("Content-Length", 0)))
             try:
                 sha = versions.prepare_ref(json.loads(body)["ref"])
@@ -221,10 +173,24 @@ class Handler(SimpleHTTPRequestHandler):
         pass  # ikke spam terminalen for hver request
 
 
+def serve(adresse):
+    try:
+        ThreadingHTTPServer((adresse, PORT), Handler).serve_forever()
+    except KeyboardInterrupt:
+        sys.exit(0)
+
+
 def main():
     # sys.exit -> atexit -> versions.py rydder containere/worktrees, også ved `kill`
     signal.signal(signal.SIGTERM, lambda *_: sys.exit(0))
     global pdfgen_url
+    if IS_NAIS:
+        # Demo-appen: pdfgenrs er en egen nais-app, og adressen står i PDFGEN_URL.
+        # Må lytte på alle adresser for at nais skal nå probene.
+        print(f"pdfgenrs: {PDFGEN_CANDIDATES[0]}")
+        print(f"Demo på port {PORT}")
+        serve("0.0.0.0")
+        return
     if find_pdfgen() is None:
         start_pdfgen()
     # Ikke stol blindt på containeren vi fant: uten repo-volumer (metarepoets
@@ -243,17 +209,10 @@ def main():
         print(f"pdfgenrs: {pdfgen_url}")
     else:
         print("pdfgenrs kjører fortsatt ikke - PDF-generering vil feile til den er oppe.")
-    # LEGACY PDFGEN: slett disse tre linjene når pdfgen fjernes
-    if legacy_templates() and find_legacy() is None:
-        start_legacy()
-    print(f"pdfgen (gammel): {legacy_url or 'kjører ikke'}")
     print(f"Devtools:  http://localhost:{PORT}")
     print("Containere devtoolsen starter heter pdfgenrs-devtools-* (porter "
           f"{versions.CONTAINER_PORTS.start}-{versions.CONTAINER_PORTS.stop - 1}) og fjernes ved avslutning.")
-    try:
-        ThreadingHTTPServer(("127.0.0.1", PORT), Handler).serve_forever()
-    except KeyboardInterrupt:
-        sys.exit(0)
+    serve("127.0.0.1")
 
 
 if __name__ == "__main__":

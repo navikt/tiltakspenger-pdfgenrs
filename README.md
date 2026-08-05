@@ -40,6 +40,22 @@ Starter også pdfgenrs selv om den ikke allerede kjører.
 
 Se [devtools/brev-preview/README.md](devtools/brev-preview/README.md) for detaljer.
 
+## Demo i dev
+
+Samme forhåndsvisning kjører som egen nais-app i dev: <https://tiltakspenger-pdfgenrs-demo.intern.dev.nav.no> (krever naisdevice).
+Der kan hvem som helst på teamet velge et brev, redigere flettedataene og se PDF-en — uten repo, Docker eller Python lokalt.
+Utgangspunktet er datasettene i `data/tpts/`, som derfor skal vise et helt, normalt brev.
+
+Demoen finnes **kun i dev**:
+
+- Appen er beskrevet i [`.nais/nais-demo.yml`](.nais/nais-demo.yml), og deployes av jobbene `build-demo`/`deploy-demo`.
+  De kjører kun i dev-løpet ([`deploy-dev.yml`](.github/workflows/deploy-dev.yml) og dev-beinet i [`deploy-prod.yml`](.github/workflows/deploy-prod.yml)) — prod-beinet refererer den ikke.
+- Innslippsregelen i [`.nais/nais.yml`](.nais/nais.yml) er merket `cluster: dev-gcp`, så den gjelder bare der.
+  Ingenting i `.nais/vars/prod.yml` nevner demoen.
+
+Imaget bygges fra [`devtools/brev-preview/Dockerfile`](devtools/brev-preview/Dockerfile) og inneholder bare Python-serveren og `data/tpts/`.
+Versjonssammenligningen er av i dev, siden den trenger `docker` og `git` i containeren.
+
 ## Gjøre kall mot tiltakspenger-pdfgenrs lokalt
 
 PDFene kan testes lokalt på `http://localhost:8084/api/v1/genpdf/<application>/<template>`, f.eks. http://localhost:8084/api/v1/genpdf/tpts/vedtakInnvilgelse.
@@ -49,56 +65,8 @@ Templatene vil bruke flettedata fra json-fil med samme navn som template i `data
 
 1. Start opp postman/insomnia/bruno eller et annet program som kan gjøre rest-kall.
 2. Sett opp en `POST` mot endepunktet du vil ha brev fra, f.eks. `http://localhost:8084/api/v1/genpdf/tpts/vedtakInnvilgelse`.
-3. Sett BODY til å være Json, f.eks.:
-
-```
-{
-  "personalia": {
-    "ident": "50485211165",
-    "fornavn": "Ola",
-    "etternavn": "Nordmann"
-  },
-  "saksnummer": "202501301001",
-  "saksbehandlerNavn": "Saksbehandler Navn",
-  "beslutterNavn": "Saksbehandler Navn",
-  "kontor": "Nav Tiltak Oslo",
-  "harBarnetillegg": true,
-  "satser": [
-    {
-      "år": 2024,
-      "ordinær": 285,
-      "barnetillegg": 53
-    },
-    {
-      "år": 2025,
-      "ordinær": 298,
-      "barnetillegg": 55
-    }
-  ],
-  "tilleggstekst": "Dette er en vurdering",
-  "forhandsvisning": true,
-  "datoForUtsending": "31. januar 2025",
-    "innvilgelsesperioder": {
-    "antallDagerTekst": "fem dager",
-    "perioder": [
-      {
-        "fraOgMed": "1. november 2024",
-        "tilOgMed": "28. februar 2025"
-      }
-    ]
-  },
-  "barnetillegg": [
-    {
-      "antallBarnTekst": "ett",
-      "periode": {
-        "fraOgMed": "1. november 2024",
-        "tilOgMed": "28. februar 2025"
-      }
-    }
-  ]
-}
-```
-
+3. Sett BODY til å være Json.
+   Bruk `data/tpts/<mal>.json` som utgangspunkt — de filene er fasit for hvilke felter hver mal forventer, f.eks. [data/tpts/vedtakInnvilgelse.json](data/tpts/vedtakInnvilgelse.json).
 4. Når du har gjort kall må du sette responsen til å tolkes som .PDF eller laste ned responsen som en .PDF-fil.
 
 ## Styling av brev
@@ -142,5 +110,5 @@ Punktene under er funksjonelle endringer som må avklares med fagsiden, UX og ju
       Feilen vil vises i f.eks. templaten din, mens selve feilen ligger i stylingen.
     - Ikke alle feil vises heller.
       Du kan teste om du har kompileringsfeil hvis previewet ikke oppdaterer når du legger inn tekst og saver.
-- Ulik pdfgen, (og tidligere pdfgenrs-versjoner), så må `/templates` kun inneholde de ulike templatesene våre.
+- `/templates` skal kun inneholde selve brevmalene.
   Partials (components), og andre hjelpe-templates/styles etc., ligger i `/lib`.

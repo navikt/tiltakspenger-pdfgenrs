@@ -7,7 +7,7 @@
   "saksnummer": "202501011001",
   "saksbehandlerNavn": "Ingrid Bakke",
   "beslutterNavn": "Martin Holm",
-  "tilleggstekst": "Hei hei",
+  "tilleggstekst": "Vi har lagt vekt på at du ikke var deltaker på et arbeidsmarkedstiltak i perioden du søkte om tiltakspenger for, og at du mottok kvalifiseringsstønad i den samme perioden.",
   "avslagsgrunnerSize": 2,
   "avslagsgrunner": [
     "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK",
@@ -15,8 +15,8 @@
   ],
   "harSøktMedBarn": true,
   "hjemlerTekst": "Dette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften §§ 2, 3, 7, 8, 9 og 11.",
-  "forhandsvisning": true,
-  "avslagFraOgMed": "01.01.2023",
-  "avslagTilOgMed": "10.01.2023",
-  "datoForUtsending": "3. august 2023"
+  "forhandsvisning": false,
+  "avslagFraOgMed": "01.01.2025",
+  "avslagTilOgMed": "10.01.2025",
+  "datoForUtsending": "15. januar 2025"
 }

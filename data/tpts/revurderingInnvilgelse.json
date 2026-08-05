@@ -20,8 +20,8 @@
       "barnetillegg": 55
     }
   ],
-  "tilleggstekst": "Dette er en vurdering",
-  "forhandsvisning": true,
+  "tilleggstekst": "Vi har vurdert saken din på nytt etter at vi fikk nye opplysninger om tiltaksdeltakelsen din.\n\nVi har lagt vekt på at du deltok på tiltaket i hele perioden, og at tiltaksarrangøren har bekreftet dette.",
+  "forhandsvisning": false,
   "datoForUtsending": "31. januar 2025",
   "innvilgelsesperioder": {
     "antallDagerTekst": "fem dager",

@@ -8,14 +8,14 @@
   "saksbehandlerNavn": "Ingrid Bakke",
   "tilleggstekst": [
     {
-      "tittel": "Tilleggsinformasjon",
-      "tekst": "Hei hei"
+      "tittel": "Hvorfor vi avviser klagen",
+      "tekst": "Du klaget på vedtaket vårt av 3. februar 2025. Fristen for å klage var 24. februar 2025, og klagen din kom inn til oss 12. mai 2025. Vi har derfor fått klagen for sent."
     },
     {
-      "tittel": "Mer informasjon",
-      "tekst": "Dette er ekstra informasjon som kan være nyttig."
+      "tittel": "Vi har vurdert om du kan klage likevel",
+      "tekst": "Vi har sett på om det er grunner til å behandle klagen selv om fristen har gått ut. Vi har ikke fått opplysninger som tilsier det, og avviser derfor klagen."
     }
   ],
-  "forhandsvisning": true,
-  "datoForUtsending": "3. august 2023"
+  "forhandsvisning": false,
+  "datoForUtsending": "20. mai 2025"
 }

@@ -27,15 +27,5 @@ function pdfPanel(iframe, setError) {
     }
   }
 
-  function blank(message) {
-    ++seq; // en eventuell pågående load skal ikke overskrive blankingen
-    setError(message ?? "");
-    if (objectUrl) {
-      URL.revokeObjectURL(objectUrl);
-      objectUrl = null;
-    }
-    iframe.src = "about:blank";
-  }
-
-  return { load, blank };
+  return { load };
 }

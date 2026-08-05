@@ -1,7 +1,10 @@
 version: 2
 updates:
   - package-ecosystem: docker
-    directory: "/"
+    directories:
+      - "/"
+      - "/devtools/brev-preview" # demo-appen i dev
+      - "/test"
     schedule:
       interval: daily
     cooldown:

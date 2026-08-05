@@ -1,5 +1,5 @@
 // Kjernen: flettedata-state, mal-valg, skjema/JSON-redigering og hovedpanelet.
-// Ekstra paneler (compare.js, legacy.js) kobler seg på via window.brevPreview.
+// Ekstra paneler (compare.js) kobler seg på via window.brevPreview.
 const $ = (id) => document.getElementById(id);
 
 let defaults = null; // original flettedata fra data/tpts
@@ -7,13 +7,9 @@ let current = null; // gjeldende (redigerte) flettedata
 let mode = "form";
 let generateTimer = null;
 let generateSeq = 0;
-let lastGenerate = null; // {template, body, legacyOnly} - så paneler som kobler seg på sent får siste generering
-const generateHooks = []; // kalles med (template, body, {legacyOnly}) ved hver generering
+let lastGenerate = null; // {template, body} - så paneler som kobler seg på sent får siste generering
+const generateHooks = []; // kalles med (template, body) ved hver generering
 let mainTarget = null; // compare.js overstyrer hvor hovedpanelet genereres (async (template) -> url)
-
-// LEGACY PDFGEN (overgangsfase): maler som ikke er migrert til pdfgenrs ennå,
-// vises med flettedata fra pdfgen-repoet. Slett når pdfgen fjernes.
-let legacyOnly = new Set();
 
 const mainPanel = pdfPanel($("pdf"), showError);
 
@@ -21,7 +17,6 @@ window.brevPreview = {
   get current() {
     return current;
   },
-  legacyActive: false, // settes av legacy.js (LEGACY PDFGEN)
   compareActive: false, // settes av compare.js
   setMainCaption,
   setMainTarget(fn) {
@@ -29,7 +24,7 @@ window.brevPreview = {
   },
   onGenerate(fn) {
     generateHooks.push(fn);
-    if (lastGenerate) fn(lastGenerate.template, lastGenerate.body, lastGenerate);
+    if (lastGenerate) fn(lastGenerate.template, lastGenerate.body);
   },
   generate,
   scheduleGenerate,
@@ -64,15 +59,9 @@ async function generate() {
   clearTimeout(generateTimer);
   if (current === null) return; // init er ikke ferdig ennå
   const template = $("template").value;
-  lastGenerate = { template, body: JSON.stringify(current), legacyOnly: legacyOnly.has(template) };
-  for (const fn of generateHooks) fn(template, lastGenerate.body, lastGenerate);
+  lastGenerate = { template, body: JSON.stringify(current) };
+  for (const fn of generateHooks) fn(template, lastGenerate.body);
   const seq = ++generateSeq;
-  // LEGACY PDFGEN: ikke migrert ennå -> vis kun gammel pdfgen (via legacy.js sin hook)
-  if (lastGenerate.legacyOnly) {
-    mainPanel.blank();
-    $("status").textContent = "Ikke migrert til pdfgenrs ennå — viser kun gammel pdfgen.";
-    return;
-  }
   $("status").textContent = "Genererer …";
   try {
     const url = mainTarget ? await mainTarget(template) : `/api/genpdf/tpts/${template}`;
@@ -87,9 +76,7 @@ async function generate() {
 async function loadTemplate() {
   const name = $("template").value;
   localStorage.setItem("devtools-template", name);
-  // LEGACY PDFGEN: umigrerte maler har flettedataene sine i pdfgen-repoet
-  const dataUrl = legacyOnly.has(name) ? `/api/legacy/data/${name}` : `/data/tpts/${name}.json`;
-  defaults = await (await fetch(dataUrl)).json();
+  defaults = await (await fetch(`/data/tpts/${name}.json`)).json();
   current = structuredClone(defaults);
   render();
   generate();
@@ -98,18 +85,8 @@ async function loadTemplate() {
 async function init() {
   const names = await (await fetch("/api/templates")).json();
   for (const name of names) $("template").append(new Option(name, name));
-  // LEGACY PDFGEN: vis også maler som kun finnes i gammel pdfgen (ikke migrert ennå)
-  try {
-    const legacyNames = await (await fetch("/api/legacy/templates")).json();
-    legacyOnly = new Set(legacyNames.filter((n) => !names.includes(n)));
-    for (const name of [...legacyOnly].sort()) {
-      $("template").append(new Option(`${name} (kun i pdfgen)`, name));
-    }
-  } catch {
-    legacyOnly = new Set();
-  }
   const saved = localStorage.getItem("devtools-template");
-  if (names.includes(saved) || legacyOnly.has(saved)) $("template").value = saved;
+  if (names.includes(saved)) $("template").value = saved;
 
   $("template").onchange = loadTemplate;
   $("generate").onclick = generate;

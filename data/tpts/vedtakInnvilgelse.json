@@ -20,8 +20,8 @@
       "barnetillegg": 55
     }
   ],
-  "tilleggstekst": "Dette er en vurdering\n\nDette er en ny linje med mer informasjon.\n\nDette er enda en ny linje med mer informasjon.",
-  "forhandsvisning": true,
+  "tilleggstekst": "Vi har innvilget søknaden din fordi du deltar på Arbeidstrening hos Aremark Snekkerverksted AS i perioden du har søkt om tiltakspenger for.\n\nDu får barnetillegg for barna du forsørger. Antall barn varierer i perioden, og beløpet er derfor ulikt fra periode til periode.",
+  "forhandsvisning": false,
   "datoForUtsending": "31. januar 2025",
   "innvilgelsesperioder": {
     "antallDagerTekst": "fem dager",

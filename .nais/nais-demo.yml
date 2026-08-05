@@ -1,0 +1,53 @@
+# Brev-preview som egen app, slik at brevene kan vises og redigeres uten repo og Docker lokalt.
+# Deployes KUN til dev: ingen jobb i prod-beinet refererer denne fila, og ingressen under er dev-only.
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+  name: tiltakspenger-pdfgenrs-demo
+  namespace: tpts
+  labels:
+    team: tpts
+spec:
+  image: {{ image }}
+  port: 8087
+  ingresses:
+    - https://tiltakspenger-pdfgenrs-demo.intern.dev.nav.no
+  accessPolicy:
+    outbound:
+      rules:
+        - application: tiltakspenger-pdfgenrs
+  env:
+    - name: PDFGEN_URL
+      value: http://tiltakspenger-pdfgenrs
+  # Prober følger felles mal, se «Delte konvensjoner» i navikt/tiltakspenger AGENTS.md. Avvik skal begrunnes med kommentar her.
+  startup:
+    path: /internal/isAlive
+    initialDelay: 5
+    periodSeconds: 5
+    failureThreshold: 60
+    timeout: 3
+  liveness:
+    path: /internal/isAlive
+    periodSeconds: 10
+    failureThreshold: 3
+    timeout: 3
+  readiness:
+    path: /internal/isReady
+    periodSeconds: 5
+    failureThreshold: 1
+    timeout: 3
+  replicas:
+    min: 1
+    max: 1
+  # En Python-stdlib-server som proxyer videre til pdfgenrs; selve PDF-jobben gjøres der.
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      cpu: 20m
+      memory: 128Mi
+  observability:
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki

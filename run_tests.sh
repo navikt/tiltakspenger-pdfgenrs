@@ -5,7 +5,12 @@ set -euo pipefail
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
-cleanup() { docker compose -f docker-compose.test.yml down --remove-orphans >/dev/null 2>&1 || true; }
+# Eget prosjektnavn. Uten det arver testkjøringen prosjektnavnet fra katalogen, og
+# `down --remove-orphans` river ned utviklings-containeren fra docker-compose.yml
+# (port 8084) fordi den ikke finnes i testoppsettet.
+PROSJEKT=tiltakspenger-pdfgenrs-test
+
+cleanup() { docker compose -p "$PROSJEKT" -f docker-compose.test.yml down --remove-orphans >/dev/null 2>&1 || true; }
 trap cleanup EXIT
 
-docker compose -f docker-compose.test.yml up --build --exit-code-from test --attach test
+docker compose -p "$PROSJEKT" -f docker-compose.test.yml up --build --exit-code-from test --attach test

@@ -17,6 +17,16 @@ jobs:
       contents: read
       id-token: write
 
+  build-demo:
+    name: Build demo image
+    uses: ./.github/workflows/.build-image.yml
+    permissions:
+      contents: read
+      id-token: write
+    with:
+      DOCKERFILE: devtools/brev-preview/Dockerfile
+      IMAGE_SUFFIX: demo
+
   deploy:
     name: Deploy to NAIS (dev)
     needs: [build, test]
@@ -27,3 +37,15 @@ jobs:
     with:
       NAIS_ENV: dev
       IMAGE: ${{ needs.build.outputs.IMAGE }}
+
+  deploy-demo:
+    name: Deploy demo to NAIS (dev)
+    needs: [build-demo, test]
+    uses: ./.github/workflows/.deploy-to-nais.yml
+    permissions:
+      contents: read
+      id-token: write
+    with:
+      NAIS_ENV: dev
+      IMAGE: ${{ needs.build-demo.outputs.IMAGE }}
+      RESOURCE: .nais/nais-demo.yml

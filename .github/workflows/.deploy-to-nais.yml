@@ -9,6 +9,11 @@ on:
       IMAGE:
         required: true
         type: string
+      RESOURCE:
+        description: "Nais-manifestet som deployes. Demo-appen (.nais/nais-demo.yml) deployes kun til dev."
+        required: false
+        type: string
+        default: .nais/nais.yml
 
 jobs:
   deploy:
@@ -27,6 +32,6 @@ jobs:
         uses: nais/deploy/actions/deploy@2d18f050f07b6a007864c6a57070ed915d571beb # v2
         env:
           CLUSTER: ${{ inputs.NAIS_ENV }}-gcp
-          RESOURCE: .nais/nais.yml
+          RESOURCE: ${{ inputs.RESOURCE }}
           VAR: image=${{ inputs.IMAGE }}
           VARS: .nais/vars/${{ inputs.NAIS_ENV }}.yml

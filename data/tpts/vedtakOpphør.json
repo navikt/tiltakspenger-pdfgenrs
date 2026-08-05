@@ -9,7 +9,7 @@
   "beslutterNavn": "Martin Holm",
   "datoForUtsending": "13. februar 2026",
   "tilleggstekst": "Vi har vurdert saken din på nytt.",
-  "forhandsvisning": true,
+  "forhandsvisning": false,
   "vedtaksperiode": {
     "fraOgMed": "19. januar 2026",
     "tilOgMed": "31. januar 2026"

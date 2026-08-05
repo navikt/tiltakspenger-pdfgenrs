@@ -2,8 +2,8 @@
   "meldekortId": "meldekort_01JCQV1M22WR1D9VGC43MSRP0P",
   "saksnummer": "202501011001",
   "periode": {
-    "fraOgMed": "26. desember 2022",
-    "tilOgMed": "6. januar 2023"
+    "fraOgMed": "4. november 2024",
+    "tilOgMed": "15. november 2024"
   },
   "erAutomatiskBehandlet": false,
   "saksbehandlerNavn": "Ingrid Bakke",
@@ -12,25 +12,25 @@
     "Arbeidsmarkedsopplæring (gruppe)",
     "Jobbklubb"
   ],
-  "iverksattTidspunkt": "7. april 2025 14:36:18",
+  "iverksattTidspunkt": "18. november 2024 14:36:18",
   "fødselsnummer": "25508631114",
   "totaltBelop": 2198,
   "totalDifferanse": -338,
-  "brevTekst": "Bruker hadde registrert at han var syk, men deltok på tiltak disse dagene.",
-  "forhandsvisning": true,
+  "brevTekst": "Du hadde meldt fra om at du var syk disse dagene, men vi har fått opplysninger fra tiltaksarrangøren om at du deltok på tiltaket. Vi har derfor endret meldekortet ditt.",
+  "forhandsvisning": false,
   "meldeperioder": [
     {
       "korrigering": false,
       "periode": {
-        "fraOgMed": "26. desember 2022",
-        "tilOgMed": "1. januar 2023"
+        "fraOgMed": "4. november 2024",
+        "tilOgMed": "10. november 2024"
       },
       "beløp": 1690,
       "beløpDiff": 1690,
       "harBarnetillegg": true,
       "dager": [
         {
-          "dato": "mandag 26. desember",
+          "dato": "mandag 4. november",
           "status": {
             "forrige": null,
             "gjeldende": "Deltatt",
@@ -54,7 +54,7 @@
           "harEndring": true
         },
         {
-          "dato": "tirsdag 27. desember",
+          "dato": "tirsdag 5. november",
           "status": {
             "forrige": null,
             "gjeldende": "Deltatt",
@@ -78,7 +78,7 @@
           "harEndring": true
         },
         {
-          "dato": "onsdag 28. desember",
+          "dato": "onsdag 6. november",
           "status": {
             "forrige": null,
             "gjeldende": "Deltatt",
@@ -102,7 +102,7 @@
           "harEndring": true
         },
         {
-          "dato": "torsdag 29. desember",
+          "dato": "torsdag 7. november",
           "status": {
             "forrige": null,
             "gjeldende": "Deltatt",
@@ -126,7 +126,7 @@
           "harEndring": true
         },
         {
-          "dato": "fredag 30. desember",
+          "dato": "fredag 8. november",
           "status": {
             "forrige": null,
             "gjeldende": "Deltatt",
@@ -150,7 +150,7 @@
           "harEndring": true
         },
         {
-          "dato": "lørdag 31. desember",
+          "dato": "lørdag 9. november",
           "status": {
             "forrige": null,
             "gjeldende": "Ikke tiltaksdag",
@@ -174,7 +174,7 @@
           "harEndring": true
         },
         {
-          "dato": "søndag 1. januar",
+          "dato": "søndag 10. november",
           "status": {
             "forrige": null,
             "gjeldende": "Ikke tiltaksdag",
@@ -202,15 +202,15 @@
     {
       "korrigering": true,
       "periode": {
-        "fraOgMed": "2. januar 2023",
-        "tilOgMed": "6. januar 2023"
+        "fraOgMed": "11. november 2024",
+        "tilOgMed": "15. november 2024"
       },
       "beløp": 508,
       "beløpDiff": -338,
       "harBarnetillegg": true,
       "dager": [
         {
-          "dato": "mandag 2. januar",
+          "dato": "mandag 11. november",
           "status": {
             "forrige": "Syk",
             "gjeldende": "Deltatt",
@@ -234,7 +234,7 @@
           "harEndring": true
         },
         {
-          "dato": "tirsdag 3. januar",
+          "dato": "tirsdag 12. november",
           "status": {
             "forrige": "Deltatt",
             "gjeldende": "Ikke tiltaksdag",
@@ -258,7 +258,7 @@
           "harEndring": true
         },
         {
-          "dato": "onsdag 4. januar",
+          "dato": "onsdag 13. november",
           "status": {
             "forrige": "Deltatt",
             "gjeldende": "Ikke besvart",
@@ -282,7 +282,7 @@
           "harEndring": true
         },
         {
-          "dato": "torsdag 5. januar",
+          "dato": "torsdag 14. november",
           "status": {
             "forrige": "Deltatt",
             "gjeldende": "Deltatt",
@@ -306,7 +306,7 @@
           "harEndring": false
         },
         {
-          "dato": "fredag 6. januar",
+          "dato": "fredag 15. november",
           "status": {
             "forrige": "Deltatt",
             "gjeldende": "Deltatt",

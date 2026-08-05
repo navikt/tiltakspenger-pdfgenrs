@@ -100,8 +100,7 @@
       window.brevPreview.setMainCaption(label(refs.a));
       $("caption-b").querySelector(".label").textContent = label(refs.b);
     } else {
-      // LEGACY PDFGEN: hovedpanelet trenger fortsatt merkelapp når gammel pdfgen vises ved siden av
-      window.brevPreview.setMainCaption(window.brevPreview.legacyActive ? "pdfgenrs (ny)" : null);
+      window.brevPreview.setMainCaption(null); // ett panel trenger ingen merkelapp
     }
   }
 
@@ -119,12 +118,8 @@
 
   $("compare-rs").onchange = () => setActive($("compare-rs").checked);
 
-  window.brevPreview.onGenerate(async (template, body, { legacyOnly }) => {
+  window.brevPreview.onGenerate(async (template, body) => {
     if (!active) return;
-    if (legacyOnly) {
-      panelB.blank(); // LEGACY PDFGEN: malen finnes ikke i pdfgenrs i det hele tatt
-      return;
-    }
     try {
       await panelB.load(await target(refs.b, template), body);
     } catch (e) {

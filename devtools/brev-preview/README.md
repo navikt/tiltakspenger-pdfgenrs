@@ -6,7 +6,7 @@ Utviklerverktøy for å forhåndsvise brevene i nettleseren: velg brev, juster f
 
 Fra repo-rota:
 
-```
+```bash
 ./run_devtools.sh
 ```
 
@@ -36,34 +36,20 @@ Containerne er lette å kjenne igjen i `docker ps`:
 
 Skulle en økt ha krasjet uten opprydding, er det trygt å fjerne alt med `docker rm -f $(docker ps -aq --filter name=pdfgenrs-devtools)` — de gjenskapes ved behov.
 
-## Overgangsfase: gammel pdfgen side om side
+## Demo i dev
 
-Så lenge `../tiltakspenger-pdfgen` finnes (utsjekket meta-repo), vises PDF-en fra gammel pdfgen ved siden av den nye, generert fra de samme flettedataene, slik at det er lett å sammenlikne brevene.
-Scriptet finner en kjørende pdfgen på port 8081, og prøver å starte den med `docker compose up -d --build` i pdfgen-repoet om den ikke svarer (tilsvarer `../tiltakspenger-pdfgen/run_development.sh`, bare detached).
-(Panelet viker når «Sammenlign versjoner» er på.)
+Samme side kjører som egen nais-app i dev, slik at brevene kan vises og redigeres uten repo og Docker lokalt: <https://tiltakspenger-pdfgenrs-demo.intern.dev.nav.no>.
+Se [«Demo i dev»](../../README.md#demo-i-dev) i repoets README for oppsett og deploy.
 
-Brev som ikke finnes i gammel pdfgen merkes med «finnes ikke i pdfgen».
-Brev som ennå ikke er migrert til pdfgenrs vises i mallisten som «(kun i pdfgen)» — flettedataene hentes da fra pdfgen-repoet og kun det gamle panelet rendres.
-
-### Slette legacy-støtten når pdfgen fjernes
-
-Alt er merket med `LEGACY PDFGEN`:
-
-```
-grep -rn "LEGACY PDFGEN" devtools/brev-preview
-```
-
-1. Slett `legacy.js`
-2. Fjern de merkede blokkene i `serve.py`, `index.html`, `app.js` og `compare.js`
-3. Fjern denne seksjonen fra denne README-en
+Versjonssammenligningen er av der, siden den trenger `docker` og `git` i containeren.
+Siden oppdager det selv: `compare.js` skjuler hele funksjonen når `/api/refs` ikke svarer, og `serve.py` registrerer ikke de rutene når `NAIS_APP_NAME` er satt.
 
 ## Miljøvariabler
 
-| Variabel            | Default                 | Beskrivelse                                        |
-|---------------------|-------------------------|----------------------------------------------------|
-| `DEVTOOLS_PORT`     | `8087`                  | Port for devtools-siden                            |
-| `PDFGEN_URL`        | `http://localhost:8084` | Adresse til pdfgenrs-serveren                      |
-| `LEGACY_PDFGEN_URL` | `http://localhost:8081` | Adresse til gammel pdfgen (LEGACY PDFGEN, se over) |
+| Variabel        | Default                 | Beskrivelse                   |
+|-----------------|-------------------------|-------------------------------|
+| `DEVTOOLS_PORT` | `8087`                  | Port for devtools-siden       |
+| `PDFGEN_URL`    | `http://localhost:8084` | Adresse til pdfgenrs-serveren |
 
 ## Hvordan det henger sammen
 
@@ -78,8 +64,7 @@ Frontend (ren HTML/JS/CSS uten avhengigheter):
 
 - `app.js` er kjernen: flettedata-state, mal-valg og hovedpanelet. Ekstra paneler kobler seg på via `window.brevPreview` (`onGenerate`-hooken får mal + flettedata ved hver generering).
 - `form.js` genererer skjemaet rekursivt fra JSON-strukturen: boolske felt blir checkboxer, tall og tekst blir inputs, og arrays får «Legg til»/«Fjern»-knapper.
-- `panel.js` er gjenbrukbar lasting av PDF inn i en iframe (objectURL-opprydding, utdaterte svar ignoreres) — brukes av alle tre panelene.
+- `panel.js` er gjenbrukbar lasting av PDF inn i en iframe (objectURL-opprydding, utdaterte svar ignoreres) — brukes av begge panelene.
 - `compare.js` er versjonssammenligningen (ref-feltene og høyrepanelet).
-- `legacy.js` er panelet for gammel pdfgen (LEGACY PDFGEN, se over).
 
 Brevlisten kommer fra filnavnene i `data/tpts/` — nye brev dukker opp automatisk.

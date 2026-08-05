@@ -18,6 +18,9 @@ spec:
         - application: tiltakspenger-meldekort-api
         - application: tiltakspenger-soknad-api
         - application: tiltakspenger-saksbehandling-api
+        # Brev-preview-demoen deployes kun til dev, og cluster-feltet holder regelen der.
+        - application: tiltakspenger-pdfgenrs-demo
+          cluster: dev-gcp
   azure:
     application:
       enabled: false
