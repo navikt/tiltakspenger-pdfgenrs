@@ -74,6 +74,8 @@ INNHOLDSKRAV = {
     "meldekort-korrigert": {"krever": ["Meldekort for tiltakspenger"], "forbyr": ["Med vennlig hilsen"]},
     "soknad": {"forbyr": ["Med vennlig hilsen"]},
     "klageAvvis--uten-saksbehandler": {"krever": ["ingen saksbehandler tildelt"]},
+    # Forhåndsvisning før klagebehandlingen er tildelt: samme kravliste som klageInnstilling, pluss plassholderen for saksbehandler.
+    "klageInnstilling--uten-saksbehandler": {"krever": ["Har du spørsmål?", "Med vennlig hilsen", "Nav Tiltak Oslo", "Oversendelsesbrev til Nav Klageinstans", "side 1 av", "ingen saksbehandler tildelt"]},
     "vedtakInnvilgelse--tom-beslutter": {"forbyr": ["ingen saksbehandler tildelt"]},
     "vedtakInnvilgelse--tom-saksbehandler": {"krever": ["ingen saksbehandler tildelt"]},
     "meldekortvedtak--automatisk": {"krever": ["Automatisk behandlet"], "forbyr": ["Med vennlig hilsen", "Nav Tiltak Oslo"]},
@@ -81,7 +83,7 @@ INNHOLDSKRAV = {
     "vedtakOpphør--kun-fritekst": {"krever": ["Slik har vi vurdert saken din", "tiltakspengeforskriften § 3"]},
 }
 # Datasett der standardkravene for utgående brev ikke gjelder: automatisk behandlede vedtak har ingen signatur, og klageInnstilling har egen kravliste.
-UTEN_STANDARDKRAV = {"klageInnstilling", "meldekortvedtak--automatisk"}
+UTEN_STANDARDKRAV = {"klageInnstilling", "klageInnstilling--uten-saksbehandler", "meldekortvedtak--automatisk"}
 
 
 def malnavn(datanavn):
