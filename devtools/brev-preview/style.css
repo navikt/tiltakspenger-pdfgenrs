@@ -1,3 +1,20 @@
+/* Ren CSS uten avhengigheter.
+   Fargene er Aksel-tokens, samme kilde som malene bruker (se AGENTS.md -> Design tokens). */
+:root {
+  color-scheme: light;
+  --tekst: #23262a; /* --a-text-default */
+  --tekst-svak: #5c6169; /* --a-text-subtle */
+  --flate: #fff; /* --a-surface-default */
+  --flate-svak: #f2f3f5; /* --a-surface-subtle */
+  --kant: #d3d8dd; /* --a-border-divider */
+  --handling: #0067c5; /* --a-surface-action */
+  --handling-mork: #005b9f; /* --a-surface-action-hover */
+  --fare: #c30000; /* --a-border-danger */
+  --mork: #23262a;
+  --mork-hev: #31363c;
+  --radius: 6px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -12,32 +29,130 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  font: 14px/1.4 system-ui, sans-serif;
-  background: #f4f4f4;
+  font: 14px/1.45 system-ui, sans-serif;
+  color: var(--tekst);
+  background: var(--flate-svak);
 }
+
+:focus-visible {
+  outline: 3px solid var(--handling);
+  outline-offset: 1px;
+}
+
+/* ---------- Header ---------- */
 
 header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: #23262a;
+  gap: 0.5rem 0.75rem;
+  padding: 0.6rem 1rem;
+  background: var(--mork);
   color: #fff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
 }
 
-header h1 {
-  font-size: 1rem;
-  margin: 0 1rem 0 0;
+/* Blå fokusring forsvinner i den mørke headeren */
+header :focus-visible {
+  outline-color: #fff;
+}
+
+.merke {
+  margin-right: 0.5rem;
+}
+
+.merke h1 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.merke p {
+  margin: 0;
+  font-size: 11px;
+  color: #a3a9b1;
+}
+
+.felt {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.felt label {
+  color: #d3d8dd;
+}
+
+/* Kontrollene i headeren skal ta plassen de trenger, ikke strekkes som i skjemaet */
+header select,
+header input:not([type="checkbox"]) {
+  flex: none;
+  width: auto;
+}
+
+#template {
+  min-width: 13rem;
 }
 
 #status {
-  color: #9ca3af;
+  color: #d3d8dd;
+  font-size: 13px;
+}
+
+#status:not(:empty)::before {
+  content: "";
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.4rem;
+  border-radius: 50%;
+  background: #ffaa33; /* --a-yellow-400 */
+  animation: puls 1s ease-in-out infinite;
+}
+
+@keyframes puls {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #status:not(:empty)::before {
+    animation: none;
+  }
+
+  summary::before {
+    transition: none;
+  }
+}
+
+/* Skjema/JSON som segmentert valg */
+#mode {
+  display: flex;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+#mode button {
+  border-radius: 0;
+  border-color: transparent;
+  background: var(--mork-hev);
+  color: #d3d8dd;
+}
+
+#mode button + button {
+  border-left: 1px solid var(--mork);
+}
+
+#mode button:hover {
+  background: #3d434a;
+  color: #fff;
 }
 
 #mode button.active {
-  background: #0067c5;
+  background: var(--handling);
   color: #fff;
-  border-color: #0067c5;
 }
 
 /* VERSJONSSAMMENLIGNING: modus-valg og ref-felter i headeren */
@@ -60,6 +175,7 @@ header h1 {
   display: flex;
   align-items: center;
   gap: 0.3rem;
+  color: #d3d8dd;
 }
 
 #compare-rs-controls select,
@@ -67,6 +183,8 @@ header h1 {
   flex: none;
   width: 14rem;
 }
+
+/* ---------- Layout ---------- */
 
 main {
   flex: 1;
@@ -76,15 +194,24 @@ main {
 }
 
 #editor {
+  display: flex;
+  flex-direction: column;
   overflow: auto;
-  padding: 0.75rem;
-  border-right: 1px solid #ccc;
+  padding: 0.75rem 0.9rem 2rem;
+  background: var(--flate-svak);
+  border-right: 1px solid var(--kant);
+}
+
+/* Skjemaet skal ha sin naturlige høyde og la #editor scrolle, ikke klemmes sammen */
+#form {
+  flex: none;
 }
 
 #preview {
   display: flex;
   min-width: 0;
   min-height: 0;
+  background: #5c6169;
 }
 
 #preview iframe {
@@ -92,7 +219,7 @@ main {
   width: 100%;
   height: 100%;
   border: 0;
-  background: #808080;
+  background: #5c6169;
 }
 
 #preview figure {
@@ -104,66 +231,193 @@ main {
 }
 
 #preview figure + figure {
-  border-left: 1px solid #555;
+  border-left: 1px solid #31363c;
 }
 
 #preview figcaption {
-  padding: 0.15rem 0.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.3rem 0.75rem;
   font-size: 12px;
-  background: #e5e5e5;
-  border-bottom: 1px solid #ccc;
+  color: var(--tekst);
+  background: var(--flate);
+  border-bottom: 1px solid var(--kant);
+}
+
+#preview figcaption .label {
+  font-weight: 600;
 }
 
 #preview figcaption .err {
-  color: #b91c1c;
-  margin-left: 0.5rem;
+  color: var(--fare);
   white-space: pre-wrap;
 }
 
+/* Fyller resten av panelet uansett hvor høy headeren har blitt */
 #json {
+  flex: 1;
   width: 100%;
-  height: calc(100vh - 6rem);
-  font: 12px/1.4 ui-monospace, monospace;
+  min-height: 20rem;
+  max-height: none;
+  field-sizing: fixed;
+  font: 12px/1.5 ui-monospace, monospace;
 }
 
 #error {
-  color: #b91c1c;
+  flex: none;
+  margin: 0.75rem 0 0;
+  padding: 0.6rem 0.75rem;
+  color: var(--fare);
+  background: #fff;
+  border: 1px solid var(--fare);
+  border-left-width: 4px;
+  border-radius: var(--radius);
   white-space: pre-wrap;
   font-family: ui-monospace, monospace;
 }
 
+/* ---------- Skjema ---------- */
+
 .row {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
-  margin: 0.25rem 0;
+  padding: 0.15rem 0;
+  margin: 0.15rem 0;
 }
 
-.row.nested {
-  flex-direction: column;
-  gap: 0.15rem;
+/* Flerlinjede felt: nøkkelen står på første linje, ikke midt i tekstboksen */
+.row:has(textarea) {
+  align-items: flex-start;
+}
+
+.row:has(textarea) > .key {
+  padding-top: 0.3rem;
+}
+
+.row:hover > .key {
+  color: var(--tekst);
 }
 
 .key {
+  flex: none;
   min-width: 9rem;
-  padding-top: 0.25rem;
   font-family: ui-monospace, monospace;
-  color: #444;
+  font-size: 12px;
+  color: var(--tekst-svak);
+  overflow-wrap: anywhere;
 }
 
-.row > .object,
-.row > .array {
-  flex: 1;
+/* display: flex på <summary> skjuler den innebygde trekanten, så den tegnes selv */
+summary {
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::before {
+  content: "";
+  flex: none;
+  width: 0;
+  height: 0;
+  border-left: 5px solid currentcolor;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  opacity: 0.5;
+  transition: transform 0.1s ease-out;
+}
+
+details[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+/* Sammenleggbar gruppe: objekt eller liste under en nøkkel */
+.gruppe {
+  margin: 0.35rem 0;
+}
+
+.gruppe > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.gruppe > summary:hover {
+  color: var(--tekst);
+}
+
+/* Gruppene øverst i brevet er de som deler opp flettedataene, og skal veie tyngst */
+#form > .object > .gruppe > summary {
+  color: var(--tekst);
+  font-weight: 600;
+}
+
+.gruppe > .object,
+.gruppe > .array {
   padding-left: 0.75rem;
-  border-left: 2px solid #ddd;
+  margin-left: 0.3rem;
+  border-left: 2px solid var(--kant);
 }
 
+/* Ett ledd i en liste */
 .item {
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 0.5rem;
-  margin: 0.25rem 0;
-  background: #fff;
+  margin: 0.35rem 0;
+  padding: 0.4rem 0.6rem;
+  background: var(--flate);
+  border: 1px solid var(--kant);
+  border-radius: var(--radius);
 }
+
+.item > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: -0.4rem -0.6rem;
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.item[open] > summary {
+  margin-bottom: 0.4rem;
+  border-bottom: 1px solid var(--kant);
+}
+
+.item.flat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nummer {
+  flex: none;
+  min-width: 1.4rem;
+  height: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--tekst-svak);
+  background: var(--flate-svak);
+  border-radius: 50%;
+}
+
+.ledetekst {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--tekst-svak);
+}
+
+/* ---------- Kontroller ---------- */
 
 input,
 textarea,
@@ -173,27 +427,87 @@ button {
 }
 
 input:not([type="checkbox"]),
-textarea {
+textarea,
+select {
   flex: 1;
+  min-width: 0;
   width: 100%;
-  padding: 0.2rem 0.4rem;
-  border: 1px solid #bbb;
-  border-radius: 4px;
+  padding: 0.25rem 0.4rem;
+  color: var(--tekst);
+  background: var(--flate);
+  border: 1px solid #9ba3ab;
+  border-radius: var(--radius);
+}
+
+input[type="checkbox"] {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0; /* uten dette står checkboxene et par piksler til høyre for de andre feltene */
+  accent-color: var(--handling);
 }
 
 textarea {
   min-height: 4.5rem;
+  /* Vokser med teksten der nettleseren støtter det, ellers står den på min-height */
+  field-sizing: content;
+  max-height: 50vh;
+  resize: vertical;
 }
 
-button {
-  padding: 0.25rem 0.75rem;
-  border: 1px solid #bbb;
-  border-radius: 4px;
-  background: #fff;
+select {
   cursor: pointer;
 }
 
+/* Avledet felt: en visning av noe som regnes ut, ikke et felt du kan fylle ut */
+input.avledet {
+  color: var(--tekst-svak);
+  background: var(--flate-svak);
+  border-style: dashed;
+  cursor: not-allowed;
+}
+
+button {
+  padding: 0.3rem 0.8rem;
+  color: var(--tekst);
+  background: var(--flate);
+  border: 1px solid #9ba3ab;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--flate-svak);
+}
+
+button.primaer {
+  color: #fff;
+  background: var(--handling);
+  border-color: var(--handling);
+  font-weight: 600;
+}
+
+button.primaer:hover {
+  background: var(--handling-mork);
+  border-color: var(--handling-mork);
+}
+
 button.small {
-  margin-top: 0.25rem;
+  margin-top: 0.35rem;
+  padding: 0.15rem 0.6rem;
   font-size: 12px;
+  color: var(--handling);
+  border-color: var(--kant);
+}
+
+button.fjern {
+  flex: none;
+  padding: 0.1rem 0.5rem;
+  font-size: 12px;
+  color: var(--tekst-svak);
+  border-color: var(--kant);
+}
+
+button.fjern:hover {
+  color: var(--fare);
+  border-color: var(--fare);
 }

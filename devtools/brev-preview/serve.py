@@ -99,6 +99,15 @@ class Handler(SimpleHTTPRequestHandler):
         # I demo-imaget inneholder rota kun devtools/brev-preview og data/tpts.
         super().__init__(*args, directory=REPO_ROOT, **kwargs)
 
+    def end_headers(self):
+        # Siden, skriptene og flettedataene endres mens man jobber. Uten dette
+        # bestemmer nettleseren selv hvor lenge den beholder en gammel style.css
+        # eller app.js, og en endring ser ut til å ikke slå gjennom.
+        # «no-cache» betyr «spør alltid», ikke «ikke lagre» - uendrede filer
+        # svarer fortsatt 304 og lastes ikke ned på nytt.
+        self.send_header("Cache-Control", "no-cache")
+        super().end_headers()
+
     def do_GET(self):
         if self.path in ("/", "/index.html"):
             self.send_response(302)

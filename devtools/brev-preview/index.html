@@ -3,22 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>pdfgenrs devtools</title>
-  <link rel="icon" href="data:,">
+  <title>Brevforhåndsvisning – tiltakspenger</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='3' fill='%230067c5'/><g fill='%23fff'><rect x='4' y='3' width='8' height='10' rx='1'/></g><g fill='%230067c5'><rect x='5.5' y='5' width='5' height='1'/><rect x='5.5' y='7' width='5' height='1'/><rect x='5.5' y='9' width='3' height='1'/></g></svg>">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>pdfgenrs</h1>
-    <label for="template">Brev</label>
-    <select id="template"></select>
-    <nav id="mode">
+    <div class="merke">
+      <h1>Brevforhåndsvisning</h1>
+      <p>tiltakspenger-pdfgenrs</p>
+    </div>
+    <div class="felt">
+      <label for="template">Brev</label>
+      <select id="template"></select>
+    </div>
+    <nav id="mode" aria-label="Redigeringsmodus">
       <button type="button" data-mode="form" class="active">Skjema</button>
       <button type="button" data-mode="json">JSON</button>
     </nav>
     <button type="button" id="reset">Tilbakestill</button>
-    <button type="button" id="generate">Generer PDF</button>
-    <span id="status"></span>
+    <button type="button" id="generate" class="primaer">Generer PDF</button>
+    <span id="status" role="status"></span>
     <!-- VERSJONSSAMMENLIGNING: pdfgenrs mot pdfgenrs på en annen git-ref -->
     <span id="compare-rs-nav" hidden>
       <label><input type="checkbox" id="compare-rs"> Sammenlign versjoner</label>
@@ -34,7 +39,7 @@
   <main>
     <section id="editor">
       <form id="form"></form>
-      <textarea id="json" hidden spellcheck="false"></textarea>
+      <textarea id="json" hidden spellcheck="false" aria-label="Flettedata som JSON"></textarea>
       <p id="error" hidden></p>
     </section>
     <section id="preview">
@@ -50,6 +55,8 @@
     </section>
   </main>
   <script src="panel.js"></script>
+  <script src="enums.js"></script>
+  <script src="avledet.js"></script>
   <script src="form.js"></script>
   <script src="app.js"></script>
   <!-- VERSJONSSAMMENLIGNING: pdfgenrs mot pdfgenrs -->

@@ -4,6 +4,7 @@ const $ = (id) => document.getElementById(id);
 
 let defaults = null; // original flettedata fra data/tpts
 let current = null; // gjeldende (redigerte) flettedata
+let felt = { enum: {}, avledet: {} }; // enums.js/avledet.js for valgt datasett
 let mode = "form";
 let generateTimer = null;
 let generateSeq = 0;
@@ -35,11 +36,20 @@ function scheduleGenerate() {
   generateTimer = setTimeout(generate, 400);
 }
 
+// Ved hver endring i skjemaet: regn ut de avledede feltene på nytt og vis dem,
+// før genereringen planlegges. JSON-modus er rå og røres ikke — der setter du hva du vil.
+function endret() {
+  beregnAvledede(current, felt.avledet);
+  for (const visning of $("form").querySelectorAll(".avledet")) visning.oppdater();
+  scheduleGenerate();
+}
+
 function render() {
   $("form").hidden = mode !== "form";
   $("json").hidden = mode !== "json";
   if (mode === "form") {
-    $("form").replaceChildren(buildEditor(current, (v) => (current = v), scheduleGenerate));
+    beregnAvledede(current, felt.avledet); // også når skjemaet åpnes etter en runde i JSON-modus
+    $("form").replaceChildren(buildEditor(current, (v) => (current = v), endret, felt));
   } else {
     $("json").value = JSON.stringify(current, null, 2);
   }
@@ -76,6 +86,7 @@ async function generate() {
 async function loadTemplate() {
   const name = $("template").value;
   localStorage.setItem("devtools-template", name);
+  felt = { enum: enumFeltFor(name), avledet: avledetFeltFor(name) };
   defaults = await (await fetch(`/data/tpts/${name}.json`)).json();
   current = structuredClone(defaults);
   render();

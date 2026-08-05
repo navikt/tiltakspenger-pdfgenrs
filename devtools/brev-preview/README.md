@@ -17,6 +17,42 @@ Det finner en kjørende pdfgenrs på port 8084, og starter den selv med `docker 
 
 Om containeren på 8084 ikke volum-monterer dette repoet (typisk metarepoets compose, som baker malene inn i imaget ved build og dermed viser en gammel versjon), oppdages det ved oppstart og devtoolsen starter i stedet en egen container for arbeidskatalogen.
 
+## Nedtrekkslister for felt som er enum
+
+Felt som egentlig er enum vises som nedtrekksliste i skjemaet, med en lesbar etikett i listen og selve verdien som tittel på feltet.
+De står i [`enums.js`](enums.js), med sti inn i flettedataene per datasett i `data/tpts`:
+
+| Datasett                | Felt                                    | Kilde                                                     |
+|-------------------------|-----------------------------------------|-----------------------------------------------------------|
+| `meldekort*`            | `dager[].status`                        | `meldekortLabelsNo`/`-En` i `lib/meldekortComponents.typ`  |
+| `vedtakAvslag`          | `avslagsgrunner[]`                      | grenene i `lib/avslagComponents.typ`                       |
+| `meldekortvedtak`       | `…dager[].status.forrige`/`.gjeldende`  | `toStatus()` i `BrevMeldekortvedtakDTO.kt`                 |
+| `utbetalingsvedtak`     | `saksbehandler.type`/`beslutter.type`   | `templates/tpts/utbetalingsvedtak.typ`                     |
+
+Listene er kopier av kilden, på samme måte som `AVSLAGSGRUNNER` i `test/run-tests.py` — verdiene kan ikke leses ut av malene i drift, siden demo-imaget bare inneholder `devtools/brev-preview` og `data/tpts`.
+Endres kilden, må listen oppdateres.
+En verdi som ikke står i listen (typisk skrevet inn i JSON-modus) blir stående, merket «ukjent verdi».
+
+Resten av feltene er fritekst, tall eller checkbox som før.
+Statusene i `utbetalingsvedtak` har et eget sett ord som ingen kilde i flåten lenger produserer (malen er avløst av `meldekortvedtak`), og er derfor ikke satt opp som enum.
+
+## Felt som regnes ut fra andre felt
+
+Noen felt i flettedataene er ikke noe saksbehandler fyller ut — backend regner dem ut fra andre felt i samme payload.
+De er skrivebeskyttet i skjemaet (stiplet ramme) og oppdateres med det samme grunnlaget endres, så forhåndsvisningen ikke kan komme i utakt med seg selv.
+Reglene står i [`avledet.js`](avledet.js):
+
+| Datasett          | Felt                              | Regel                                                             |
+|-------------------|-----------------------------------|-------------------------------------------------------------------|
+| `vedtakAvslag`    | `avslagsgrunnerSize`              | antall `avslagsgrunner` (`BrevSøknadAvslagDTO.kt`)                 |
+| `meldekortvedtak` | `meldeperioder[].harBarnetillegg` | en dag har barnetillegg > 0 (`BrevMeldekortvedtakDTO.kt`)          |
+
+Bare felt der backend-regelen kan gjentas nøyaktig fra det payloaden inneholder står her.
+Beløpsfeltene i `meldekortvedtak` ser avledede ut, men er det ikke: `meldeperioder[].beløp` summerer dagene i *beregningen*, mens `dager` i payloaden kommer fra sammenligningen, og `totaltBelop` hentes fra behandlingen.
+Å summere dagene i skjemaet ville vært en gjetning, ikke samme regel som backend.
+
+Regelen gjelder bare skjemaet — JSON-modus er rå, og der kan du sette hva du vil.
+
 ## Sammenlikne versjoner (pdfgenrs mot pdfgenrs)
 
 Huk av «Sammenlign versjoner» i headeren for å se det samme brevet, med de samme flettedataene, fra to versjoner av repoet side om side:
@@ -63,7 +99,10 @@ Backend (kun Python-stdlib):
 Frontend (ren HTML/JS/CSS uten avhengigheter):
 
 - `app.js` er kjernen: flettedata-state, mal-valg og hovedpanelet. Ekstra paneler kobler seg på via `window.brevPreview` (`onGenerate`-hooken får mal + flettedata ved hver generering).
-- `form.js` genererer skjemaet rekursivt fra JSON-strukturen: boolske felt blir checkboxer, tall og tekst blir inputs, og arrays får «Legg til»/«Fjern»-knapper.
+- `form.js` genererer skjemaet rekursivt fra JSON-strukturen: boolske felt blir checkboxer, tall og tekst blir inputs, enum-felt blir nedtrekkslister, og arrays får «Legg til»/«Fjern»-knapper.
+  Objekter og lister er sammenleggbare, og lister med mer enn tre ledd starter sammenlagt med første tekstverdi som overskrift — ellers drukner de lange brevene i dager og perioder.
+- `enums.js` er listen over felt som er enum, med sti inn i flettedataene per datasett (se over).
+- `avledet.js` er reglene for felt som regnes ut fra andre felt, med samme stisyntaks.
 - `panel.js` er gjenbrukbar lasting av PDF inn i en iframe (objectURL-opprydding, utdaterte svar ignoreres) — brukes av begge panelene.
 - `compare.js` er versjonssammenligningen (ref-feltene og høyrepanelet).
 
