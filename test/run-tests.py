@@ -273,9 +273,9 @@ def avslagsvarianter():
     basis = json.loads((DATA_DIR / "vedtakAvslag.json").read_text())
     for grunn in AVSLAGSGRUNNER:
         for medBarn in (True, False):
-            payload = dict(basis, avslagsgrunner=[grunn], avslagsgrunnerSize=1, harSøktMedBarn=medBarn, hjemlerTekst=None)
+            payload = dict(basis, avslagsgrunner=[grunn], harSøktMedBarn=medBarn, hjemlerTekst=None)
             yield f"vedtakAvslag--{grunn.lower()}{'' if medBarn else '-uten-barn'}", payload
-    payload = dict(basis, avslagsgrunner=AVSLAGSGRUNNER, avslagsgrunnerSize=len(AVSLAGSGRUNNER))
+    payload = dict(basis, avslagsgrunner=AVSLAGSGRUNNER)
     yield "vedtakAvslag--alle-grunner", payload
 
 

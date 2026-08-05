@@ -1,16 +1,12 @@
 // Felt som backend regner ut fra andre felt i samme payload. De er skrivebeskyttet
 // i skjemaet og regnes ut på nytt når grunnlaget endres, så forhåndsvisningen ikke
-// kan komme i utakt med seg selv — legger du til en avslagsgrunn, følger tellingen med.
+// kan komme i utakt med seg selv — endrer du barnetillegget på en dag, følger flagget med.
 //
 // Regelen får objektet feltet står i som første argument og hele payloaden som andre.
 // Kilden står over hver regel; endres den, må regelen her følge etter.
 // Rekkefølgen betyr noe: et felt som bygger på et annet avledet felt må stå etter det.
 
 const AVLEDEDE_FELT = {
-  vedtakAvslag: {
-    // BrevSøknadAvslagDTO.kt: avslagsgrunnerSize = avslagsgrunner.size
-    avslagsgrunnerSize: (data) => data.avslagsgrunner.length,
-  },
   meldekortvedtak: {
     // BrevMeldekortvedtakDTO.kt: harBarnetillegg = dager.any { barnetillegg.gjeldende > 0 || (forrige ?: 0) > 0 },
     // regnet ut fra nettopp den daglisten som havner i payloaden.

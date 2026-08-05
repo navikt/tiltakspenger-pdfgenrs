@@ -58,7 +58,6 @@ Reglene står i [`avledet.js`](avledet.js):
 
 | Datasett          | Felt                              | Regel                                                             |
 |-------------------|-----------------------------------|-------------------------------------------------------------------|
-| `vedtakAvslag`    | `avslagsgrunnerSize`              | antall `avslagsgrunner` (`BrevSøknadAvslagDTO.kt`)                 |
 | `meldekortvedtak` | `meldeperioder[].harBarnetillegg` | en dag har barnetillegg > 0 (`BrevMeldekortvedtakDTO.kt`)          |
 
 Bare felt der backend-regelen kan gjentas nøyaktig fra det payloaden inneholder står her.
