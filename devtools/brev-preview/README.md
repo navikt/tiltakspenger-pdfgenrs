@@ -17,6 +17,22 @@ Det finner en kjørende pdfgenrs på port 8084, og starter den selv med `docker 
 
 Om containeren på 8084 ikke volum-monterer dette repoet (typisk metarepoets compose, som baker malene inn i imaget ved build og dermed viser en gammel versjon), oppdages det ved oppstart og devtoolsen starter i stedet en egen container for arbeidskatalogen.
 
+## Dele en lenke til et bestemt brev
+
+«Kopier lenke» i headeren gir en URL som åpner samme brev med samme innhold hos den som får den.
+Adressefeltet holdes i takt med det du ser, så lenken kan også bare kopieres derfra.
+
+Alt ligger i fragmentet (`#brev=…&data=…`), som aldri sendes til serveren — flettedataene inneholder syntetiske fødselsnumre og har ingenting i en accesslogg å gjøre.
+Har du ikke endret noe, bærer lenken bare brevnavnet (`#brev=vedtakAvslag`) og viser datasettet fra `data/tpts`.
+Har du endret noe, pakkes hele payloaden med, gzippet og base64url-kodet.
+Lenken er altså selvbærende, ikke en diff mot `data/tpts`: en gammel lenke viser det samme brevet selv om testdatasettet endres senere.
+
+Målt på datasettene i repoet blir lenkene 600–1200 tegn, og `utbetalingsvedtak` er den lengste med 1537.
+Det er godt innenfor det Slack og e-post takler.
+
+Er lenken avkortet på veien, sier siden fra og viser datasettet i stedet for å stå igjen tom — brevvalget i lenken beholdes.
+Lenken virker likt lokalt og i demoen i dev; bare vertsnavnet skiller.
+
 ## Nedtrekkslister for felt som er enum
 
 Felt som egentlig er enum vises som nedtrekksliste i skjemaet, med en lesbar etikett i listen og selve verdien som tittel på feltet.
@@ -103,6 +119,7 @@ Frontend (ren HTML/JS/CSS uten avhengigheter):
   Objekter og lister er sammenleggbare, og lister med mer enn tre ledd starter sammenlagt med første tekstverdi som overskrift — ellers drukner de lange brevene i dager og perioder.
 - `enums.js` er listen over felt som er enum, med sti inn i flettedataene per datasett (se over).
 - `avledet.js` er reglene for felt som regnes ut fra andre felt, med samme stisyntaks.
+- `lenke.js` pakker brev og flettedata inn i og ut av fragmentet i URL-en (se over).
 - `panel.js` er gjenbrukbar lasting av PDF inn i en iframe (objectURL-opprydding, utdaterte svar ignoreres) — brukes av begge panelene.
 - `compare.js` er versjonssammenligningen (ref-feltene og høyrepanelet).
 
