@@ -57,7 +57,6 @@ UTGÅENDE_MALER = {
     "meldekortvedtak",
     "revurderingInnvilgelse",
     "stansvedtak",
-    "utbetalingsvedtak",
     "vedtakAvslag",
     "vedtakInnvilgelse",
     "vedtakOpphør",
@@ -78,10 +77,9 @@ INNHOLDSKRAV = {
     "vedtakInnvilgelse--tom-beslutter": {"forbyr": ["ingen saksbehandler tildelt"]},
     "vedtakInnvilgelse--tom-saksbehandler": {"krever": ["ingen saksbehandler tildelt"]},
     "meldekortvedtak--automatisk": {"krever": ["Automatisk behandlet"], "forbyr": ["Med vennlig hilsen", "Nav Tiltak Oslo"]},
-    "utbetalingsvedtak--automatisk": {"krever": ["Automatisk behandlet"], "forbyr": ["Med vennlig hilsen", "Nav Tiltak Oslo"]},
 }
 # Datasett der standardkravene for utgående brev ikke gjelder: automatisk behandlede vedtak har ingen signatur, og klageInnstilling har egen kravliste.
-UTEN_STANDARDKRAV = {"klageInnstilling", "meldekortvedtak--automatisk", "utbetalingsvedtak--automatisk"}
+UTEN_STANDARDKRAV = {"klageInnstilling", "meldekortvedtak--automatisk"}
 
 
 def malnavn(datanavn):

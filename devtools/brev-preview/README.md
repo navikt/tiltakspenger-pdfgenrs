@@ -27,7 +27,7 @@ Har du ikke endret noe, bærer lenken bare brevnavnet (`#brev=vedtakAvslag`) og 
 Har du endret noe, pakkes hele payloaden med, gzippet og base64url-kodet.
 Lenken er altså selvbærende, ikke en diff mot `data/tpts`: en gammel lenke viser det samme brevet selv om testdatasettet endres senere.
 
-Målt på datasettene i repoet blir lenkene 600–1200 tegn, og `utbetalingsvedtak` er den lengste med 1537.
+Målt på datasettene i repoet blir lenkene 600–1200 tegn, og `meldekortvedtak` er den lengste med rundt 1170.
 Det er godt innenfor det Slack og e-post takler.
 
 Er lenken avkortet på veien, sier siden fra og viser datasettet i stedet for å stå igjen tom — brevvalget i lenken beholdes.
@@ -43,14 +43,12 @@ De står i [`enums.js`](enums.js), med sti inn i flettedataene per datasett i `d
 | `meldekort*`            | `dager[].status`                        | `meldekortLabelsNo`/`-En` i `lib/meldekortComponents.typ`  |
 | `vedtakAvslag`          | `avslagsgrunner[]`                      | grenene i `lib/avslagComponents.typ`                       |
 | `meldekortvedtak`       | `…dager[].status.forrige`/`.gjeldende`  | `toStatus()` i `BrevMeldekortvedtakDTO.kt`                 |
-| `utbetalingsvedtak`     | `saksbehandler.type`/`beslutter.type`   | `templates/tpts/utbetalingsvedtak.typ`                     |
 
 Listene er kopier av kilden, på samme måte som `AVSLAGSGRUNNER` i `test/run-tests.py` — verdiene kan ikke leses ut av malene i drift, siden demo-imaget bare inneholder `devtools/brev-preview` og `data/tpts`.
 Endres kilden, må listen oppdateres.
 En verdi som ikke står i listen (typisk skrevet inn i JSON-modus) blir stående, merket «ukjent verdi».
 
 Resten av feltene er fritekst, tall eller checkbox som før.
-Statusene i `utbetalingsvedtak` har et eget sett ord som ingen kilde i flåten lenger produserer (malen er avløst av `meldekortvedtak`), og er derfor ikke satt opp som enum.
 
 ## Felt som regnes ut fra andre felt
 

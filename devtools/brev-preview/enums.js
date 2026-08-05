@@ -69,13 +69,6 @@ const MELDEKORTVEDTAK_STATUS = [
   "Ikke besvart",
 ];
 
-// templates/tpts/utbetalingsvedtak.typ: AUTOMATISK gir «Automatisk behandlet» i
-// stedet for signatur, MANUELL gir navnet.
-const BEHANDLINGSTYPE = [
-  ["MANUELL", "Manuell"],
-  ["AUTOMATISK", "Automatisk"],
-];
-
 // Felt som kan stå tomme.
 const INGEN = [null, "(ingen)"];
 
@@ -91,10 +84,6 @@ const ENUM_FELT = {
     "meldeperioder[].dager[].status.gjeldende": MELDEKORTVEDTAK_STATUS,
     // Forrige status finnes bare når dagen er korrigert.
     "meldeperioder[].dager[].status.forrige": [INGEN, ...MELDEKORTVEDTAK_STATUS],
-  },
-  utbetalingsvedtak: {
-    "saksbehandler.type": BEHANDLINGSTYPE,
-    "beslutter.type": BEHANDLINGSTYPE,
   },
 };
 
