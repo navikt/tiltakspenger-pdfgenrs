@@ -1,5 +1,5 @@
 #import "/lib/styles.typ": *
-#import "/lib/pensjonsbrev/template.typ": mainTitle
+#import "/lib/pensjonsbrev/content/header.typ": mainTitle
 #import "/lib/pensjonsbrev/content/title.typ": title1, title2, title3
 #import "/lib/pensjonsbrev/content/paragraph.typ": paragraph
 
