@@ -25,7 +25,9 @@ jobs:
       id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Deploy to NAIS
         # Versjonsoversikt (tag -> SHA): https://github.com/nais/deploy/tags
         # Denne SHA-en: https://github.com/nais/deploy/commit/2d18f050f07b6a007864c6a57070ed915d571beb
