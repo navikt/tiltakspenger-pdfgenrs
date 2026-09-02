@@ -1,5 +1,5 @@
 # Dockerfile
-FROM ghcr.io/navikt/pdfgenrs:1.0.17
+FROM ghcr.io/navikt/pdfgenrs:1.0.31
 
 # Søknadsvedleggene konverteres bilde → PDF via /api/v1/genpdf/image, og serverens default på 2 MiB er for lavt for dem.
 # Grensen gjelder per request (RequestBodyLimitLayer), altså hver enkelt fil og hver enkelt rendrede PDF-side — ikke hele søknaden.
