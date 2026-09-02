@@ -1,10 +1,10 @@
 # AGENTS.md — tiltakspenger-pdfgenrs
 
-Dette repoet følger monorepo-konvensjonene i [`../AGENTS.md`](../AGENTS.md).
+Dette repoet følger monorepo-konvensjonene i AGENTS.md i metarepoet `tiltakspenger` (ligger som `..` når repoet er klonet inn i monorepoet, eller som `../tiltakspenger` når dette repoet er klonet for seg selv).
 Les den først.
 
 Repoet inneholder kun Typst-maler (`templates/`, `lib/`), testdata (`data/`) og statiske ressurser oppå det prebygde serverimaget `ghcr.io/navikt/pdfgenrs`.
-Kotlin/JVM-konvensjonene i `../AGENTS-backend.md` gjelder derfor ikke her.
+Kotlin/JVM-konvensjonene i AGENTS-backend.md (også i metarepoet `tiltakspenger`) gjelder derfor ikke her.
 
 Lokalt kjører tjenesten på port `8084`, både via metarepoets docker-compose og dette repoets `docker-compose.yml`/`run_development.sh`.
 Port 8085 er reservert for `nais login` og skal ikke bindes her.
