@@ -1,7 +1,7 @@
 # Demo-appen i dev: brev-preview-siden servert av sin egen Python-server, med
 # pdfgenrs som separat nais-app. Kun dev - se «Demo i dev» i repoets README.
 # Bygges fra repo-rota, siden siden leser flettedataene i testdata/tpts direkte.
-FROM python:3.13-slim
+FROM python:3.14-slim
 
 WORKDIR /app
 
