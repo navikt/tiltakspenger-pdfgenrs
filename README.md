@@ -18,7 +18,7 @@ Flagget `--build` brukes for å bygge imaget på nytt, som vil si at applikasjon
 
 Kjør `./run_tests.sh`.
 Alt kjører i Docker (en pdfgenrs-container og en testrunner-container), så det trengs ingen verktøy på maskinen utover Docker.
-Testene rendrer alle datasettene i `data/tpts/`, kanttilfellevariantene i `test/data/` og genererte avslagsvarianter (hver avslagsgrunn alene med/uten barnetillegg + alle i punktliste, se `AVSLAGSGRUNNER` i `test/run-tests.py`), og sjekker at:
+Testene rendrer alle datasettene i `testdata/tpts/`, kanttilfellevariantene i `test/data/` og genererte avslagsvarianter (hver avslagsgrunn alene med/uten barnetillegg + alle i punktliste, se `AVSLAGSGRUNNER` i `test/run-tests.py`), og sjekker at:
 
 * alle maler kompilerer og svarer 200 med en gyldig PDF
 * alle sider er A4 og dokumentet har minst én side
@@ -48,7 +48,7 @@ Samme forhåndsvisning kjører som egen nais-app i dev, på to adresser:
 - <https://tiltakspenger-pdfgenrs-demo.intern.dev.nav.no> — krever naisdevice.
 
 Der kan hvem som helst velge et brev, redigere flettedataene og se PDF-en — uten repo, Docker eller Python lokalt.
-Utgangspunktet er datasettene i `data/tpts/`, som derfor skal vise et helt, normalt brev.
+Utgangspunktet er datasettene i `testdata/tpts/`, som derfor skal vise et helt, normalt brev.
 
 Appen har ingen egen autentisering, og trenger det ikke: `ansatt`-domenet sender deg til Entra-innlogging i kanten før trafikken når appen.
 Det er verifisert fra 4G utenfor Nav-nett, men står ikke i Nais-dokumentasjonen — test på nytt før du bygger om på antakelsen.
@@ -61,20 +61,20 @@ Demoen finnes **kun i dev**:
 - Innslippsregelen i [`.nais/nais.yml`](.nais/nais.yml) er merket `cluster: dev-gcp`, så den gjelder bare der.
   Ingenting i `.nais/vars/prod.yml` nevner demoen.
 
-Imaget bygges fra [`devtools/brev-preview/Dockerfile`](devtools/brev-preview/Dockerfile) og inneholder bare Python-serveren og `data/tpts/`.
+Imaget bygges fra [`devtools/brev-preview/Dockerfile`](devtools/brev-preview/Dockerfile) og inneholder bare Python-serveren og `testdata/tpts/`.
 Versjonssammenligningen er av i dev, siden den trenger `docker` og `git` i containeren.
 
 ## Gjøre kall mot tiltakspenger-pdfgenrs lokalt
 
 PDFene kan testes lokalt på `http://localhost:8084/api/v1/genpdf/<application>/<template>`, f.eks. http://localhost:8084/api/v1/genpdf/tpts/vedtakInnvilgelse.
-Templatene vil bruke flettedata fra json-fil med samme navn som template i `data/tpts`.
+Templatene vil bruke flettedata fra json-fil med samme navn som template i `testdata/tpts`.
 
 ## Gjøre kall mot tiltakspenger-pdfgenrs lokalt (alternativ 2)
 
 1. Start opp postman/insomnia/bruno eller et annet program som kan gjøre rest-kall.
 2. Sett opp en `POST` mot endepunktet du vil ha brev fra, f.eks. `http://localhost:8084/api/v1/genpdf/tpts/vedtakInnvilgelse`.
 3. Sett BODY til å være Json.
-   Bruk `data/tpts/<mal>.json` som utgangspunkt — de filene er fasit for hvilke felter hver mal forventer, f.eks. [data/tpts/vedtakInnvilgelse.json](data/tpts/vedtakInnvilgelse.json).
+   Bruk `testdata/tpts/<mal>.json` som utgangspunkt — de filene er fasit for hvilke felter hver mal forventer, f.eks. [testdata/tpts/vedtakInnvilgelse.json](testdata/tpts/vedtakInnvilgelse.json).
 4. Når du har gjort kall må du sette responsen til å tolkes som .PDF eller laste ned responsen som en .PDF-fil.
 
 ## Styling av brev

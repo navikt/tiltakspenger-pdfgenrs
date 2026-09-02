@@ -3,7 +3,8 @@
 Dette repoet følger monorepo-konvensjonene i AGENTS.md i metarepoet `tiltakspenger` (ligger som `..` når repoet er klonet inn i monorepoet, eller som `../tiltakspenger` når dette repoet er klonet for seg selv).
 Les den først.
 
-Repoet inneholder kun Typst-maler (`templates/`, `lib/`), testdata (`data/`) og statiske ressurser oppå det prebygde serverimaget `ghcr.io/navikt/pdfgenrs`.
+Repoet inneholder kun Typst-maler (`templates/`, `lib/`), testdata (`testdata/`) og statiske ressurser oppå det prebygde serverimaget `ghcr.io/navikt/pdfgenrs`.
+Typst-malene skal fortsatt lese payload fra den virtuelle `/data/...`-stien som pdfgenrs injiserer; mappen `testdata/` er bare lokal forhåndsvisnings- og testinput.
 Kotlin/JVM-konvensjonene i AGENTS-backend.md (også i metarepoet `tiltakspenger`) gjelder derfor ikke her.
 
 Lokalt kjører tjenesten på port `8084`, både via metarepoets docker-compose og dette repoets `docker-compose.yml`/`run_development.sh`.
@@ -59,12 +60,12 @@ Typografi, avstander, tabeller og sideoppsett kommer fra et delt Typst-oppsett s
 ## Teste brevmalene
 
 Kjør `./run_tests.sh` etter malendringer — alt kjører i Docker og krever ingen verktøy på maskinen.
-Testene rendrer alle datasett i `data/tpts/`, kanttilfellevariantene i `test/data/` og genererte avslagsvarianter (alle avslagsgrunn-grener), og asserterer HTTP 200, gyldig PDF, A4, felles hale og signatur i utgående brev (se `INNHOLDSKRAV` i `test/run-tests.py`).
+Testene rendrer alle datasett i `testdata/tpts/`, kanttilfellevariantene i `test/data/` og genererte avslagsvarianter (alle avslagsgrunn-grener), og asserterer HTTP 200, gyldig PDF, A4, felles hale og signatur i utgående brev (se `INNHOLDSKRAV` i `test/run-tests.py`).
 De sjekker også at alle URL-er i brevtekst er klikkbare `navLenke`-lenker med `https://`-URI, og at ingen tegn rendres oppå hverandre (layoutkollisjoner).
-Nye brev og nye kanttilfeller skal ha testdata: standarddatasett i `data/tpts/<mal>.json`, varianter i `test/data/<mal>--<variant>.json`.
+Nye brev og nye kanttilfeller skal ha testdata: standarddatasett i `testdata/tpts/<mal>.json`, varianter i `test/data/<mal>--<variant>.json`.
 Testdataene bruker en fast, virkelighetsnær testfamilie — ingen tulleord/tullenavn, og syntetiske identer (+40 på måned) så ingen privatpersoner kan treffes.
 Kanoniske verdier: bruker Emil Aremark (fnr `25508631114`), barn Nora/Jakob/Oskar Johan Aremark, saksbehandler Ingrid Bakke, beslutter Martin Holm, saksnummer `202501011001`, tiltaksarrangør Aremark Snekkerverksted AS.
-Datasettene i `data/tpts/` er også defaultene i brev-preview (både lokalt og i demoen i dev), så de skal vise et **helt, normalt brev**: ingen forhåndsvisningsvannmerke, ingen plassholdertekst og datoer som henger sammen.
+Datasettene i `testdata/tpts/` er også defaultene i brev-preview (både lokalt og i demoen i dev), så de skal vise et **helt, normalt brev**: ingen forhåndsvisningsvannmerke, ingen plassholdertekst og datoer som henger sammen.
 Kanttilfellene — forhåndsvisning, manglende saksbehandler, automatisk behandling — hører hjemme som varianter i `test/data/`.
 Tekstene i `valgtHjemmelTekst` (stans/opphør) skal speile fasit-testene i `tiltakspenger-saksbehandling-api` (`BrevRevurderingStansDTOTest`/`BrevOmgjøringOpphørDTOTest`) — endres brevtekstene der, oppdater testdataene her.
 Endrer du felleskomponentene (signatur, vedtaksinfo), oppdater innholdskravene i samme endring.
@@ -78,10 +79,10 @@ Testene er deploy-gate i CI (`.github/workflows/.test.yml`).
 
    ```bash
    curl -s -X POST http://localhost:8084/api/v1/genpdf/tpts/<mal> \
-     -H "Content-Type: application/json" --data @data/tpts/<mal>.json -o /tmp/<mal>.pdf
+     -H "Content-Type: application/json" --data @testdata/tpts/<mal>.json -o /tmp/<mal>.pdf
    ```
 
-3. **Lag payload-varianter for kanttilfellene** (kopier `data/tpts/<mal>.json` og endre med python3/jq): null-felter (f.eks. `beslutterNavn`, `brevTekst`, `iverksattTidspunkt`), tomme lister, `forhandsvisning` true/false, og malspesifikke grener (korrigering, med/uten barnetillegg, …).
+3. **Lag payload-varianter for kanttilfellene** (kopier `testdata/tpts/<mal>.json` og endre med python3/jq): null-felter (f.eks. `beslutterNavn`, `brevTekst`, `iverksattTidspunkt`), tomme lister, `forhandsvisning` true/false, og malspesifikke grener (korrigering, med/uten barnetillegg, …).
 4. **Se på PDF-ene direkte med Read-verktøyet.**
    PDF-er rendres visuelt for agenten — les dem og vurder innhold, rekkefølge, tabellstruktur og markeringer.
    Ingen konvertering til bilder er nødvendig for hele dokumenter; `pages`-parameteren (sideutvalg) krever derimot poppler (`brew install poppler`).

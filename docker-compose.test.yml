@@ -14,7 +14,7 @@ services:
     environment:
       PDFGENRS_URL: http://pdfgenrs:8080
     volumes:
-      - ./data:/repo/data:ro
+      - ./testdata:/repo/testdata:ro
       - ./templates:/repo/templates:ro
       - ./test:/repo/test:ro
       - ./build:/repo/build

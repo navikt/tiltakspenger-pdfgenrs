@@ -95,8 +95,8 @@ def start_pdfgen():
 
 class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
-        # Repo-rota serveres fordi siden leser flettedataene i data/tpts direkte.
-        # I demo-imaget inneholder rota kun devtools/brev-preview og data/tpts.
+        # Repo-rota serveres fordi siden leser flettedataene i testdata/tpts direkte.
+        # I demo-imaget inneholder rota kun devtools/brev-preview og testdata/tpts.
         super().__init__(*args, directory=REPO_ROOT, **kwargs)
 
     def end_headers(self):
@@ -118,7 +118,7 @@ class Handler(SimpleHTTPRequestHandler):
             # er siden fortsatt brukbar og feilen vises der den oppstår.
             self._respond(200, "text/plain; charset=utf-8", b"OK")
         elif self.path == "/api/templates":
-            data_dir = os.path.join(REPO_ROOT, "data", "tpts")
+            data_dir = os.path.join(REPO_ROOT, "testdata", "tpts")
             names = sorted(f[:-5] for f in os.listdir(data_dir) if f.endswith(".json"))
             self._respond(200, "application/json", json.dumps(names).encode())
         elif self.path == "/api/refs" and not IS_NAIS:

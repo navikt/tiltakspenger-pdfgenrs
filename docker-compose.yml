@@ -13,7 +13,7 @@ services:
     volumes:
       - ./templates:/app/templates
       - ./fonts:/app/fonts
-      - ./data:/app/data
+      - ./testdata:/app/data
       - ./resources:/app/resources
       - ./lib:/app/lib
     environment:

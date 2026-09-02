@@ -22,7 +22,7 @@ const AVLEDEDE_FELT = {
 // Å summere dagene i skjemaet ville derfor vært en gjetning, ikke samme regel som backend.
 //
 // `totalDifferanse = meldeperioder.sumOf { it.beløpDiff }` er derimot entydig i koden,
-// men data/tpts/meldekortvedtak.json har -338 der summen er 1352 (1690 + -338).
+// men testdata/tpts/meldekortvedtak.json har -338 der summen er 1352 (1690 + -338).
 // Regelen er utelatt til det er avklart hvilken av de to som er feil — ellers ville
 // demoen stille vist andre tall enn testdatasettet.
 

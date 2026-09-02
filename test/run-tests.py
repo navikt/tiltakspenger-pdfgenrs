@@ -21,7 +21,7 @@ import pypdfium2.raw as pdfium_c
 
 PDFGENRS_URL = os.environ.get("PDFGENRS_URL", "http://pdfgenrs:8080")
 REPO = Path(os.environ.get("REPO_DIR", "/repo"))
-DATA_DIR = REPO / "data" / "tpts"
+DATA_DIR = REPO / "testdata" / "tpts"
 TEMPLATE_DIR = REPO / "templates" / "tpts"
 VARIANT_DIR = REPO / "test" / "data"
 DEBUG_DIR = REPO / "build" / "test"

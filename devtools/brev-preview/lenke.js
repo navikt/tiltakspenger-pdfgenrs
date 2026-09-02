@@ -3,7 +3,7 @@
 // Alt ligger i fragmentet (#brev=…&data=…), som aldri sendes til serveren:
 // flettedataene inneholder syntetiske fødselsnumre og har ingenting i en
 // accesslogg å gjøre. Lenken er selvbærende — hele payloaden ligger i den, ikke
-// en diff mot data/tpts — så en gammel lenke viser det samme brevet selv om
+// en diff mot testdata/tpts — så en gammel lenke viser det samme brevet selv om
 // testdatasettet endrer seg senere.
 //
 // Flettedataene tas bare med når de er endret; ellers er lenken kort og peker

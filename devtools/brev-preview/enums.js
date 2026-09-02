@@ -4,7 +4,7 @@
 // Listene er kopier av kilden, og kilden står i kommentaren over hver liste.
 // Endres den, må listen her oppdateres — samme håndarbeid som AVSLAGSGRUNNER i
 // test/run-tests.py. Verdiene kan ikke leses ut av malene i drift, siden
-// demo-imaget bare inneholder devtools/brev-preview og data/tpts.
+// demo-imaget bare inneholder devtools/brev-preview og testdata/tpts.
 //
 // Et alternativ er enten "VERDI" (verdien vises som den er) eller
 // ["VERDI", "Etikett"]. Etiketten er kun en hjelp i skjemaet; det er verdien
@@ -72,7 +72,7 @@ const MELDEKORTVEDTAK_STATUS = [
 // Felt som kan stå tomme.
 const INGEN = [null, "(ingen)"];
 
-// Enum-feltene per datasett i data/tpts. Nøkkelen er stien inn i flettedataene,
+// Enum-feltene per datasett i testdata/tpts. Nøkkelen er stien inn i flettedataene,
 // der «[]» står for et array-ledd.
 const ENUM_FELT = {
   meldekort: { "dager[].status": MELDEKORT_STATUS_NB },

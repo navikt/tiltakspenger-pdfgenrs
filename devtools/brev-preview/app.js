@@ -2,7 +2,7 @@
 // Ekstra paneler (compare.js) kobler seg på via window.brevPreview.
 const $ = (id) => document.getElementById(id);
 
-let defaults = null; // original flettedata fra data/tpts
+let defaults = null; // original flettedata fra testdata/tpts
 let current = null; // gjeldende (redigerte) flettedata
 let felt = { enum: {}, avledet: {} }; // enums.js/avledet.js for valgt datasett
 let fraLenke = null; // flettedata fra en delt lenke, brukes kun ved første lasting
@@ -86,7 +86,7 @@ async function generate() {
   if (seq === generateSeq) $("status").textContent = "";
 }
 
-// Flettedataene er endret når de ikke lenger er datasettet i data/tpts.
+// Flettedataene er endret når de ikke lenger er datasettet i testdata/tpts.
 // Styrer om lenken må bære med seg innholdet, eller bare peke på brevet.
 function erEndret() {
   return JSON.stringify(current) !== JSON.stringify(defaults);
@@ -96,7 +96,7 @@ async function loadTemplate() {
   const name = $("template").value;
   localStorage.setItem("devtools-template", name);
   felt = { enum: enumFeltFor(name), avledet: avledetFeltFor(name) };
-  defaults = await (await fetch(`/data/tpts/${name}.json`)).json();
+  defaults = await (await fetch(`/testdata/tpts/${name}.json`)).json();
   current = fraLenke ?? structuredClone(defaults);
   fraLenke = null; // gjelder kun den første lastingen; bytter du brev, er du tilbake på datasettet
   render();

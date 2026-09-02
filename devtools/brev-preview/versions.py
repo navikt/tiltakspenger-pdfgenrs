@@ -1,6 +1,6 @@
 """Versjonssammenligning: pdfgenrs mot pdfgenrs på en vilkårlig git-ref.
 
-Siden pdfgenrs bare er upstream-imaget med templates/fonts/data/resources/lib
+Siden pdfgenrs bare er upstream-imaget med templates/fonts/testdata/resources/lib
 montert som volumer, trenger vi ikke bygge noe for å vise en annen versjon:
 hver ref får et git-worktree under ~/.cache og en egen container på en ledig
 port. Containere og worktrees ryddes når serve.py avsluttes.
@@ -120,10 +120,18 @@ def _run_container(container, src_dir, image, label):
     subprocess.run(["docker", "rm", "-f", container], capture_output=True)  # frigjør navn og port fra forrige økt
     port = _free_port()
     volumes = []
-    for d in ("templates", "fonts", "data", "resources", "lib"):
-        path = os.path.join(src_dir, d)
+    # Eldre refs har data/; begge navn monteres som /app/data.
+    for source, target in (
+        ("templates", "templates"),
+        ("fonts", "fonts"),
+        ("data", "data"),
+        ("testdata", "data"),
+        ("resources", "resources"),
+        ("lib", "lib"),
+    ):
+        path = os.path.join(src_dir, source)
         if os.path.isdir(path):
-            volumes += ["-v", f"{path}:/app/{d}"]
+            volumes += ["-v", f"{path}:/app/{target}"]
     print(f"pdfgenrs @ {label}: starter {image} som '{container}' på http://localhost:{port} (fjernes ved avslutning)")
     instance = {"url": f"http://localhost:{port}", "container": container}
     run = subprocess.run(

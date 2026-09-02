@@ -23,9 +23,9 @@ Om containeren på 8084 ikke volum-monterer dette repoet (typisk metarepoets com
 Adressefeltet holdes i takt med det du ser, så lenken kan også bare kopieres derfra.
 
 Alt ligger i fragmentet (`#brev=…&data=…`), som aldri sendes til serveren — flettedataene inneholder syntetiske fødselsnumre og har ingenting i en accesslogg å gjøre.
-Har du ikke endret noe, bærer lenken bare brevnavnet (`#brev=vedtakAvslag`) og viser datasettet fra `data/tpts`.
+Har du ikke endret noe, bærer lenken bare brevnavnet (`#brev=vedtakAvslag`) og viser datasettet fra `testdata/tpts`.
 Har du endret noe, pakkes hele payloaden med, gzippet og base64url-kodet.
-Lenken er altså selvbærende, ikke en diff mot `data/tpts`: en gammel lenke viser det samme brevet selv om testdatasettet endres senere.
+Lenken er altså selvbærende, ikke en diff mot `testdata/tpts`: en gammel lenke viser det samme brevet selv om testdatasettet endres senere.
 
 Målt på datasettene i repoet blir lenkene 600–1200 tegn, og `meldekortvedtak` er den lengste med rundt 1170.
 Det er godt innenfor det Slack og e-post takler.
@@ -36,7 +36,7 @@ Lenken virker likt lokalt og i demoen i dev; bare vertsnavnet skiller.
 ## Nedtrekkslister for felt som er enum
 
 Felt som egentlig er enum vises som nedtrekksliste i skjemaet, med en lesbar etikett i listen og selve verdien som tittel på feltet.
-De står i [`enums.js`](enums.js), med sti inn i flettedataene per datasett i `data/tpts`:
+De står i [`enums.js`](enums.js), med sti inn i flettedataene per datasett i `testdata/tpts`:
 
 | Datasett                | Felt                                    | Kilde                                                     |
 |-------------------------|-----------------------------------------|-----------------------------------------------------------|
@@ -44,7 +44,7 @@ De står i [`enums.js`](enums.js), med sti inn i flettedataene per datasett i `d
 | `vedtakAvslag`          | `avslagsgrunner[]`                      | grenene i `lib/avslagComponents.typ`                       |
 | `meldekortvedtak`       | `…dager[].status.forrige`/`.gjeldende`  | `toStatus()` i `BrevMeldekortvedtakDTO.kt`                 |
 
-Listene er kopier av kilden, på samme måte som `AVSLAGSGRUNNER` i `test/run-tests.py` — verdiene kan ikke leses ut av malene i drift, siden demo-imaget bare inneholder `devtools/brev-preview` og `data/tpts`.
+Listene er kopier av kilden, på samme måte som `AVSLAGSGRUNNER` i `test/run-tests.py` — verdiene kan ikke leses ut av malene i drift, siden demo-imaget bare inneholder `devtools/brev-preview` og `testdata/tpts`.
 Endres kilden, må listen oppdateres.
 En verdi som ikke står i listen (typisk skrevet inn i JSON-modus) blir stående, merket «ukjent verdi».
 
@@ -104,7 +104,7 @@ Siden oppdager det selv: `compare.js` skjuler hele funksjonen når `/api/refs` i
 
 Backend (kun Python-stdlib):
 
-- `serve.py` server statiske filer fra repo-rota (siden trenger `data/tpts/*.json` som utgangspunkt for skjemaet) og proxyer `POST /api/genpdf/...` videre til pdfgenrs sin `/api/v1/genpdf/...`.
+- `serve.py` server statiske filer fra repo-rota (siden trenger `testdata/tpts/*.json` som utgangspunkt for skjemaet) og proxyer `POST /api/genpdf/...` videre til pdfgenrs sin `/api/v1/genpdf/...`.
   Proxyen trengs fordi pdfgenrs ikke sender CORS-headere, så siden kan ikke kalle serveren direkte fra en annen origin.
 - `versions.py` eier versjonssammenligningen: `GET /api/refs` (forslagsliste), `POST /api/ref/prepare` (worktree + container for en ref) og oppryddingen ved avslutning.
 - `common.py` er det lille som deles: repo-rota og liveness-sjekken.
@@ -120,4 +120,4 @@ Frontend (ren HTML/JS/CSS uten avhengigheter):
 - `panel.js` er gjenbrukbar lasting av PDF inn i en iframe (objectURL-opprydding, utdaterte svar ignoreres) — brukes av begge panelene.
 - `compare.js` er versjonssammenligningen (ref-feltene og høyrepanelet).
 
-Brevlisten kommer fra filnavnene i `data/tpts/` — nye brev dukker opp automatisk.
+Brevlisten kommer fra filnavnene i `testdata/tpts/` — nye brev dukker opp automatisk.
