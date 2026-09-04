@@ -3,7 +3,9 @@ updates:
   - package-ecosystem: docker
     directories:
       - "/"
-      - "/devtools/brev-preview" # demo-appen i dev
+      # Demo-appen i dev.
+      # Basebildet er Chainguard-speilet med flytende tagg, så Dependabot finner ingen bumps her; oppføringen står igjen for den dagen bildet får en versjonert tagg.
+      - "/devtools/brev-preview"
       - "/test"
     schedule:
       interval: daily
