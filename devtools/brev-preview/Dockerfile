@@ -4,7 +4,9 @@
 # Baseimage er Navs Chainguard-mirror, som er anbefalingen på sikkerhet.nav.no.
 # imagene bygges om daglig, og de har verken shell, pakkebehandler eller installert pip.
 # Serveren bruker kun stdlib og trenger ingenting av det som er fjernet.
-# Taggen 3.14 er flytende innenfor 3.14-linja, så nye patcher kommer ved neste bygg og ikke som dependabot-PR.
+# Taggen 3.14 er flytende innenfor 3.14-linja, og bevisst uten digest: registeret er privat, Dependabot har ikke tilgang
+# og kan ikke bumpe en pinnet digest. Flytende tagg gir nyeste bygg ved hver push til main (nais/docker-build-push har pull: true).
+# Playbooken anbefaler det samme; digestabot er alternativet om vi en gang vil pinne.
 # I CI logger nais/docker-build-push inn selv; lokalt kreves `gcloud auth configure-docker europe-north1-docker.pkg.dev` én gang.
 FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/python:3.14
 

@@ -4,7 +4,8 @@ updates:
     directories:
       - "/"
       # Demo-appen i dev.
-      # Basebildet er Chainguard-speilet med flytende tagg, så Dependabot finner ingen bumps her; oppføringen står igjen for den dagen bildet får en versjonert tagg.
+      # Basebildet ligger i Navs private Chainguard-speil, som Dependabot ikke har tilgang til: ingen bumps her uansett tagg eller digest.
+      # Oppføringen står igjen for den dagen Nav gir Dependabot tilgang (OIDC mot Artifact Registry).
       - "/devtools/brev-preview"
       - "/test"
     schedule:
