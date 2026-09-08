@@ -6,7 +6,7 @@ set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 # Eget prosjektnavn. Uten det arver testkjøringen prosjektnavnet fra katalogen, og
-# `down --remove-orphans` river ned utviklings-containeren fra docker-compose.yml
+# `down --remove-orphans` river ned utviklingscontaineren fra docker-compose.yml
 # (port 8084) fordi den ikke finnes i testoppsettet.
 PROSJEKT=tiltakspenger-pdfgenrs-test
 

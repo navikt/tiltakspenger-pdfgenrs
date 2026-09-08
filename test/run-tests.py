@@ -30,7 +30,7 @@ A4_PUNKTER = (595.3, 841.9)
 
 # Datasett der filnavnet ikke er likt malnavnet.
 # Varianter i test/data/ bruker konvensjonen <mal>--<variant>.json og trenger ikke listes her.
-DATA_TIL_MAL = {
+DATASETT_TIL_MAL = {
     "meldekort-korrigert": "meldekort",
     "meldekort-korrigert-en": "meldekort-en",
 }
@@ -50,7 +50,7 @@ AVSLAGSGRUNNER = [
     "FREMMET_FOR_SENT",
 ]
 
-# Alle utgående vedtaksbrev skal ha den felles halen (vedtaksinfo) og den felles signaturen.
+# Alle utgående brev skal ha den felles halen (vedtaksinfo) og den felles signaturen; unntakene står i UTEN_STANDARDKRAV.
 UTGÅENDE_MALER = {
     "klageAvvis",
     "klageInnstilling",
@@ -86,10 +86,10 @@ INNHOLDSKRAV = {
 UTEN_STANDARDKRAV = {"klageInnstilling", "klageInnstilling--uten-saksbehandler", "meldekortvedtak--automatisk"}
 
 
-def malnavn(datanavn):
-    if "--" in datanavn:
-        return datanavn.split("--")[0]
-    return DATA_TIL_MAL.get(datanavn, datanavn)
+def malnavn(datasettnavn):
+    if "--" in datasettnavn:
+        return datasettnavn.split("--")[0]
+    return DATASETT_TIL_MAL.get(datasettnavn, datasettnavn)
 
 
 def vent_på_server():
@@ -99,7 +99,7 @@ def vent_på_server():
             urllib.request.urlopen(PDFGENRS_URL, timeout=2)
             return
         except urllib.error.HTTPError:
-            return  # serveren svarte; statuskode er uinteressant
+            return  # Serveren svarte; statuskoden er uinteressant.
         except OSError:
             time.sleep(1)
     print(f"FEIL: pdfgenrs på {PDFGENRS_URL} svarte ikke innen fristen.")
@@ -274,9 +274,9 @@ def avslagsvarianter():
     """Genererer (navn, payload) som til sammen rendrer alle avslagsgrunn-grenene."""
     basis = json.loads((DATA_DIR / "vedtakAvslag.json").read_text())
     for grunn in AVSLAGSGRUNNER:
-        for medBarn in (True, False):
-            payload = dict(basis, avslagsgrunner=[grunn], harSøktMedBarn=medBarn, hjemlerTekst=None)
-            yield f"vedtakAvslag--{grunn.lower()}{'' if medBarn else '-uten-barn'}", payload
+        for med_barn in (True, False):
+            payload = dict(basis, avslagsgrunner=[grunn], harSøktMedBarn=med_barn, hjemlerTekst=None)
+            yield f"vedtakAvslag--{grunn.lower()}{'' if med_barn else '-uten-barn'}", payload
     payload = dict(basis, avslagsgrunner=AVSLAGSGRUNNER)
     yield "vedtakAvslag--alle-grunner", payload
 
@@ -291,7 +291,7 @@ def test_datasett(datafil, feil):
 def test_payload(navn, payload, feil):
     mal = malnavn(navn)
     if not (TEMPLATE_DIR / f"{mal}.typ").is_file():
-        feil.append(f"{navn}: fant ingen mal '{mal}.typ' (sjekk DATA_TIL_MAL i run-tests.py)")
+        feil.append(f"{navn}: fant ingen mal '{mal}.typ' (sjekk DATASETT_TIL_MAL i run-tests.py)")
         return
 
     status, body = render(mal, payload)

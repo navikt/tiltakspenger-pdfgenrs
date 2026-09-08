@@ -1,4 +1,4 @@
-// VERSJONSSAMMENLIGNING: pdfgenrs mot pdfgenrs.
+// Versjonssammenligning: pdfgenrs mot pdfgenrs.
 // Sammenlikner arbeidskatalogen (med lokale/uncommittede endringer) mot en
 // vilkårlig git-ref, eller to refs mot hverandre. serve.py/versions.py lager
 // et git-worktree og starter en egen pdfgenrs-container per ref.
@@ -78,13 +78,13 @@
   refPicker("a", WORKTREE);
   refPicker("b", refsInfo.default);
 
-  const errB = (message) => ($("caption-b").querySelector(".err").textContent = message || "");
-  const panelB = pdfPanel($("pdf-b"), errB);
+  const showErrorB = (message) => ($("caption-b").querySelector(".err").textContent = message || "");
+  const panelB = pdfPanel($("pdf-b"), showErrorB);
   const label = (ref) => (ref === WORKTREE ? "arbeidskatalogen (med lokale endringer)" : ref);
 
   // Klargjør (eller gjenbruker) container for ref-en og gir genpdf-URL-en dit.
-  // Ref-en resolves på nytt hver gang, så nye commits på en gren plukkes opp.
-  async function target(ref, template) {
+  // Ref-en slås opp på nytt hver gang, så nye commits på en gren plukkes opp.
+  async function genpdfUrl(ref, template) {
     if (ref === WORKTREE) return `/api/genpdf/tpts/${template}`;
     const res = await fetch("/api/ref/prepare", {
       method: "POST",
@@ -110,7 +110,7 @@
     $("compare-rs").checked = on;
     $("compare-rs-controls").hidden = !on;
     $("figure-b").hidden = !on;
-    window.brevPreview.setMainTarget(on ? (template) => target(refs.a, template) : null);
+    window.brevPreview.setMainTarget(on ? (template) => genpdfUrl(refs.a, template) : null);
     updateCaptions();
     localStorage.setItem("devtools-compare-rs", on ? "1" : "");
     window.brevPreview.generate();
@@ -121,9 +121,9 @@
   window.brevPreview.onGenerate(async (template, body) => {
     if (!active) return;
     try {
-      await panelB.load(await target(refs.b, template), body);
+      await panelB.load(await genpdfUrl(refs.b, template), body);
     } catch (e) {
-      errB(String(e));
+      showErrorB(String(e));
     }
   });
 

@@ -10,12 +10,12 @@ Bruk:
     ./run_devtools.sh               ->  http://localhost:8087
 
 Samme server kjører også som demo-app i dev, se .nais/nais-demo.yml.
-Der finnes hverken docker eller git, så versjonssammenligning og oppstart av pdfgenrs
+Der finnes verken docker eller git, så versjonssammenligning og oppstart av pdfgenrs
 er slått av; frontenden skjuler funksjonen selv når /api/refs ikke svarer.
 
 Miljøvariabler:
     DEVTOOLS_PORT       port for denne serveren (default 8087)
-    PDFGEN_URL          overstyr pdfgenrs-adressen (default: 8084)
+    PDFGEN_URL          overstyr pdfgenrs-adressen (default http://localhost:8084)
 """
 import json
 import os
@@ -33,7 +33,7 @@ import versions
 from common import REPO_ROOT, is_alive
 
 PORT = int(os.environ.get("DEVTOOLS_PORT", "8087"))
-# Nais setter NAIS_APP_NAME i alle containere. Der finnes hverken docker eller git,
+# Nais setter NAIS_APP_NAME i alle containere. Der finnes verken docker eller git,
 # så alt som trenger dem er av. Bryteren står i koden, ikke som egen miljøvariabel.
 IS_NAIS = "NAIS_APP_NAME" in os.environ
 PDFGEN_CANDIDATES = (
@@ -55,7 +55,7 @@ def find_pdfgen():
 
 
 def serves_working_tree(url):
-    """Sjekker at containeren bak url-en faktisk volum-monterer dette repoet.
+    """Sjekker at containeren bak url-en faktisk volummonterer dette repoet.
 
     Metarepoets compose kjører pdfgenrs på samme port, men UTEN volumer - da er
     malene bakt inn i imaget ved build, og forhåndsvisningen ville stille vist
@@ -141,7 +141,7 @@ class Handler(SimpleHTTPRequestHandler):
             sha, genpdf_path = ref_proxy.groups()
             target = versions.instance_url(sha)
             if target is None:
-                self._respond(502, "text/plain; charset=utf-8", "Ukjent versjons-instans - last siden på nytt.".encode())
+                self._respond(502, "text/plain; charset=utf-8", "Ukjent versjonsinstans - last siden på nytt.".encode())
             else:
                 self._proxy_genpdf(target, genpdf_path, f"pdfgenrs @ {sha[:12]}")
         else:
@@ -209,7 +209,7 @@ def main():
         print(f"ADVARSEL: containeren på {pdfgen_url} monterer ikke dette repoet")
         print("(sannsynligvis metarepoets compose, som baker malene inn i imaget ved build).")
         try:
-            pdfgen_url = versions.worktree_url()
+            pdfgen_url = versions.arbeidskatalog_url()
             print("Starter derfor en egen pdfgenrs for arbeidskatalogen.")
         except versions.RefError as e:
             print(f"Klarte ikke å starte egen pdfgenrs for arbeidskatalogen ({e}) - "

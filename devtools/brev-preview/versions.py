@@ -48,7 +48,7 @@ def list_refs():
 def prepare_ref(ref):
     """Sørger for at en pdfgenrs kjører for ref-en; returnerer commit-sha-en.
 
-    Ref-en resolves på nytt hver gang, så en gren som har fått nye commits
+    Ref-en slås opp på nytt hver gang, så en gren som har fått nye commits
     får automatisk en fersk instans ved neste generering.
     """
     ref = ref.strip()
@@ -73,21 +73,21 @@ def instance_url(sha):
     return instance["url"] if instance else None
 
 
-def worktree_url():
+def arbeidskatalog_url():
     """En pdfgenrs som garantert serverer arbeidskatalogen (dette repoet, volum-montert).
 
     Brukes når containeren på PDFGEN_URL viser seg å ikke montere repoet
     (typisk metarepoets compose, som baker malene inn i imaget ved build).
     """
-    global _worktree_instance
+    global _arbeidskatalog_instance
     with ref_lock:
-        if _worktree_instance and is_alive(_worktree_instance["url"]):
-            return _worktree_instance["url"]
-        _worktree_instance = _run_container("pdfgenrs-devtools-arbeidskatalog", REPO_ROOT, _image_for(None), "arbeidskatalogen")
-        return _worktree_instance["url"]
+        if _arbeidskatalog_instance and is_alive(_arbeidskatalog_instance["url"]):
+            return _arbeidskatalog_instance["url"]
+        _arbeidskatalog_instance = _run_container("pdfgenrs-devtools-arbeidskatalog", REPO_ROOT, _image_for(None), "arbeidskatalogen")
+        return _arbeidskatalog_instance["url"]
 
 
-_worktree_instance = None
+_arbeidskatalog_instance = None
 
 
 def _image_for(sha):
@@ -143,18 +143,18 @@ def _run_container(container, src_dir, image, label):
         capture_output=True, text=True,
     )
     if run.returncode != 0:
-        _remove_instance_files(instance)
+        _destroy_instance(instance)
         raise RefError(f"docker run feilet: {run.stderr.strip()}")
     for _ in range(60):
         if is_alive(instance["url"]):
             return instance
         time.sleep(1)
-    _remove_instance_files(instance)
-    raise RefError(f"pdfgenrs @ {label} svarte ikke innen 60s")
+    _destroy_instance(instance)
+    raise RefError(f"pdfgenrs @ {label} svarte ikke innen 60 sekunder")
 
 
 def _start_instance(sha, ref):
-    short = sha[:12]
+    short_sha = sha[:12]
     worktree = os.path.join(WORKTREES_DIR, short)
     # Rydd rester fra en tidligere økt som ikke fikk avsluttet ordentlig
     run_git("worktree", "remove", "--force", worktree)
@@ -167,13 +167,13 @@ def _start_instance(sha, ref):
     try:
         instance = _run_container(f"pdfgenrs-devtools-{short}", worktree, _image_for(sha), f"{ref} ({short})")
     except RefError:
-        _remove_instance_files({"container": f"pdfgenrs-devtools-{short}", "worktree": worktree})
+        _destroy_instance({"container": f"pdfgenrs-devtools-{short}", "worktree": worktree})
         raise
     instance["worktree"] = worktree
     return instance
 
 
-def _remove_instance_files(instance):
+def _destroy_instance(instance):
     subprocess.run(["docker", "rm", "-f", instance["container"]], capture_output=True)
     if "worktree" in instance:
         run_git("worktree", "remove", "--force", instance["worktree"])
@@ -182,12 +182,12 @@ def _remove_instance_files(instance):
 
 
 def _remove_instance(sha):
-    _remove_instance_files(ref_instances.pop(sha))
+    _destroy_instance(ref_instances.pop(sha))
 
 
 @atexit.register
 def _cleanup():
     for sha in list(ref_instances):
         _remove_instance(sha)
-    if _worktree_instance:
-        _remove_instance_files(_worktree_instance)
+    if _arbeidskatalog_instance:
+        _destroy_instance(_arbeidskatalog_instance)

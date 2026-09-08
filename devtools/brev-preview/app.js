@@ -9,7 +9,7 @@ let fraLenke = null; // flettedata fra en delt lenke, brukes kun ved første las
 let mode = "form";
 let generateTimer = null;
 let generateSeq = 0;
-let lastGenerate = null; // {template, body} - så paneler som kobler seg på sent får siste generering
+let lastGeneration = null; // {template, body} - så paneler som kobler seg på sent får siste generering
 const generateHooks = []; // kalles med (template, body) ved hver generering
 let mainTarget = null; // compare.js overstyrer hvor hovedpanelet genereres (async (template) -> url)
 
@@ -26,7 +26,7 @@ window.brevPreview = {
   },
   onGenerate(fn) {
     generateHooks.push(fn);
-    if (lastGenerate) fn(lastGenerate.template, lastGenerate.body);
+    if (lastGeneration) fn(lastGeneration.template, lastGeneration.body);
   },
   generate,
   scheduleGenerate,
@@ -70,8 +70,8 @@ async function generate() {
   clearTimeout(generateTimer);
   if (current === null) return; // init er ikke ferdig ennå
   const template = $("template").value;
-  lastGenerate = { template, body: JSON.stringify(current) };
-  for (const fn of generateHooks) fn(template, lastGenerate.body);
+  lastGeneration = { template, body: JSON.stringify(current) };
+  for (const fn of generateHooks) fn(template, lastGeneration.body);
   const seq = ++generateSeq;
   $("status").textContent = "Genererer …";
   // Ikke await: adressefeltet trenger ikke være oppdatert før PDF-en hentes
@@ -79,7 +79,7 @@ async function generate() {
   try {
     const url = mainTarget ? await mainTarget(template) : `/api/genpdf/tpts/${template}`;
     if (seq !== generateSeq) return; // en nyere generering er underveis
-    await mainPanel.load(url, lastGenerate.body);
+    await mainPanel.load(url, lastGeneration.body);
   } catch (e) {
     showError(String(e)); // f.eks. klargjøring av valgt versjon feilet
   }

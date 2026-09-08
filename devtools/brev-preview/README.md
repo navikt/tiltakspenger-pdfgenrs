@@ -12,10 +12,10 @@ Fra repo-rota:
 
 Åpne deretter http://localhost:8087.
 
-Scriptet trenger bare Python 3 (kun stdlib, ingen avhengigheter).
+Skriptet trenger bare Python 3 (kun stdlib, ingen avhengigheter).
 Det finner en kjørende pdfgenrs på port 8084, og starter den selv med `docker compose up -d --build` om den ikke svarer.
 
-Om containeren på 8084 ikke volum-monterer dette repoet (typisk metarepoets compose, som baker malene inn i imaget ved build og dermed viser en gammel versjon), oppdages det ved oppstart og devtoolsen starter i stedet en egen container for arbeidskatalogen.
+Om containeren på 8084 ikke volummonterer dette repoet (typisk metarepoets compose, som baker malene inn i imaget ved build og dermed viser en gammel versjon), oppdages det ved oppstart og devtoolsen starter i stedet en egen container for arbeidskatalogen.
 
 ## Dele en lenke til et bestemt brev
 
@@ -60,22 +60,22 @@ Reglene står i [`avledet.js`](avledet.js):
 |-------------------|-----------------------------------|-------------------------------------------------------------------|
 | `meldekortvedtak` | `meldeperioder[].harBarnetillegg` | en dag har barnetillegg > 0 (`BrevMeldekortvedtakDTO.kt`)          |
 
-Bare felt der backend-regelen kan gjentas nøyaktig fra det payloaden inneholder står her.
+Bare felt der backend-regelen kan gjentas nøyaktig fra det payloaden inneholder, står her.
 Beløpsfeltene i `meldekortvedtak` ser avledede ut, men er det ikke: `meldeperioder[].beløp` summerer dagene i *beregningen*, mens `dager` i payloaden kommer fra sammenligningen, og `totaltBelop` hentes fra behandlingen.
 Å summere dagene i skjemaet ville vært en gjetning, ikke samme regel som backend.
 
 Regelen gjelder bare skjemaet — JSON-modus er rå, og der kan du sette hva du vil.
 
-## Sammenlikne versjoner (pdfgenrs mot pdfgenrs)
+## Sammenligne versjoner (pdfgenrs mot pdfgenrs)
 
 Huk av «Sammenlign versjoner» i headeren for å se det samme brevet, med de samme flettedataene, fra to versjoner av repoet side om side:
 
-- Venstre panel er default **arbeidskatalogen** — det du har utsjekket akkurat nå, inkludert uncommittede endringer.
+- Venstre panel er default **arbeidskatalogen** — det du har utsjekket akkurat nå, inkludert ikke-committede endringer.
 - Høyre panel er default **main**. Nedtrekkslistene viser arbeidskatalogen, grenene og de siste commitene; velg «Egen ref …» for å skrive inn hva som helst `git rev-parse` forstår (tøm feltet for å komme tilbake til listen).
 
-Begge feltene kan settes fritt, så det går også an å sammenlikne to commits med hverandre.
+Begge feltene kan settes fritt, så det går også an å sammenligne to commits med hverandre.
 
-Bak kulissene lager `versions.py` et git-worktree per ref under `~/.cache/tiltakspenger-pdfgenrs-devtools/` og starter en egen pdfgenrs-container per ref — pdfgenrs er bare upstream-imaget med maler/fonter montert som volumer, så ingenting må bygges. Refs resolves på nytt ved hver generering, så committer du til grenen du sammenlikner mot, plukkes den nye commiten opp automatisk. Containere og worktrees ryddes når devtoolsen avsluttes.
+Bak kulissene lager `versions.py` et git-worktree per ref under `~/.cache/tiltakspenger-pdfgenrs-devtools/` og starter en egen pdfgenrs-container per ref — pdfgenrs er bare upstream-imaget med maler/fonter montert som volumer, så ingenting må bygges. Refs slås opp på nytt ved hver generering, så committer du til grenen du sammenlikner mot, plukkes den nye commiten opp automatisk. Containere og worktrees ryddes når devtoolsen avsluttes.
 
 Containerne er lette å kjenne igjen i `docker ps`:
 
@@ -104,7 +104,7 @@ Siden oppdager det selv: `compare.js` skjuler hele funksjonen når `/api/refs` i
 
 Backend (kun Python-stdlib):
 
-- `serve.py` server statiske filer fra repo-rota (siden trenger `testdata/tpts/*.json` som utgangspunkt for skjemaet) og proxyer `POST /api/genpdf/...` videre til pdfgenrs sin `/api/v1/genpdf/...`.
+- `serve.py` serverer statiske filer fra repo-rota (siden trenger `testdata/tpts/*.json` som utgangspunkt for skjemaet) og proxyer `POST /api/genpdf/...` videre til pdfgenrs sin `/api/v1/genpdf/...`.
   Proxyen trengs fordi pdfgenrs ikke sender CORS-headere, så siden kan ikke kalle serveren direkte fra en annen origin.
 - `versions.py` eier versjonssammenligningen: `GET /api/refs` (forslagsliste), `POST /api/ref/prepare` (worktree + container for en ref) og oppryddingen ved avslutning.
 - `common.py` er det lille som deles: repo-rota og liveness-sjekken.

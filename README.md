@@ -1,18 +1,18 @@
 # tiltakspenger-pdfgenrs
 
-Generering av PDF for tiltakspenger sine applikasjoner.
+PDF-generering for applikasjonene i tiltakspenger.
 
 ## Starte tiltakspenger-pdfgenrs lokalt
 
 * Du kan starte pdfgenrs lokalt ved å kjøre `./run_development.sh`
-* Man kan også kjøre docker-compose:
+* Du kan også kjøre docker compose:
 
 ```docker compose up -d --build```
 
 Flagget `-d` brukes for at ikke terminalen skal låses til docker.
 Flagget `--build` brukes for å bygge imaget på nytt, som vil si at applikasjonen som kjøres opp er lik koden du har lokalt.
 
-* Pdfgenrs er også en del av scriptet `up.sh` som ligger i metarepo og starter opp ved kjøring av det.
+* Pdfgenrs er også en del av skriptet `up.sh` i metarepoet og startes derfra.
 
 ## Teste brevmalene
 
@@ -22,8 +22,8 @@ Testene rendrer alle datasettene i `testdata/tpts/`, kanttilfellevariantene i `t
 
 * alle maler kompilerer og svarer 200 med en gyldig PDF
 * alle sider er A4 og dokumentet har minst én side
-* utgående vedtaksbrev inneholder den felles halen og signaturen (fasit-tekster som «Du har rett til å klage» og «Nav Tiltak Oslo»)
-* varianter oppfører seg riktig (placeholder ved manglende saksbehandler, ingen signatur ved automatisk behandling, osv.)
+* utgående vedtaksbrev inneholder den felles halen og signaturen (fasittekster som «Du har rett til å klage» og «Nav Tiltak Oslo»)
+* varianter oppfører seg riktig (plassholder ved manglende saksbehandler, ingen signatur ved automatisk behandling, osv.)
 * alle URL-er i brevteksten er klikkbare lenker (`navLenke`) med gyldig `https://`-URI i PDF-annotasjonen
 * ingen tegn rendres oppå hverandre (fanger layoutkollisjoner, f.eks. dato plassert over annen tekst)
 
@@ -42,7 +42,7 @@ Se [devtools/brev-preview/README.md](devtools/brev-preview/README.md) for detalj
 
 ## Demo i dev
 
-Samme forhåndsvisning kjører som egen nais-app i dev, på to adresser:
+Samme forhåndsvisning kjører som egen Nais-app i dev, på to adresser:
 
 - <https://tiltakspenger-pdfgenrs-demo.ansatt.dev.nav.no> — for alle i Nav, uten naisdevice.
 - <https://tiltakspenger-pdfgenrs-demo.intern.dev.nav.no> — krever naisdevice.
@@ -66,14 +66,14 @@ Versjonssammenligningen er av i dev, siden den trenger `docker` og `git` i conta
 
 ## Gjøre kall mot tiltakspenger-pdfgenrs lokalt
 
-PDFene kan testes lokalt på `http://localhost:8084/api/v1/genpdf/<application>/<template>`, f.eks. http://localhost:8084/api/v1/genpdf/tpts/vedtakInnvilgelse.
-Templatene vil bruke flettedata fra json-fil med samme navn som template i `testdata/tpts`.
+PDF-ene kan testes lokalt på `http://localhost:8084/api/v1/genpdf/<application>/<template>`, f.eks. http://localhost:8084/api/v1/genpdf/tpts/vedtakInnvilgelse.
+Malene bruker flettedata fra JSON-fila med samme navn i `testdata/tpts`.
 
 ## Gjøre kall mot tiltakspenger-pdfgenrs lokalt (alternativ 2)
 
-1. Start opp postman/insomnia/bruno eller et annet program som kan gjøre rest-kall.
+1. Start opp Postman, Insomnia, Bruno eller et annet verktøy for REST-kall.
 2. Sett opp en `POST` mot endepunktet du vil ha brev fra, f.eks. `http://localhost:8084/api/v1/genpdf/tpts/vedtakInnvilgelse`.
-3. Sett BODY til å være Json.
+3. Sett body til JSON.
    Bruk `testdata/tpts/<mal>.json` som utgangspunkt — de filene er fasit for hvilke felter hver mal forventer, f.eks. [testdata/tpts/vedtakInnvilgelse.json](testdata/tpts/vedtakInnvilgelse.json).
 4. Når du har gjort kall må du sette responsen til å tolkes som .PDF eller laste ned responsen som en .PDF-fil.
 
@@ -104,19 +104,19 @@ Punktene under er funksjonelle endringer som må avklares med fagsiden, UX og ju
       Harmoniser hvis det delte oppsettet får støtte for merking.
 - [ ] **`template()`**: når punktene over er løst kan malene trolig bruke det delte side- og førstesideoppsettet direkte i stedet for adapterne i `lib/`.
 
-## Extra
+## Ekstra
 
 - docs og tutorial for typst
   - https://typst.app/docs
   - https://typst.app/docs/tutorial/
-- Intellij har dårlig out-of-the-box IDE-støtte, du kan laste ned plugin "Kvasir" gratis - https://plugins.jetbrains.com/plugin/25061-kvasir.
+- IntelliJ har dårlig IDE-støtte ut av boksen, du kan laste ned plugin "Kvasir" gratis - https://plugins.jetbrains.com/plugin/25061-kvasir.
   Denne gir deg syntax highlighting, live preview og linting for typst i IntelliJ.
-  - known issues:
-    - Dersom prosjektet åpnes i intellij fra meta-repoet, vil Kvasir klage på file-path til data/resources/styles, etc. og preview slutte å fungere.
+  - Kjente problemer:
+    - Dersom prosjektet åpnes i IntelliJ fra metarepoet, vil Kvasir klage på filstien til data/resources/styles, etc. og preview slutte å fungere.
       Dette kan løses ved å åpne prosjektet direkte i intellij, og ikke via meta-repoet.
-    - Feilmeldinger fra Kvasir kan i tider være litt kryptiske.
+    - Feilmeldinger fra Kvasir kan til tider være litt kryptiske.
       Feilen vil vises i f.eks. templaten din, mens selve feilen ligger i stylingen.
     - Ikke alle feil vises heller.
-      Du kan teste om du har kompileringsfeil hvis previewet ikke oppdaterer når du legger inn tekst og saver.
+      Du kan teste om du har kompileringsfeil hvis forhåndsvisningen ikke oppdaterer seg når du lagrer.
 - `/templates` skal kun inneholde selve brevmalene.
   Partials (components), og andre hjelpe-templates/styles etc., ligger i `/lib`.

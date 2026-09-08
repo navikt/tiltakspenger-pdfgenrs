@@ -42,13 +42,13 @@ async function lesLenke() {
   }
 }
 
-async function byggLenke(brev, data, endret) {
+async function byggLenke(brev, data, erEndret) {
   const params = new URLSearchParams({ brev });
-  if (endret) params.set("data", await pakk(JSON.stringify(data)));
+  if (erEndret) params.set("data", await pakk(JSON.stringify(data)));
   return `${location.origin}${location.pathname}#${params}`;
 }
 
 // Holder adressefeltet i takt med det som vises, uten å fylle opp historikken.
-async function skrivLenke(brev, data, endret) {
-  history.replaceState(null, "", await byggLenke(brev, data, endret));
+async function skrivLenke(brev, data, erEndret) {
+  history.replaceState(null, "", await byggLenke(brev, data, erEndret));
 }

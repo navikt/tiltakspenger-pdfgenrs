@@ -41,7 +41,7 @@ const MELDEKORT_STATUS_EN = [
 
 // lib/avslagComponents.typ — én gren per grunn. Samme liste som AVSLAGSGRUNNER i
 // test/run-tests.py, med Avslagsgrunnlag i tiltakspenger-saksbehandling-api som kilde.
-const AVSLAGSGRUNN = [
+const AVSLAGSGRUNNER = [
   ["DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK", "Deltar ikke på arbeidsmarkedstiltak"],
   ["ALDER", "Har ikke fylt 18 år"],
   ["LIVSOPPHOLDYTELSE", "Annen pengestøtte til livsopphold"],
@@ -69,7 +69,7 @@ const MELDEKORTVEDTAK_STATUS = [
   "Ikke besvart",
 ];
 
-// Felt som kan stå tomme.
+// Valget for tom verdi i nedtrekkslistene.
 const INGEN = [null, "(ingen)"];
 
 // Enum-feltene per datasett i testdata/tpts. Nøkkelen er stien inn i flettedataene,
@@ -79,7 +79,7 @@ const ENUM_FELT = {
   "meldekort-korrigert": { "dager[].status": MELDEKORT_STATUS_NB },
   "meldekort-en": { "dager[].status": MELDEKORT_STATUS_EN },
   "meldekort-korrigert-en": { "dager[].status": MELDEKORT_STATUS_EN },
-  vedtakAvslag: { "avslagsgrunner[]": AVSLAGSGRUNN },
+  vedtakAvslag: { "avslagsgrunner[]": AVSLAGSGRUNNER },
   meldekortvedtak: {
     "meldeperioder[].dager[].status.gjeldende": MELDEKORTVEDTAK_STATUS,
     // Forrige status finnes bare når dagen er korrigert.
