@@ -102,3 +102,8 @@ build
 
 # Python-bytekode fra devtools/brev-preview
 __pycache__/
+
+# Arbeidstrær (git worktree add) uansett navn og nivå
+.worktrees/
+.worktree/
+worktrees/
