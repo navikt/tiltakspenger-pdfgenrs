@@ -34,7 +34,7 @@
 
 
     #brødtekst[
-        Du finner oversikt over saksbehandlingstidene på #navLenke("nav.no/saksbehandlingstider")[nav.no/saksbehandlingstider.] Du får beskjed fra Nav Klageinstans, dersom de trenger mer tid.
+        Du finner oversikt over saksbehandlingstidene på #navLenke("nav.no/saksbehandlingstider")[nav.no/saksbehandlingstider.] Du får beskjed fra Nav Klageinstans dersom de trenger mer tid.
     ]
 
 
@@ -54,7 +54,7 @@
     ]
 
     #brødtekst[
-        Hvis du ikke finner svar på #navLenke("nav.no")[nav.no,] kan du ringe oss på telefon 55 55 33 33, hverdager 09.00-15.00.
+        Hvis du ikke finner svar på #navLenke("nav.no")[nav.no,] kan du ringe oss på telefon 55 55 33 33, hverdager 09.00–15.00.
     ]
 ]
 

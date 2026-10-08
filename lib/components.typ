@@ -70,7 +70,7 @@ Tekstene er fasit fra pdfgen (partials/klagerett.hbs, base.hbs og partials/spors
 
         #brødtekst("Nav kan veilede deg på telefon om hvordan du sender en klage. Nav-kontoret ditt kan også hjelpe deg med å skrive en klage.")
 
-        #brødtekst("Hvis du får medhold i klagen, kan du få dekket vesentlige utgifter som har vært nødvendige for å få endret vedtaket, for eksempel hjelp fra advokat. Du kan ha krav på fri rettshjelp etter rettshjelploven. Du kan få mer informasjon om denne ordningen hos advokater, statsforvalteren, eller Nav.")
+        #brødtekst("Hvis du får medhold i klagen, kan du få dekket vesentlige utgifter som har vært nødvendige for å få endret vedtaket, for eksempel hjelp fra advokat. Du kan ha krav på fri rettshjelp etter rettshjelploven. Du kan få mer informasjon om denne ordningen hos advokater, statsforvalteren eller Nav.")
 
         #brødtekst("Du kan lese om saksomkostninger i forvaltningsloven § 36.")
 
@@ -96,7 +96,7 @@ Tekstene er fasit fra pdfgen (partials/klagerett.hbs, base.hbs og partials/spors
 
     #block(below: space-32)[
         #h2("Har du spørsmål?")
-        #brødtekst[Du finner mer informasjon om tiltakspenger på #navLenke("nav.no/tiltakspenger")[nav.no/tiltakspenger.] På #navLenke("nav.no/kontakt")[nav.no/kontakt] kan du chatte eller skrive til oss. Hvis du ikke finner svar på #navLenke("nav.no")[nav.no] kan du ringe oss på telefon 55 55 33 33, hverdager 09.00-15.00.]
+        #brødtekst[Du finner mer informasjon om tiltakspenger på #navLenke("nav.no/tiltakspenger")[nav.no/tiltakspenger.] På #navLenke("nav.no/kontakt")[nav.no/kontakt] kan du chatte eller skrive til oss. Hvis du ikke finner svar på #navLenke("nav.no")[nav.no,] kan du ringe oss på telefon 55 55 33 33, hverdager 09.00–15.00.]
     ]
     #body
 ]
