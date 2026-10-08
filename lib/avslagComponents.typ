@@ -42,8 +42,8 @@
         brødtekst[Dette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften § 8 andre ledd.]
     } else if grunn == "INSTITUSJONSOPPHOLD" {
         brødtekst[Du får ikke tiltakspenger#barn fra og med #fom til og med #tom fordi du oppholder deg på en institusjon med gratis opphold, mat og drikke.]
-        brødtekst[Deltakere som har opphold i institusjon, med gratis opphold, mat og drikke. Under gjennomføringen av arbeidsmarkedstiltaket, har ikke rett til tiltakspenger#barn.]
-        brødtekst[Det er gjort unntak for opphold i barneverns-institusjoner. Dette kommer frem av tiltakspengeforskriften § 9.]
+        brødtekst[Deltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til tiltakspenger#barn.]
+        brødtekst[Det er gjort unntak for opphold i barnevernsinstitusjoner. Dette kommer frem av tiltakspengeforskriften § 9.]
     } else if grunn == "FREMMET_FOR_SENT" {
         brødtekst[Du får ikke tiltakspenger#barn fra og med #fom til og med #tom fordi du har søkt om tiltakspenger#barn for sent.]
         brødtekst[Tiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om tiltakspenger#barn.]
@@ -94,7 +94,7 @@
     } else if grunn == "INSTITUSJONSOPPHOLD" {
         (
             [Du oppholder deg på en institusjon med gratis opphold, mat og drikke.],
-            [Deltakere som har opphold i institusjon, med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket, har ikke rett til tiltakspenger#barn.],
+            [Deltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til tiltakspenger#barn.],
         )
     } else if grunn == "FREMMET_FOR_SENT" {
         (
