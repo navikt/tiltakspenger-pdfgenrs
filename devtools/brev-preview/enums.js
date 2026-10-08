@@ -2,9 +2,9 @@
 // nedtrekksliste i stedet for et fritekstfelt.
 //
 // Listene er kopier av kilden, og kilden står i kommentaren over hver liste.
-// Endres den, må listen her oppdateres — samme håndarbeid som AVSLAGSGRUNNER i
-// test/run-tests.py. Verdiene kan ikke leses ut av malene i drift, siden
-// demo-imaget bare inneholder devtools/brev-preview og testdata/tpts.
+// Endres den, må listen her oppdateres for hånd. Verdiene kan ikke leses ut av
+// malene i drift, siden demo-imaget bare inneholder devtools/brev-preview og
+// testdata/tpts.
 //
 // Et alternativ er enten "VERDI" (verdien vises som den er) eller
 // ["VERDI", "Etikett"]. Etiketten er kun en hjelp i skjemaet; det er verdien
@@ -39,20 +39,6 @@ const MELDEKORT_STATUS_EN = [
   ["IKKE_BESVART", "No report"],
 ];
 
-// lib/avslagComponents.typ — én gren per grunn. Samme liste som AVSLAGSGRUNNER i
-// test/run-tests.py, med Avslagsgrunnlag i tiltakspenger-saksbehandling-api som kilde.
-const AVSLAGSGRUNNER = [
-  ["DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK", "Deltar ikke på arbeidsmarkedstiltak"],
-  ["ALDER", "Har ikke fylt 18 år"],
-  ["LIVSOPPHOLDYTELSE", "Annen pengestøtte til livsopphold"],
-  ["KVALIFISERINGSPROGRAMMET", "Deltar på kvalifiseringsprogram"],
-  ["INTRODUKSJONSPROGRAMMET", "Deltar på introduksjonsprogram"],
-  ["LØNN_FRA_TILTAKSARRANGØR", "Lønn fra tiltaksarrangør"],
-  ["LØNN_FRA_ANDRE", "Lønn for arbeid i tiltaksdeltakelsen"],
-  ["INSTITUSJONSOPPHOLD", "Institusjonsopphold"],
-  ["FREMMET_FOR_SENT", "Søkt for sent"],
-];
-
 // toStatus() i BrevMeldekortvedtakDTO.kt (tiltakspenger-saksbehandling-api).
 // Statusen kommer ferdig oversatt i flettedataene, så verdien er også etiketten.
 // lib/meldekortvedtakComponents.typ forgrener på «Ikke besvart» og «Ikke tiltaksdag».
@@ -79,7 +65,6 @@ const ENUM_FELT = {
   "meldekort-korrigert": { "dager[].status": MELDEKORT_STATUS_NB },
   "meldekort-en": { "dager[].status": MELDEKORT_STATUS_EN },
   "meldekort-korrigert-en": { "dager[].status": MELDEKORT_STATUS_EN },
-  vedtakAvslag: { "avslagsgrunner[]": AVSLAGSGRUNNER },
   meldekortvedtak: {
     "meldeperioder[].dager[].status.gjeldende": MELDEKORTVEDTAK_STATUS,
     // Forrige status finnes bare når dagen er korrigert.

@@ -60,14 +60,15 @@ Typografi, avstander, tabeller og sideoppsett kommer fra et delt Typst-oppsett s
 ## Teste brevmalene
 
 Kjør `./run_tests.sh` etter malendringer — alt kjører i Docker og krever ingen verktøy på maskinen.
-Testene rendrer alle datasett i `testdata/tpts/`, kanttilfellevariantene i `test/data/` og genererte avslagsvarianter (alle avslagsgrunn-grener), og asserterer HTTP 200, gyldig PDF, A4, felles hale og signatur i utgående brev (se `INNHOLDSKRAV` i `test/run-tests.py`).
+Testene rendrer alle datasett i `testdata/tpts/` og kanttilfellevariantene i `test/data/`, og asserterer HTTP 200, gyldig PDF, A4, felles hale og signatur i utgående brev (se `INNHOLDSKRAV` i `test/run-tests.py`).
 De sjekker også at alle URL-er i brevtekst er klikkbare `navLenke`-lenker med `https://`-URI, og at ingen tegn rendres oppå hverandre (layoutkollisjoner).
 Nye brev og nye kanttilfeller skal ha testdata: standarddatasett i `testdata/tpts/<mal>.json`, varianter i `test/data/<mal>--<variant>.json`.
 Testdataene bruker en fast, virkelighetsnær testfamilie — ingen tulleord/tullenavn, og syntetiske identer (+40 på måned) så ingen privatpersoner kan treffes.
 Kanoniske verdier: bruker Emil Aremark (fnr `25508631114`), barn Nora/Jakob/Oskar Johan Aremark, saksbehandler Ingrid Bakke, beslutter Martin Holm, saksnummer `202501011001`, tiltaksarrangør Aremark Snekkerverksted AS.
 Datasettene i `testdata/tpts/` er også defaultene i brev-preview (både lokalt og i demoen i dev), så de skal vise et **helt, normalt brev**: ingen forhåndsvisningsvannmerke, ingen plassholdertekst og datoer som henger sammen.
 Kanttilfellene — forhåndsvisning, manglende saksbehandler, automatisk behandling — hører hjemme som varianter i `test/data/`.
-Tekstene i `valgtHjemmelTekst` (stans/opphør) skal speile fasit-testene i `tiltakspenger-saksbehandling-api` (`BrevRevurderingStansDTOTest`/`BrevOmgjøringOpphørDTOTest`) — endres brevtekstene der, oppdater testdataene her.
+Tekstene i `valgtHjemmelTekst` (avslag/stans/opphør) skal speile fasit-testene i `tiltakspenger-saksbehandling-api` (`BrevSøknadAvslagDTOTest`/`BrevRevurderingStansDTOTest`/`BrevOmgjøringOpphørDTOTest`) — endres brevtekstene der, oppdater testdataene her.
+Brevtekstene hører hjemme i saksbehandling-api; malene setter bare inn innledning og tekstene de får, og forgrener ikke på enum-verdier for å velge tekst.
 Endrer du felleskomponentene (signatur, vedtaksinfo), oppdater innholdskravene i samme endring.
 Testene er deploy-gate i CI (`.github/workflows/.test.yml`).
 

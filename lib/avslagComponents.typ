@@ -1,126 +1,33 @@
 #import "/lib/typography.typ": *
 #import "/lib/styles.typ": *
 
-#let barnetillegg(medBarn) = if medBarn { " og barnetillegg" } else { "" }
+#let medLinjeskift(tekst) = tekst.split("\n").join(linebreak())
 
-// Enkeltgrunn (kun én avslagsgrunn): full brødtekst med hjemler.
-#let avslagsgrunnEnkelt(grunn, data) = {
-    let medBarn = data.harSøktMedBarn
-    let barn = barnetillegg(medBarn)
-    let fom = data.avslagFraOgMed
-    let tom = data.avslagTilOgMed
-
-    if grunn == "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK" {
-        brødtekst[Du får ikke tiltakspenger#barn fra og med #fom til og med #tom fordi du ikke deltar på arbeidsmarkedstiltak som gir rett til tiltakspenger.]
-        if medBarn {
-            brødtekst[For å få tiltakspenger og barnetillegg må du delta i arbeidsmarkedstiltak som gir rett til tiltakspenger og barnetillegg.]
-            brødtekst[Dette kommer frem av arbeidsmarkedsloven § 13, tiltakspengeforskriften §§ 2 og 3.]
-        } else {
-            brødtekst[For å få tiltakspenger må du delta i arbeidsmarkedstiltak som gir rett til tiltakspenger.]
-            brødtekst[Dette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften § 2.]
-        }
-    } else if grunn == "ALDER" {
-        brødtekst[Du får ikke tiltakspenger#barn fra og med #fom til og med #tom fordi du ikke har fylt 18 år. Du må ha fylt 18 år for å ha rett til å få tiltakspenger#barn.]
-        brødtekst[Det kommer frem av tiltakspengeforskriften § 3.]
-    } else if grunn == "LIVSOPPHOLDYTELSE" {
-        brødtekst[Du får ikke tiltakspenger#barn fra og med #fom til og med #tom fordi du mottar en annen pengestøtte til livsopphold. Deltakere som har rett til andre pengestøtter til livsopphold har ikke samtidig rett til å få tiltakspenger#barn.]
-        brødtekst[Dette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7.]
-    } else if grunn == "KVALIFISERINGSPROGRAMMET" {
-        brødtekst[Du får ikke tiltakspenger#barn fra og med #fom til og med #tom fordi du deltar på kvalifiseringsprogram. Deltakere i kvalifiseringsprogram, har ikke rett til tiltakspenger#barn.]
-        brødtekst[Dette kommer frem av tiltakspengeforskriften § 7 tredje ledd.]
-    } else if grunn == "INTRODUKSJONSPROGRAMMET" {
-        brødtekst[Du får ikke tiltakspenger#barn fra og med #fom til og med #tom fordi du deltar på introduksjonsprogram. Deltakere i introduksjonsprogram, har ikke rett til tiltakspenger#barn.]
-        brødtekst[Dette kommer frem av tiltakspengeforskriften § 7 tredje ledd.]
-    } else if grunn == "LØNN_FRA_TILTAKSARRANGØR" {
-        brødtekst[Du får ikke tiltakspenger#barn fra og med #fom til og med #tom fordi du mottar lønn fra tiltaksarrangør for tiden i arbeidsmarkedstiltaket.]
-        brødtekst[Deltakere som mottar lønn fra tiltaksarrangør for tid i arbeidsmarkedstiltaket har ikke rett til tiltakspenger#barn.]
-        brødtekst[Dette kommer frem av tiltakspengeforskriften § 8.]
-    } else if grunn == "LØNN_FRA_ANDRE" {
-        brødtekst[Du får ikke tiltakspenger#barn fra og med #fom til og med #tom fordi du mottar lønn for arbeid som er en del av tiltaksdeltakelsen og du derfor har dekning av utgifter til livsopphold.]
-        brødtekst[Deltaker i arbeidsmarkedstiltak som har rett til å få dekket utgifter til livsopphold på annen måte har ikke rett til tiltakspenger#barn. Lønn anses som dekning av utgifter til livsopphold på annen måte, når du får lønnen for arbeid som er en del av tiltaksdeltakelsen.]
-        brødtekst[Lønn fra arbeid utenom tiltaksdeltakelsen har ikke betydning for din rett til tiltakspenger.]
-        brødtekst[Dette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften § 8 andre ledd.]
-    } else if grunn == "INSTITUSJONSOPPHOLD" {
-        brødtekst[Du får ikke tiltakspenger#barn fra og med #fom til og med #tom fordi du oppholder deg på en institusjon med gratis opphold, mat og drikke.]
-        brødtekst[Deltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til tiltakspenger#barn.]
-        brødtekst[Det er gjort unntak for opphold i barnevernsinstitusjoner. Dette kommer frem av tiltakspengeforskriften § 9.]
-    } else if grunn == "FREMMET_FOR_SENT" {
-        brødtekst[Du får ikke tiltakspenger#barn fra og med #fom til og med #tom fordi du har søkt om tiltakspenger#barn for sent.]
-        brødtekst[Tiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om tiltakspenger#barn.]
-        brødtekst[Dette kommer frem av tiltakspengeforskriften § 11.]
-    }
-}
-
-// Grunn i punktliste (flere avslagsgrunner): kortere formulering uten hjemler.
-#let avslagsgrunnListe(grunn, data) = {
-    let medBarn = data.harSøktMedBarn
-    let barn = barnetillegg(medBarn)
-
-    let deler = if grunn == "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK" {
-        (
-            [Du ikke deltar på arbeidsmarkedstiltak som gir rett til tiltakspenger.],
-            [For å få tiltakspenger#barn må du delta i arbeidsmarkedstiltak som gir rett til tiltakspenger#barn.],
-        )
-    } else if grunn == "ALDER" {
-        (
-            [Du ikke har fylt 18 år. Du må ha fylt 18 år for å ha rett til å få tiltakspenger.],
-        )
-    } else if grunn == "LIVSOPPHOLDYTELSE" {
-        (
-            [Du mottar en annen pengestøtte til livsopphold.],
-            [Deltakere som har rett til andre pengestøtter til livsopphold har ikke samtidig rett til å få tiltakspenger#barn.],
-        )
-    } else if grunn == "KVALIFISERINGSPROGRAMMET" {
-        (
-            [Du deltar på kvalifiseringsprogram.],
-            [Deltakere i kvalifiseringsprogram har ikke rett til tiltakspenger#barn.],
-        )
-    } else if grunn == "INTRODUKSJONSPROGRAMMET" {
-        (
-            [Du deltar på introduksjonsprogram.],
-            [Deltakere i introduksjonsprogram har ikke rett til tiltakspenger#barn.],
-        )
-    } else if grunn == "LØNN_FRA_TILTAKSARRANGØR" {
-        (
-            [Du mottar lønn fra tiltaksarrangør for tiden i arbeidsmarkedstiltaket.],
-            [Deltakere som mottar lønn fra tiltaksarrangør for tid i arbeidsmarkedstiltaket har ikke rett til tiltakspenger#barn.],
-        )
-    } else if grunn == "LØNN_FRA_ANDRE" {
-        (
-            [Du mottar lønn for arbeid som er en del av tiltaksdeltakelsen og du derfor har dekning av utgifter til livsopphold.],
-            [Deltaker i arbeidsmarkedstiltak som har rett til å få dekket utgifter til livsopphold på annen måte har ikke rett til tiltakspenger#barn. Lønn anses som dekning av utgifter til livsopphold på annen måte, når du får lønnen for arbeid som er en del av tiltaksdeltakelsen.],
-            [Lønn fra arbeid utenom tiltaksdeltakelsen har ikke betydning for din rett til tiltakspenger.],
-        )
-    } else if grunn == "INSTITUSJONSOPPHOLD" {
-        (
-            [Du oppholder deg på en institusjon med gratis opphold, mat og drikke.],
-            [Deltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til tiltakspenger#barn.],
-        )
-    } else if grunn == "FREMMET_FOR_SENT" {
-        (
-            [Du har søkt om tiltakspenger#barn for sent.],
-            [Tiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om tiltakspenger#barn.],
-        )
-    }
-
-        //første element er det som skal stå i punktet, resten er forklarende tekst som skal stå under selve punktet
-        set block(spacing: space-4)
-        brødtekst[#deler.join(linebreak())]
-}
-
-// Rendrer avslagsgrunnene: én enkeltgrunn med hjemler, eller punktliste med felles hjemler.
+// Brevtekstene lages i tiltakspenger-saksbehandling-api (BrevSøknadAvslagDTO.kt) og kommer i valgtHjemmelTekst.
+// Én avslagsgrunn: hele teksten med hjemler fullfører innledningen.
+// Flere avslagsgrunner: én punkttekst per grunn, med de samlede hjemlene i hjemlerTekst under punktlisten.
 #let avslagsgrunner(data) = {
-    let grunner = data.avslagsgrunner
-    let barn = barnetillegg(data.harSøktMedBarn)
+    let tekster = data.valgtHjemmelTekst
+    let barn = if data.harSøktMedBarn { " og barnetillegg" } else { "" }
+    let innledning = [Du får ikke tiltakspenger#barn fra og med #data.avslagFraOgMed til og med #data.avslagTilOgMed fordi]
 
-    if grunner.len() == 1 {
-        avslagsgrunnEnkelt(grunner.at(0), data)
-    } else if grunner.len() > 1 {
-        brødtekst[Du får ikke tiltakspenger#barn fra og med #data.avslagFraOgMed til og med #data.avslagTilOgMed fordi:]
+    if tekster.len() == 1 {
+        // Hvert «\n\n»-skilte avsnitt blir eget avsnitt i brevet; det første fullfører innledningen.
+        let avsnitt = tekster.at(0).split("\n\n")
+        brødtekst[#innledning #medLinjeskift(avsnitt.first())]
+        for resten in avsnitt.slice(1) {
+            brødtekst[#medLinjeskift(resten)]
+        }
+    } else if tekster.len() > 1 {
+        brødtekst[#innledning:]
         block(below: space-16)[
             #list(
                 spacing: space-16,
-                ..grunner.map(grunn => avslagsgrunnListe(grunn, data)),
+                ..tekster.map(tekst => {
+                    // Første linje er selve punktet, resten er forklarende tekst under punktet.
+                    set block(spacing: space-4)
+                    brødtekst[#medLinjeskift(tekst)]
+                }),
             )
         ]
         brødtekst[#data.hjemlerTekst]

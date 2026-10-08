@@ -18,7 +18,7 @@ Flagget `--build` brukes for å bygge imaget på nytt, som vil si at applikasjon
 
 Kjør `./run_tests.sh`.
 Alt kjører i Docker (en pdfgenrs-container og en testrunner-container), så det trengs ingen verktøy på maskinen utover Docker.
-Testene rendrer alle datasettene i `testdata/tpts/`, kanttilfellevariantene i `test/data/` og genererte avslagsvarianter (hver avslagsgrunn alene med/uten barnetillegg + alle i punktliste, se `AVSLAGSGRUNNER` i `test/run-tests.py`), og sjekker at:
+Testene rendrer alle datasettene i `testdata/tpts/` og kanttilfellevariantene i `test/data/`, og sjekker at:
 
 * alle maler kompilerer og svarer 200 med en gyldig PDF
 * alle sider er A4 og dokumentet har minst én side

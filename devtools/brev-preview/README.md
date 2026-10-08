@@ -41,10 +41,9 @@ De står i [`enums.js`](enums.js), med sti inn i flettedataene per datasett i `t
 | Datasett                | Felt                                    | Kilde                                                     |
 |-------------------------|-----------------------------------------|-----------------------------------------------------------|
 | `meldekort*`            | `dager[].status`                        | `meldekortLabelsNo`/`-En` i `lib/meldekortComponents.typ`  |
-| `vedtakAvslag`          | `avslagsgrunner[]`                      | grenene i `lib/avslagComponents.typ`                       |
 | `meldekortvedtak`       | `…dager[].status.forrige`/`.gjeldende`  | `toStatus()` i `BrevMeldekortvedtakDTO.kt`                 |
 
-Listene er kopier av kilden, på samme måte som `AVSLAGSGRUNNER` i `test/run-tests.py` — verdiene kan ikke leses ut av malene i drift, siden demo-imaget bare inneholder `devtools/brev-preview` og `testdata/tpts`.
+Listene er kopier av kilden — verdiene kan ikke leses ut av malene i drift, siden demo-imaget bare inneholder `devtools/brev-preview` og `testdata/tpts`.
 Endres kilden, må listen oppdateres.
 En verdi som ikke står i listen (typisk skrevet inn i JSON-modus) blir stående, merket «ukjent verdi».
 

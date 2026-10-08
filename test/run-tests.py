@@ -35,21 +35,6 @@ DATASETT_TIL_MAL = {
     "meldekort-korrigert-en": "meldekort-en",
 }
 
-# Avslagsgrunnene fra saksbehandling-api (Avslagsgrunnlag). Brukes til å generere
-# datasett som dekker alle grener i lib/avslagComponents.typ — både enkeltgrunn
-# (med hjemler, med/uten barnetillegg) og punktlisten med alle grunnene samlet.
-AVSLAGSGRUNNER = [
-    "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK",
-    "ALDER",
-    "LIVSOPPHOLDYTELSE",
-    "KVALIFISERINGSPROGRAMMET",
-    "INTRODUKSJONSPROGRAMMET",
-    "LØNN_FRA_TILTAKSARRANGØR",
-    "LØNN_FRA_ANDRE",
-    "INSTITUSJONSOPPHOLD",
-    "FREMMET_FOR_SENT",
-]
-
 # Alle utgående brev skal ha den felles halen (vedtaksinfo) og den felles signaturen; unntakene står i UTEN_STANDARDKRAV.
 UTGÅENDE_MALER = {
     "klageAvvis",
@@ -81,6 +66,10 @@ INNHOLDSKRAV = {
     "meldekortvedtak--automatisk": {"krever": ["Automatisk behandlet"], "forbyr": ["Med vennlig hilsen", "Nav Tiltak Oslo"]},
     # Opphør der alle valgte hjemler krever fritekst: valgtHjemmelTekst er null og begrunnelsen står kun i tilleggsteksten.
     "vedtakOpphør--kun-fritekst": {"krever": ["Slik har vi vurdert saken din", "tiltakspengeforskriften § 3"]},
+    # Flere avslagsgrunner: punktliste fra valgtHjemmelTekst med de samlede hjemlene fra hjemlerTekst under.
+    "vedtakAvslag": {"krever": ["10.01.2025 fordi:", "Du mottar en annen pengestøtte til livsopphold.", "Dette kommer frem av arbeidsmarkedsloven"]},
+    # Én avslagsgrunn: teksten fra valgtHjemmelTekst fullfører innledningen og har hjemlene selv.
+    "vedtakAvslag--en-grunn": {"krever": ["Du får ikke tiltakspenger fra og med", "fordi du mottar lønn", "tiltakspengeforskriften § 8 andre ledd."], "forbyr": ["og barnetillegg fra og med"]},
 }
 # Datasett der standardkravene for utgående brev ikke gjelder: automatisk behandlede vedtak har ingen signatur, og klageInnstilling har egen kravliste.
 UTEN_STANDARDKRAV = {"klageInnstilling", "klageInnstilling--uten-saksbehandler", "meldekortvedtak--automatisk"}
@@ -270,17 +259,6 @@ def sjekk_pdf(navn, mal, body, feil):
         pdf.close()
 
 
-def avslagsvarianter():
-    """Genererer (navn, payload) som til sammen rendrer alle avslagsgrunn-grenene."""
-    basis = json.loads((DATA_DIR / "vedtakAvslag.json").read_text())
-    for grunn in AVSLAGSGRUNNER:
-        for med_barn in (True, False):
-            payload = dict(basis, avslagsgrunner=[grunn], harSøktMedBarn=med_barn, hjemlerTekst=None)
-            yield f"vedtakAvslag--{grunn.lower()}{'' if med_barn else '-uten-barn'}", payload
-    payload = dict(basis, avslagsgrunner=AVSLAGSGRUNNER)
-    yield "vedtakAvslag--alle-grunner", payload
-
-
 def test_datasett(datafil, feil):
     navn = datafil.stem
     payload = datafil.read_bytes()
@@ -324,10 +302,6 @@ def main():
         test_datasett(datafil, feil)
 
     antall = len(datafiler)
-    for navn, payload in avslagsvarianter():
-        antall += 1
-        test_payload(navn, json.dumps(payload, ensure_ascii=False).encode("utf-8"), feil)
-
     print(f"\n{antall - len(feil)}/{antall} datasett ok")
     if feil:
         for f in feil:
