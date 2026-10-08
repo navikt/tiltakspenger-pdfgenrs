@@ -23,7 +23,7 @@
 
 #brødtekst[For å få tiltakspenger må du gjennomføre avtalt aktivitet og delta hele den avtalte tiden i tiltaket ditt.]
 
-#brødtekst[Du har ikke rett på tiltakspenger de dagene du ikke gjennomfører avtalt aktivitet, eller de dagene du har lønnet arbeid som en del av oppfølgingen i tiltaket ditt.]
+#brødtekst[Du har ikke rett til tiltakspenger de dagene du ikke gjennomfører avtalt aktivitet, eller de dagene du har lønnet arbeid som en del av oppfølgingen i tiltaket ditt.]
 
 #block(above: space-26, below: space-26)[
 #if "tilleggstekst" in data and data.tilleggstekst != none and data.tilleggstekst != "" [

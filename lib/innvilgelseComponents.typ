@@ -8,7 +8,7 @@
         #h2("Du må sende meldekort")
         #brødtekst[Du må sende inn meldekort hver 14. dag. Logg inn på #navLenke("nav.no")[nav.no] for å se når du skal sende neste meldekort og hvilken periode meldekortet gjelder for. Du er på en ny meldekortløsning for tiltakspenger. Du finner informasjonen du trenger når du åpner det nye meldekortet. Informasjonen om utfylling av meldekort på #navLenke("nav.no")[nav.no] gjelder for den gamle løsningen og passer derfor ikke helt for ditt meldekort.]
 
-        #brødtekst("På meldekortet må du gi oss opplysninger om hvilke dager du har deltatt i tiltaket som avtalt og hvilke avtalte tiltaksdager du har hatt fravær eller mottatt lønn. Dersom du har hatt fravær må du i tillegg oppgi grunnen til at du ikke deltok i tiltaket som avtalt. Nav trenger dette for å beregne hvor mye du skal ha i tiltakspenger.")
+        #brødtekst("På meldekortet må du gi oss opplysninger om hvilke dager du har deltatt i tiltaket som avtalt og hvilke avtalte tiltaksdager du har hatt fravær eller mottatt lønn. Dersom du har hatt fravær, må du i tillegg oppgi grunnen til at du ikke deltok i tiltaket som avtalt. Nav trenger dette for å beregne hvor mye du skal ha i tiltakspenger.")
 
         #brødtekst("Du skal ikke oppgi noe for dager som ikke er en avtalt tiltaksdag.")
 
@@ -45,7 +45,7 @@
 
         #brødtekst("Hvis du har fått utbetalt for mye fordi du ikke har meldt fra om endringer i din livssituasjon, må du vanligvis betale tilbake pengene. Det er derfor viktig at du selv følger med på utbetalinger fra Nav og melder fra om eventuelle feil.")
 
-        #brødtekst[Hvis du flytter og endrer adresse kan du endre dette på #navLenke("skatteetaten.no/person/folkeregister")[skatteetaten.no/person/folkeregister.]]
+        #brødtekst[Hvis du flytter og endrer adresse, kan du endre dette på #navLenke("skatteetaten.no/person/folkeregister")[skatteetaten.no/person/folkeregister.]]
     ]
     #body
 ]
