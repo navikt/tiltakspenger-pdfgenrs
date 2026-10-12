@@ -23,9 +23,12 @@
     Nav har vurdert saken din på nytt. Vi har omgjort vedtaket slik at du ikke har rett til tiltakspenger #if data.barnetillegg [og barnetillegg ]fra og med #data.vedtaksperiode.fraOgMed til og med #data.vedtaksperiode.tilOgMed.
 ]
 
-#if hjemmeltekster.len() > 0 [
-    #brødtekst[#hjemmeltekster.at(0).split("\n").join(linebreak())]
-]
+// Hvert «\n\n»-skilte avsnitt blir eget avsnitt i brevet, med vanlig avstand mellom avsnitt.
+#if hjemmeltekster.len() > 0 {
+    for avsnitt in hjemmeltekster.at(0).split("\n\n") {
+        brødtekst[#medLinjeskift(avsnitt)]
+    }
+}
 
 #brødtekst[
     Når et vedtak bygger på et uriktig faktisk grunnlag, kan Nav omgjøre vedtaket til ugunst for deg. Dette gjelder selv om det ikke var din skyld at vedtaket ble feil.
@@ -35,8 +38,9 @@
     Dette kommer frem av forvaltningsloven § 35 første ledd bokstav c.
 ]
 
-#block(above: space-26, below: space-26)[
-    #if "tilleggstekst" in data and data.tilleggstekst != none and data.tilleggstekst != "" [
+// Blokken lages bare når det finnes tilleggstekst, ellers gir den tomme blokken ekstra luft før «Du har rett til å klage».
+#if "tilleggstekst" in data and data.tilleggstekst != none and data.tilleggstekst != "" [
+    #block(above: space-26, below: space-26)[
         #block(above: space-26, below: space-6)[
             #h2("Slik har vi vurdert saken din")
         ]

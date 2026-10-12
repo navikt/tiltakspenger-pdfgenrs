@@ -18,12 +18,18 @@
 = Nav har stanset tiltakspengene dine
 
 #h2("Vedtak")
+// Hvert «\n\n»-skilte avsnitt blir eget avsnitt i brevet; det første fullfører innledningen.
+#let avsnitt = hjemmeltekster.at(0).split("\n\n")
 #brødtekst[
-    Tiltakspenger #if data.barnetillegg [og barnetillegg ]stanses fra og med #data.stansFraOgMedDato fordi #hjemmeltekster.at(0).split("\n").join(linebreak())
+    Tiltakspenger #if data.barnetillegg [og barnetillegg ]stanses fra og med #data.stansFraOgMedDato fordi #medLinjeskift(avsnitt.first())
 ]
+#for resten in avsnitt.slice(1) {
+    brødtekst[#medLinjeskift(resten)]
+}
 
-#block(above: space-26, below: space-26)[
-    #if "tilleggstekst" in data and data.tilleggstekst != none and data.tilleggstekst != "" [
+// Blokken lages bare når det finnes tilleggstekst, ellers gir den tomme blokken ekstra luft før «Du har rett til å klage».
+#if "tilleggstekst" in data and data.tilleggstekst != none and data.tilleggstekst != "" [
+    #block(above: space-26, below: space-26)[
         #block(above: space-26, below: space-6)[
             #h2("Slik har vi vurdert saken din")
         ]

@@ -12,8 +12,9 @@
 
 #avslagsgrunner(data)
 
-#block(above: space-26, below: space-26)[
-    #if "tilleggstekst" in data and data.tilleggstekst != none [
+// Blokken lages bare når det finnes tilleggstekst, ellers gir den tomme blokken ekstra luft før «Du har rett til å klage».
+#if "tilleggstekst" in data and data.tilleggstekst != none [
+    #block(above: space-26, below: space-26)[
         #block(above: space-26, below: space-6)[
             #h2("Slik har vi vurdert saken din")
         ]
