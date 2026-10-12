@@ -44,7 +44,7 @@
         ]
         let hjemlerTekst = data.at("hjemlerTekst", default: none)
         if hjemlerTekst == none {
-            assert(data.at("hjemler", default: none) != none, message: "Avslagsbrevet mangler både hjemlerTekst og hjemler")
+            assert(data.at("hjemler", default: ()).len() > 0, message: "Avslagsbrevet mangler både hjemlerTekst og hjemler")
             hjemlerTekst = hjemmelsetning(data.hjemler)
         }
         brødtekst[#hjemlerTekst]
