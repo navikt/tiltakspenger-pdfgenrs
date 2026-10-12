@@ -8,6 +8,7 @@
 // Mangler valgtHjemmelTekst, lages tekstene fra avslagsgrunner med lib/hjemmeltekster.typ.
 // Én avslagsgrunn: hele teksten med hjemler fullfører innledningen.
 // Flere avslagsgrunner: én punkttekst per grunn, med de samlede hjemlene i hjemlerTekst under punktlisten.
+// Mangler hjemlerTekst, lages setningen fra hjemler med hjemmelsetning i lib/hjemmeltekster.typ.
 #let avslagsgrunner(data) = {
     let tekster = data.at("valgtHjemmelTekst", default: none)
     if tekster == none {
@@ -41,6 +42,11 @@
                 }),
             )
         ]
-        brødtekst[#data.hjemlerTekst]
+        let hjemlerTekst = data.at("hjemlerTekst", default: none)
+        if hjemlerTekst == none {
+            assert(data.at("hjemler", default: none) != none, message: "Avslagsbrevet mangler både hjemlerTekst og hjemler")
+            hjemlerTekst = hjemmelsetning(data.hjemler)
+        }
+        brødtekst[#hjemlerTekst]
     }
 }

@@ -64,6 +64,52 @@
     tekster.at(grunn)
 }
 
+// Leddene skrives som i createBrevForskrifter i BrevSøknadAvslagDTO.kt, med komma foran «og» ved tre eller flere ledd.
+#let leddtekst(ledd) = {
+    let ord = ledd.map(nummer => {
+        if nummer not in (1, 2, 3) { panic("Ukjent leddnummer i hjemler") }
+        ("første", "andre", "tredje").at(nummer - 1)
+    })
+    if ord.len() == 1 { ord.first() + " ledd" } else if ord.len() == 2 { ord.join(" og ") + " ledd" } else { ord.slice(0, -1).join(", ") + ", og " + ord.last() + " ledd" }
+}
+
+// Paragrafene i én rettskilde, sortert etter tallet de begynner med (§ 2 før § 11) og deretter som tekst.
+// Paragrafer som ikke begynner med et tall, sorteres sist, som med Int.MAX_VALUE i Kotlin.
+#let paragraftekst(hjemler) = {
+    let ledd = (:)
+    for hjemmel in hjemler {
+        let liste = ledd.at(hjemmel.paragraf, default: ())
+        if hjemmel.ledd != none { liste.push(hjemmel.ledd) }
+        ledd.insert(hjemmel.paragraf, liste)
+    }
+    let paragrafer = ledd.keys().sorted(key: paragraf => {
+        let tall = paragraf.match(regex("^\d+"))
+        (if tall == none { 9223372036854775807 } else { int(tall.text) }, paragraf)
+    })
+    let deler = paragrafer.map(paragraf => {
+        let liste = ledd.at(paragraf).dedup().sorted()
+        if liste.len() == 0 { paragraf } else { paragraf + " " + leddtekst(liste) }
+    })
+    (if deler.len() == 1 { "§ " } else { "§§ " }) + deler.join(", ", last: " og ")
+}
+
+// Setningen med de samlede hjemlene under punktlisten i avslag med flere grunner.
+// Gir samme tekst som createBrevForskrifter i BrevSøknadAvslagDTO.kt; fasiten er test/fasit/hjemler.json.
+// hjemler er en liste med rettskilde, paragraf og ledd, med duplikater og usortert.
+#let hjemmelsetning(hjemler) = {
+    let rettskilder = (ARBEIDSMARKEDSLOVEN: "arbeidsmarkedsloven", TILTAKSPENGEFORSKRIFTEN: "tiltakspengeforskriften")
+    for hjemmel in hjemler {
+        if hjemmel.rettskilde not in rettskilder { panic("Ukjent rettskilde i hjemler: " + hjemmel.rettskilde) }
+    }
+    let deler = ()
+    for (kode, navn) in rettskilder {
+        let utvalg = hjemler.filter(hjemmel => hjemmel.rettskilde == kode)
+        if utvalg.len() > 0 { deler.push(navn + " " + paragraftekst(utvalg)) }
+    }
+    if deler.len() == 0 { panic("Fant ingen hjemler") }
+    "Dette kommer frem av " + deler.join(", og ") + "."
+}
+
 // Kortere tekst uten hjemler til punktlisten i avslag med flere grunner.
 #let avslagspunkttekst(grunn, medBarnetillegg) = {
     let tekster = avslagspunkttekster(ytelsen(medBarnetillegg))

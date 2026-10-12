@@ -25,6 +25,7 @@ DATA_DIR = REPO / "testdata" / "tpts"
 TEMPLATE_DIR = REPO / "templates" / "tpts"
 VARIANT_DIR = REPO / "test" / "data"
 FASIT_HJEMMELTEKSTER = REPO / "test" / "fasit" / "hjemmeltekster.json"
+FASIT_HJEMLER = REPO / "test" / "fasit" / "hjemler.json"
 DEBUG_DIR = REPO / "build" / "test"
 
 A4_PUNKTER = (595.3, 841.9)
@@ -330,6 +331,39 @@ def test_hjemmeltekstvariant(navn, mal, payload, valgt_hjemmel_tekst, feil):
     print(f"OK   {navn} -> {mal} (lik fasiten)")
 
 
+def hjemlervarianter():
+    """Hvert tilfelle i fasiten rendret med hjemler uten hjemlerTekst og med hjemlerTekst uten hjemler.
+
+    Gir (navn, payload med hjemler, payload med hjemlerTekst).
+    """
+    base = json.loads((DATA_DIR / "vedtakAvslag.json").read_text())
+    base.pop("valgtHjemmelTekst")
+    for nummer, tilfelle in enumerate(json.loads(FASIT_HJEMLER.read_text()), start=1):
+        felles = dict(base, avslagsgrunner=tilfelle["avslagsgrunner"], harSøktMedBarn=tilfelle["harSøktMedBarn"])
+        med_hjemler = dict(felles, hjemler=tilfelle["hjemler"])
+        med_hjemler.pop("hjemlerTekst")
+        yield f"vedtakAvslag--hjemler-{nummer}", med_hjemler, dict(felles, hjemlerTekst=tilfelle["hjemlerTekst"])
+
+
+def test_hjemlervariant(navn, med_hjemler, med_tekst, feil):
+    """Brevet laget fra hjemler skal ha samme tekst som brevet laget fra hjemlerTekst i fasiten."""
+    status, body = render("vedtakAvslag", json.dumps(med_hjemler).encode())
+    if status != 200 or not body.startswith(b"%PDF-"):
+        sti = lagre_debug(navn, ".feil.txt", body)
+        feil.append(f"{navn}: HTTP {status} med hjemler (respons i {sti})")
+        return
+    status, fasitbody = render("vedtakAvslag", json.dumps(med_tekst).encode())
+    if status != 200:
+        feil.append(f"{navn}: HTTP {status} med hjemlerTekst fra fasiten")
+        return
+    if pdftekst(body) != pdftekst(fasitbody):
+        lagre_debug(navn, ".hjemler.pdf", body)
+        lagre_debug(navn, ".fasit.pdf", fasitbody)
+        feil.append(f"{navn}: teksten fra hjemler er ulik teksten fra hjemlerTekst i fasiten")
+        return
+    print(f"OK   {navn} -> vedtakAvslag (lik fasiten)")
+
+
 def ukjente_koder():
     """Payloader med en kode malene ikke kjenner, for eksempel Kotlin-navnet på enumen, eller uten både tekst og koder."""
     for mal, kodefelt in (("vedtakAvslag", "avslagsgrunner"), ("stansvedtak", "stansgrunner"), ("vedtakOpphør", "opphørsgrunner")):
@@ -340,6 +374,12 @@ def ukjente_koder():
         # Mangler både teksten og kodene, skal malen stoppe i stedet for å lage et brev uten begrunnelse.
         uten_koder = {nøkkel: verdi for nøkkel, verdi in payload.items() if nøkkel != kodefelt}
         yield f"{mal}--uten-tekst-og-koder", mal, uten_koder
+    # Avslag med flere grunner: ukjent rettskilde, og verken hjemlerTekst eller hjemler.
+    payload = json.loads((DATA_DIR / "vedtakAvslag.json").read_text())
+    payload.pop("hjemlerTekst")
+    yield "vedtakAvslag--uten-hjemlertekst-og-hjemler", "vedtakAvslag", payload
+    hjemler = [{"rettskilde": "FOLKETRYGDLOVEN", "paragraf": "11", "ledd": None}]
+    yield "vedtakAvslag--ukjent-rettskilde", "vedtakAvslag", dict(payload, hjemler=hjemler)
 
 
 def test_ukjent_kode(navn, mal, payload, feil):
@@ -390,11 +430,15 @@ def main():
     for variant in varianter:
         test_hjemmeltekstvariant(*variant, feil)
 
+    hjemlertilfeller = list(hjemlervarianter())
+    for variant in hjemlertilfeller:
+        test_hjemlervariant(*variant, feil)
+
     ukjente = list(ukjente_koder())
     for variant in ukjente:
         test_ukjent_kode(*variant, feil)
 
-    antall = len(datafiler) + len(varianter) + len(ukjente)
+    antall = len(datafiler) + len(varianter) + len(hjemlertilfeller) + len(ukjente)
     print(f"\n{antall - len(feil)}/{antall} datasett ok")
     if feil:
         for f in feil:
