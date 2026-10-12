@@ -4,5 +4,6 @@
 #import "/lib/format.typ": *
 #import "/lib/components.typ": *
 #import "/lib/meldekortComponents.typ": *
+#import "/lib/hjemmeltekster.typ": *
 #import "/lib/avslagComponents.typ": *
 #import "/lib/innvilgelseComponents.typ": *

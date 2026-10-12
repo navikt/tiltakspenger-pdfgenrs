@@ -1,0 +1,170 @@
+{
+  "avslag": {
+    "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK": {
+      "false": "du ikke deltar på arbeidsmarkedstiltak som gir rett til tiltakspenger.\n\nFor å få tiltakspenger må du delta i arbeidsmarkedstiltak som gir rett til tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften § 2.",
+      "true": "du ikke deltar på arbeidsmarkedstiltak som gir rett til tiltakspenger.\n\nFor å få tiltakspenger og barnetillegg må du delta i arbeidsmarkedstiltak som gir rett til tiltakspenger og barnetillegg.\n\nDette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften §§ 2 og 3."
+    },
+    "ALDER": {
+      "false": "du ikke har fylt 18 år. Du må ha fylt 18 år for å ha rett til å få tiltakspenger.\n\nDette kommer frem av tiltakspengeforskriften § 3.",
+      "true": "du ikke har fylt 18 år. Du må ha fylt 18 år for å ha rett til å få tiltakspenger og barnetillegg.\n\nDette kommer frem av tiltakspengeforskriften § 3."
+    },
+    "LIVSOPPHOLDYTELSE": {
+      "false": "du mottar en annen pengestøtte til livsopphold. Deltakere som har rett til andre pengestøtter til livsopphold har ikke samtidig rett til å få tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og tiltakspengeforskriften § 7 første ledd.",
+      "true": "du mottar en annen pengestøtte til livsopphold. Deltakere som har rett til andre pengestøtter til livsopphold har ikke samtidig rett til å få tiltakspenger og barnetillegg.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og tiltakspengeforskriften § 7 første ledd."
+    },
+    "KVALIFISERINGSPROGRAMMET": {
+      "false": "du deltar på kvalifiseringsprogram. Deltakere i kvalifiseringsprogram har ikke rett til tiltakspenger.\n\nDette kommer frem av tiltakspengeforskriften § 7 tredje ledd.",
+      "true": "du deltar på kvalifiseringsprogram. Deltakere i kvalifiseringsprogram har ikke rett til tiltakspenger og barnetillegg.\n\nDette kommer frem av tiltakspengeforskriften § 7 tredje ledd."
+    },
+    "INTRODUKSJONSPROGRAMMET": {
+      "false": "du deltar på introduksjonsprogram. Deltakere i introduksjonsprogram har ikke rett til tiltakspenger.\n\nDette kommer frem av tiltakspengeforskriften § 7 tredje ledd.",
+      "true": "du deltar på introduksjonsprogram. Deltakere i introduksjonsprogram har ikke rett til tiltakspenger og barnetillegg.\n\nDette kommer frem av tiltakspengeforskriften § 7 tredje ledd."
+    },
+    "LØNN_FRA_TILTAKSARRANGØR": {
+      "false": "du mottar lønn fra tiltaksarrangør for tiden i arbeidsmarkedstiltaket.\n\nDeltakere som mottar lønn fra tiltaksarrangør for tid i arbeidsmarkedstiltaket har ikke rett til tiltakspenger.\n\nDette kommer frem av tiltakspengeforskriften § 8.",
+      "true": "du mottar lønn fra tiltaksarrangør for tiden i arbeidsmarkedstiltaket.\n\nDeltakere som mottar lønn fra tiltaksarrangør for tid i arbeidsmarkedstiltaket har ikke rett til tiltakspenger og barnetillegg.\n\nDette kommer frem av tiltakspengeforskriften § 8."
+    },
+    "LØNN_FRA_ANDRE": {
+      "false": "du mottar lønn for arbeid som er en del av tiltaksdeltakelsen og du derfor har dekning av utgifter til livsopphold.\n\nDeltaker i arbeidsmarkedstiltak som har rett til å få dekket utgifter til livsopphold på annen måte har ikke rett til tiltakspenger. Lønn anses som dekning av utgifter til livsopphold på annen måte, når du får lønnen for arbeid som er en del av tiltaksdeltakelsen.\n\nLønn fra arbeid utenom tiltaksdeltakelsen har ikke betydning for din rett til tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften § 8 andre ledd.",
+      "true": "du mottar lønn for arbeid som er en del av tiltaksdeltakelsen og du derfor har dekning av utgifter til livsopphold.\n\nDeltaker i arbeidsmarkedstiltak som har rett til å få dekket utgifter til livsopphold på annen måte har ikke rett til tiltakspenger og barnetillegg. Lønn anses som dekning av utgifter til livsopphold på annen måte, når du får lønnen for arbeid som er en del av tiltaksdeltakelsen.\n\nLønn fra arbeid utenom tiltaksdeltakelsen har ikke betydning for din rett til tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften § 8 andre ledd."
+    },
+    "INSTITUSJONSOPPHOLD": {
+      "false": "du oppholder deg på en institusjon med gratis opphold, mat og drikke.\n\nDeltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til tiltakspenger.\n\nDet er gjort unntak for opphold i barnevernsinstitusjoner. Dette kommer frem av tiltakspengeforskriften § 9.",
+      "true": "du oppholder deg på en institusjon med gratis opphold, mat og drikke.\n\nDeltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til tiltakspenger og barnetillegg.\n\nDet er gjort unntak for opphold i barnevernsinstitusjoner. Dette kommer frem av tiltakspengeforskriften § 9."
+    },
+    "IKKE_LOVLIG_OPPHOLD": {
+      "false": null,
+      "true": null
+    },
+    "FREMMET_FOR_SENT": {
+      "false": "du har søkt om tiltakspenger for sent.\n\nTiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om tiltakspenger.\n\nDette kommer frem av tiltakspengeforskriften § 11.",
+      "true": "du har søkt om tiltakspenger og barnetillegg for sent.\n\nTiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om tiltakspenger og barnetillegg.\n\nDette kommer frem av tiltakspengeforskriften § 11."
+    }
+  },
+  "avslagspunkt": {
+    "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK": {
+      "false": "Du deltar ikke på arbeidsmarkedstiltak som gir rett til tiltakspenger.\nFor å få tiltakspenger må du delta i arbeidsmarkedstiltak som gir rett til tiltakspenger.",
+      "true": "Du deltar ikke på arbeidsmarkedstiltak som gir rett til tiltakspenger.\nFor å få tiltakspenger og barnetillegg må du delta i arbeidsmarkedstiltak som gir rett til tiltakspenger og barnetillegg."
+    },
+    "ALDER": {
+      "false": "Du har ikke fylt 18 år.\nDu må ha fylt 18 år for å ha rett til å få tiltakspenger.",
+      "true": "Du har ikke fylt 18 år.\nDu må ha fylt 18 år for å ha rett til å få tiltakspenger og barnetillegg."
+    },
+    "LIVSOPPHOLDYTELSE": {
+      "false": "Du mottar en annen pengestøtte til livsopphold.\nDeltakere som har rett til andre pengestøtter til livsopphold har ikke samtidig rett til å få tiltakspenger.",
+      "true": "Du mottar en annen pengestøtte til livsopphold.\nDeltakere som har rett til andre pengestøtter til livsopphold har ikke samtidig rett til å få tiltakspenger og barnetillegg."
+    },
+    "KVALIFISERINGSPROGRAMMET": {
+      "false": "Du deltar på kvalifiseringsprogram.\nDeltakere i kvalifiseringsprogram har ikke rett til tiltakspenger.",
+      "true": "Du deltar på kvalifiseringsprogram.\nDeltakere i kvalifiseringsprogram har ikke rett til tiltakspenger og barnetillegg."
+    },
+    "INTRODUKSJONSPROGRAMMET": {
+      "false": "Du deltar på introduksjonsprogram.\nDeltakere i introduksjonsprogram har ikke rett til tiltakspenger.",
+      "true": "Du deltar på introduksjonsprogram.\nDeltakere i introduksjonsprogram har ikke rett til tiltakspenger og barnetillegg."
+    },
+    "LØNN_FRA_TILTAKSARRANGØR": {
+      "false": "Du mottar lønn fra tiltaksarrangør for tiden i arbeidsmarkedstiltaket.\nDeltakere som mottar lønn fra tiltaksarrangør for tid i arbeidsmarkedstiltaket har ikke rett til tiltakspenger.",
+      "true": "Du mottar lønn fra tiltaksarrangør for tiden i arbeidsmarkedstiltaket.\nDeltakere som mottar lønn fra tiltaksarrangør for tid i arbeidsmarkedstiltaket har ikke rett til tiltakspenger og barnetillegg."
+    },
+    "LØNN_FRA_ANDRE": {
+      "false": "Du mottar lønn for arbeid som er en del av tiltaksdeltakelsen og du derfor har dekning av utgifter til livsopphold.\nDeltaker i arbeidsmarkedstiltak som har rett til å få dekket utgifter til livsopphold på annen måte har ikke rett til tiltakspenger. Lønn anses som dekning av utgifter til livsopphold på annen måte, når du får lønnen for arbeid som er en del av tiltaksdeltakelsen.\nLønn fra arbeid utenom tiltaksdeltakelsen har ikke betydning for din rett til tiltakspenger.",
+      "true": "Du mottar lønn for arbeid som er en del av tiltaksdeltakelsen og du derfor har dekning av utgifter til livsopphold.\nDeltaker i arbeidsmarkedstiltak som har rett til å få dekket utgifter til livsopphold på annen måte har ikke rett til tiltakspenger og barnetillegg. Lønn anses som dekning av utgifter til livsopphold på annen måte, når du får lønnen for arbeid som er en del av tiltaksdeltakelsen.\nLønn fra arbeid utenom tiltaksdeltakelsen har ikke betydning for din rett til tiltakspenger."
+    },
+    "INSTITUSJONSOPPHOLD": {
+      "false": "Du oppholder deg på en institusjon med gratis opphold, mat og drikke.\nDeltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til tiltakspenger.",
+      "true": "Du oppholder deg på en institusjon med gratis opphold, mat og drikke.\nDeltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til tiltakspenger og barnetillegg."
+    },
+    "IKKE_LOVLIG_OPPHOLD": {
+      "false": null,
+      "true": null
+    },
+    "FREMMET_FOR_SENT": {
+      "false": "Du har søkt om tiltakspenger for sent.\nTiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om tiltakspenger.",
+      "true": "Du har søkt om tiltakspenger og barnetillegg for sent.\nTiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om tiltakspenger og barnetillegg."
+    }
+  },
+  "stans": {
+    "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK": {
+      "false": "du ikke lenger deltar på arbeidsmarkedstiltak.\n\nDu må være deltaker i et arbeidsmarkedstiltak for å ha rett til å få tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften § 2.",
+      "true": "du ikke lenger deltar på arbeidsmarkedstiltak.\n\nDu må være deltaker i et arbeidsmarkedstiltak for å ha rett til å få tiltakspenger og barnetillegg.\n\nDette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften § 2."
+    },
+    "ALDER": {
+      "false": "du ikke har fylt 18 år. Du må ha fylt 18 år for å ha rett til å få tiltakspenger.\n\nDet kommer frem av tiltakspengeforskriften § 3.",
+      "true": "du ikke har fylt 18 år. Du må ha fylt 18 år for å ha rett til å få tiltakspenger og barnetillegg.\n\nDet kommer frem av tiltakspengeforskriften § 3."
+    },
+    "LIVSOPPHOLDYTELSE": {
+      "false": "du mottar en annen pengestøtte til livsopphold. Deltakere som har rett til andre pengestøtter til livsopphold har ikke samtidig rett til å få tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og tiltakspengeforskriften § 7 første ledd.",
+      "true": "du mottar en annen pengestøtte til livsopphold. Deltakere som har rett til andre pengestøtter til livsopphold har ikke samtidig rett til å få tiltakspenger og barnetillegg.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og tiltakspengeforskriften § 7 første ledd."
+    },
+    "KVALIFISERINGSPROGRAMMET": {
+      "false": "du deltar på kvalifiseringsprogram. Deltakere i kvalifiseringsprogram har ikke rett til tiltakspenger.\n\nDette kommer frem av tiltakspengeforskriften § 7 tredje ledd.",
+      "true": "du deltar på kvalifiseringsprogram. Deltakere i kvalifiseringsprogram har ikke rett til tiltakspenger og barnetillegg.\n\nDette kommer frem av tiltakspengeforskriften § 7 tredje ledd."
+    },
+    "INTRODUKSJONSPROGRAMMET": {
+      "false": "du deltar på introduksjonsprogram. Deltakere i introduksjonsprogram har ikke rett til tiltakspenger.\n\nDette kommer frem av tiltakspengeforskriften § 7 tredje ledd.",
+      "true": "du deltar på introduksjonsprogram. Deltakere i introduksjonsprogram har ikke rett til tiltakspenger og barnetillegg.\n\nDette kommer frem av tiltakspengeforskriften § 7 tredje ledd."
+    },
+    "LØNN_FRA_TILTAKSARRANGØR": {
+      "false": "du mottar lønn fra tiltaksarrangør for tiden i arbeidsmarkedstiltaket.\n\nDeltakere som mottar lønn fra tiltaksarrangør for tid i arbeidsmarkedstiltaket har ikke rett til tiltakspenger.\n\nDette kommer frem av tiltakspengeforskriften § 8.",
+      "true": "du mottar lønn fra tiltaksarrangør for tiden i arbeidsmarkedstiltaket.\n\nDeltakere som mottar lønn fra tiltaksarrangør for tid i arbeidsmarkedstiltaket har ikke rett til tiltakspenger og barnetillegg.\n\nDette kommer frem av tiltakspengeforskriften § 8."
+    },
+    "LØNN_FRA_ANDRE": {
+      "false": "du mottar lønn for arbeid som er en del av tiltaksdeltakelsen og du derfor har dekning av utgifter til livsopphold.\n\nDeltaker i arbeidsmarkedstiltak som har rett til å få dekket utgifter til livsopphold på annen måte har ikke rett til tiltakspenger. Lønn anses som dekning av utgifter til livsopphold på annen måte, når du får lønnen for arbeid som er en del av tiltaksdeltakelsen.\n\nLønn fra arbeid utenom tiltaksdeltakelsen har ikke betydning for din rett til tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften § 8 andre ledd.",
+      "true": "du mottar lønn for arbeid som er en del av tiltaksdeltakelsen og du derfor har dekning av utgifter til livsopphold.\n\nDeltaker i arbeidsmarkedstiltak som har rett til å få dekket utgifter til livsopphold på annen måte har ikke rett til tiltakspenger og barnetillegg. Lønn anses som dekning av utgifter til livsopphold på annen måte, når du får lønnen for arbeid som er en del av tiltaksdeltakelsen.\n\nLønn fra arbeid utenom tiltaksdeltakelsen har ikke betydning for din rett til tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften § 8 andre ledd."
+    },
+    "INSTITUSJONSOPPHOLD": {
+      "false": "du oppholder deg på en institusjon med gratis opphold, mat og drikke.\n\nDeltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til tiltakspenger.\n\nDet er gjort unntak for opphold i barnevernsinstitusjoner. Dette kommer frem av tiltakspengeforskriften § 9.",
+      "true": "du oppholder deg på en institusjon med gratis opphold, mat og drikke.\n\nDeltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til tiltakspenger og barnetillegg.\n\nDet er gjort unntak for opphold i barnevernsinstitusjoner. Dette kommer frem av tiltakspengeforskriften § 9."
+    },
+    "IKKE_LOVLIG_OPPHOLD": {
+      "false": "du i denne perioden ikke har lovlig opphold i Norge.\n\nDu må ha lovlig opphold i Norge, for å ha rett til tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 2.",
+      "true": "du i denne perioden ikke har lovlig opphold i Norge.\n\nDu må ha lovlig opphold i Norge, for å ha rett til tiltakspenger og barnetillegg.\n\nDette kommer frem av arbeidsmarkedsloven § 2."
+    },
+    "FREMMET_FOR_SENT": {
+      "false": null,
+      "true": null
+    }
+  },
+  "opphør": {
+    "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK": {
+      "false": "Vilkåret om deltakelse i arbeidsmarkedstiltak er ikke oppfylt i denne perioden.\n\nDu må være deltaker i et arbeidsmarkedstiltak for å ha rett til å få tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13, tiltakspengeforskriften § 2.",
+      "true": "Vilkåret om deltakelse i arbeidsmarkedstiltak er ikke oppfylt i denne perioden.\n\nDu må være deltaker i et arbeidsmarkedstiltak for å ha rett til å få tiltakspenger og barnetillegg.\n\nDette kommer frem av arbeidsmarkedsloven § 13, tiltakspengeforskriften § 2."
+    },
+    "ALDER": {
+      "false": null,
+      "true": null
+    },
+    "LIVSOPPHOLDYTELSE": {
+      "false": "Du har rett til annen pengestøtte til livsopphold i denne perioden.\n\nDeltakere som har rett til andre pengestøtter til livsopphold har ikke samtidig rett til å få tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd, forskrift om tiltakspenger § 7 første ledd.",
+      "true": "Du har rett til annen pengestøtte til livsopphold i denne perioden.\n\nDeltakere som har rett til andre pengestøtter til livsopphold har ikke samtidig rett til å få tiltakspenger og barnetillegg.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd, forskrift om tiltakspenger § 7 første ledd."
+    },
+    "KVALIFISERINGSPROGRAMMET": {
+      "false": "Du er deltaker i kvalifiseringsprogram i denne perioden. Deltakere i kvalifiseringsprogram har ikke rett til tiltakspenger.\n\nDette kommer frem av tiltakspengeforskriften § 7 tredje ledd.",
+      "true": "Du er deltaker i kvalifiseringsprogram i denne perioden. Deltakere i kvalifiseringsprogram har ikke rett til tiltakspenger og barnetillegg.\n\nDette kommer frem av tiltakspengeforskriften § 7 tredje ledd."
+    },
+    "INTRODUKSJONSPROGRAMMET": {
+      "false": "Du er deltaker i introduksjonsprogram i denne perioden. Deltakere i introduksjonsprogram har ikke rett til tiltakspenger.\n\nDette kommer frem av tiltakspengeforskriften § 7 tredje ledd.",
+      "true": "Du er deltaker i introduksjonsprogram i denne perioden. Deltakere i introduksjonsprogram har ikke rett til tiltakspenger og barnetillegg.\n\nDette kommer frem av tiltakspengeforskriften § 7 tredje ledd."
+    },
+    "LØNN_FRA_TILTAKSARRANGØR": {
+      "false": "Du mottar lønn fra tiltaksarrangøren for tiden i arbeidsmarkedstiltaket for denne perioden.\n\nDeltakere som mottar lønn fra tiltaksarrangør for tid i arbeidsmarkedstiltaket har ikke rett til tiltakspenger.\n\nDette kommer frem av tiltakspengeforskriften § 8.",
+      "true": "Du mottar lønn fra tiltaksarrangøren for tiden i arbeidsmarkedstiltaket for denne perioden.\n\nDeltakere som mottar lønn fra tiltaksarrangør for tid i arbeidsmarkedstiltaket har ikke rett til tiltakspenger og barnetillegg.\n\nDette kommer frem av tiltakspengeforskriften § 8."
+    },
+    "LØNN_FRA_ANDRE": {
+      "false": "Du mottar i denne perioden lønn for arbeid som er en del av tiltaksdeltakelsen. Du har derfor dekning av utgifter til livsopphold.\n\nDeltaker i arbeidsmarkedstiltak som har rett til å få dekket utgifter til livsopphold på annen måte har ikke rett til tiltakspenger. Lønn anses som dekning av utgifter til livsopphold på annen måte, når du får lønnen for arbeid som er en del av tiltaksdeltakelsen.\n\nLønn fra arbeid utenom tiltaksdeltakelsen har ikke betydning for din rett til tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13, tiltakspengeforskriften § 8 andre ledd.",
+      "true": "Du mottar i denne perioden lønn for arbeid som er en del av tiltaksdeltakelsen. Du har derfor dekning av utgifter til livsopphold.\n\nDeltaker i arbeidsmarkedstiltak som har rett til å få dekket utgifter til livsopphold på annen måte har ikke rett til tiltakspenger og barnetillegg. Lønn anses som dekning av utgifter til livsopphold på annen måte, når du får lønnen for arbeid som er en del av tiltaksdeltakelsen.\n\nLønn fra arbeid utenom tiltaksdeltakelsen har ikke betydning for din rett til tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13, tiltakspengeforskriften § 8 andre ledd."
+    },
+    "INSTITUSJONSOPPHOLD": {
+      "false": "Du oppholder deg på en institusjon med gratis opphold, mat og drikke i denne perioden.\n\nDeltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til tiltakspenger.\n\nDet er gjort unntak for opphold i barnevernsinstitusjoner. Dette kommer frem av tiltakspengeforskriften § 9.",
+      "true": "Du oppholder deg på en institusjon med gratis opphold, mat og drikke i denne perioden.\n\nDeltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til tiltakspenger og barnetillegg.\n\nDet er gjort unntak for opphold i barnevernsinstitusjoner. Dette kommer frem av tiltakspengeforskriften § 9."
+    },
+    "IKKE_LOVLIG_OPPHOLD": {
+      "false": "I denne perioden har du ikke lovlig opphold i Norge.\n\nDu må ha lovlig opphold i Norge, for å ha rett til tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 2.",
+      "true": "I denne perioden har du ikke lovlig opphold i Norge.\n\nDu må ha lovlig opphold i Norge, for å ha rett til tiltakspenger og barnetillegg.\n\nDette kommer frem av arbeidsmarkedsloven § 2."
+    },
+    "FREMMET_FOR_SENT": {
+      "false": null,
+      "true": null
+    }
+  }
+}

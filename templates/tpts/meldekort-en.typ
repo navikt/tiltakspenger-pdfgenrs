@@ -26,7 +26,7 @@
     #h2([#data.periode.fraOgMed - #data.periode.tilOgMed (week #(data.uke1)-#(data.uke2))])
     #block(below: space-26)[
         #brødtekst[
-            Please contact Nav if you are not sure how to fill out the employment status form #navLenke("nav.no/kontaktoss")[(nav.no/kontaktoss)].
+            Please contact Nav if you are not sure how to fill out the employment status form (#navLenke("nav.no/kontaktoss")[nav.no/kontaktoss]).
         ]
         #brødtekst[
             To receive employment scheme benefits, all scheme participants must submit an employment status form every 14 days. We use this information to calculate your employment scheme benefits. The payment is normally processed automatically.
