@@ -42,6 +42,7 @@ Typografi, avstander, tabeller og sideoppsett kommer fra et delt Typst-oppsett s
   Ikke lag lokale kopier av disse tekstene i maler eller komponenter.
 - **Signaturen** («Med vennlig hilsen») er også felles: bruk `signatur`-komponenten i `lib/components.typ` i alle utgående brev.
   Beslutter er nullable og vises kun når den finnes; automatisk behandlede vedtak viser «Automatisk behandlet» i stedet for signatur.
+- **Feilmeldinger:** Meldinger i `panic` og `assert` havner i pdfgenrs-loggen og må aldri inneholde andre payload-verdier enn koder.
 - **Innsendte dokumenter** (meldekort, søknad) er ikke brev, men en tro gjengivelse av det brukeren fylte ut — ingen signatur eller klagerett.
   De bruker samme personinfo-layout som utgående brev via `personaliaInnsendt` (mottatt-tidspunkt til høyre der utgående har utsendingsdato).
 
@@ -67,8 +68,9 @@ Testdataene bruker en fast, virkelighetsnær testfamilie — ingen tulleord/tull
 Kanoniske verdier: bruker Emil Aremark (fnr `25508631114`), barn Nora/Jakob/Oskar Johan Aremark, saksbehandler Ingrid Bakke, beslutter Martin Holm, saksnummer `202501011001`, tiltaksarrangør Aremark Snekkerverksted AS.
 Datasettene i `testdata/tpts/` er også defaultene i brev-preview (både lokalt og i demoen i dev), så de skal vise et **helt, normalt brev**: ingen forhåndsvisningsvannmerke, ingen plassholdertekst og datoer som henger sammen.
 Kanttilfellene — forhåndsvisning, manglende saksbehandler, automatisk behandling — hører hjemme som varianter i `test/data/`.
-Tekstene i `valgtHjemmelTekst` (avslag/stans/opphør) skal speile fasit-testene i `tiltakspenger-saksbehandling-api` (`BrevSøknadAvslagDTOTest`/`BrevRevurderingStansDTOTest`/`BrevOmgjøringOpphørDTOTest`) — endres brevtekstene der, oppdater testdataene her.
-Brevtekstene hører hjemme i saksbehandling-api; malene setter bare inn innledning og tekstene de får, og forgrener ikke på enum-verdier for å velge tekst.
+Hjemmeltekster for avslag, stans og opphør ligger i `lib/hjemmeltekster.typ`, og fasiten i `test/fasit/hjemmeltekster.json`.
+All brevtekst flyttes hit fra saksbehandling-api, og så lenge `valgtHjemmelTekst` sendes, bruker malene den, og den skal være lik teksten i `lib/hjemmeltekster.typ`.
+Testene krever at brev fra koder får samme tekst som brev fra fasiten, så endrer du en tekst, må begge filene oppdateres.
 Endrer du felleskomponentene (signatur, vedtaksinfo), oppdater innholdskravene i samme endring.
 Testene er deploy-gate i CI (`.github/workflows/.test.yml`).
 

@@ -24,6 +24,7 @@ REPO = Path(os.environ.get("REPO_DIR", "/repo"))
 DATA_DIR = REPO / "testdata" / "tpts"
 TEMPLATE_DIR = REPO / "templates" / "tpts"
 VARIANT_DIR = REPO / "test" / "data"
+FASIT_HJEMMELTEKSTER = REPO / "test" / "fasit" / "hjemmeltekster.json"
 DEBUG_DIR = REPO / "build" / "test"
 
 A4_PUNKTER = (595.3, 841.9)
@@ -266,6 +267,90 @@ def test_datasett(datafil, feil):
     test_payload(navn, payload, feil)
 
 
+def pdftekst(body):
+    pdf = pdfium.PdfDocument(body)
+    try:
+        return "".join(side.get_textpage().get_text_range() for side in pdf)
+    finally:
+        pdf.close()
+
+
+def hjemmeltekstvarianter():
+    """Payloader med koder i stedet for valgtHjemmelTekst, sammen med valgtHjemmelTekst fra fasiten.
+
+    Gir (navn, mal, payload med koder, valgtHjemmelTekst fra fasiten).
+    Kombinasjoner Kotlin ikke kan lage (avslag med IKKE_LOVLIG_OPPHOLD, stans med FREMMET_FOR_SENT) hoppes over.
+    """
+    fasit = json.loads(FASIT_HJEMMELTEKSTER.read_text())
+    felt = {"avslag": ("vedtakAvslag", "avslagsgrunner"), "stans": ("stansvedtak", "stansgrunner"), "opphør": ("vedtakOpphør", "opphørsgrunner")}
+    for brevtype, (mal, kodefelt) in felt.items():
+        base = json.loads((DATA_DIR / f"{mal}.json").read_text())
+        base.pop("valgtHjemmelTekst")
+        for kode, tekster in fasit[brevtype].items():
+            for flagg, tekst in tekster.items():
+                if tekst is None and brevtype != "opphør":
+                    continue
+                payload = dict(base, **{kodefelt: [kode]})
+                if brevtype == "avslag":
+                    payload.update(harSøktMedBarn=flagg == "true", hjemlerTekst=None)
+                else:
+                    payload["barnetillegg"] = flagg == "true"
+                # Opphørsgrunner uten tekst gir valgtHjemmelTekst null fra Kotlin.
+                yield f"{mal}--koder-{kode}-barnetillegg-{flagg}", mal, payload, None if tekst is None else [tekst]
+    base = json.loads((DATA_DIR / "vedtakAvslag.json").read_text())
+    base.pop("valgtHjemmelTekst")
+    koder = [kode for kode, tekster in fasit["avslagspunkt"].items() if tekster["false"] is not None]
+    for flagg in ("false", "true"):
+        payload = dict(base, avslagsgrunner=koder, harSøktMedBarn=flagg == "true")
+        yield f"vedtakAvslag--koder-flere-grunner-barnetillegg-{flagg}", "vedtakAvslag", payload, [fasit["avslagspunkt"][kode][flagg] for kode in koder]
+
+
+def test_hjemmeltekstvariant(navn, mal, payload, valgt_hjemmel_tekst, feil):
+    """Brevet laget fra koder skal ha samme tekst som brevet laget fra valgtHjemmelTekst i fasiten."""
+    status, body = render(mal, json.dumps(payload).encode())
+    if status != 200 or not body.startswith(b"%PDF-"):
+        sti = lagre_debug(navn, ".feil.txt", body)
+        feil.append(f"{navn}: HTTP {status} fra malen '{mal}' med koder (respons i {sti})")
+        return
+    if not sjekk_pdf(navn, mal, body, feil):
+        lagre_debug(navn, ".feil.pdf", body)
+        return
+    # Referansen bruker bare den gamle veien: kodefeltene fjernes, så fallbacken ikke sammenlignes med seg selv.
+    referanse = {nøkkel: verdi for nøkkel, verdi in payload.items() if nøkkel not in ("stansgrunner", "opphørsgrunner")}
+    referanse["valgtHjemmelTekst"] = valgt_hjemmel_tekst
+    status, fasitbody = render(mal, json.dumps(referanse).encode())
+    if status != 200:
+        feil.append(f"{navn}: HTTP {status} fra malen '{mal}' med valgtHjemmelTekst fra fasiten")
+        return
+    if pdftekst(body) != pdftekst(fasitbody):
+        lagre_debug(navn, ".koder.pdf", body)
+        lagre_debug(navn, ".fasit.pdf", fasitbody)
+        feil.append(f"{navn}: teksten fra kodene er ulik teksten fra valgtHjemmelTekst i fasiten")
+        return
+    print(f"OK   {navn} -> {mal} (lik fasiten)")
+
+
+def ukjente_koder():
+    """Payloader med en kode malene ikke kjenner, for eksempel Kotlin-navnet på enumen, eller uten både tekst og koder."""
+    for mal, kodefelt in (("vedtakAvslag", "avslagsgrunner"), ("stansvedtak", "stansgrunner"), ("vedtakOpphør", "opphørsgrunner")):
+        payload = json.loads((DATA_DIR / f"{mal}.json").read_text())
+        payload.pop("valgtHjemmelTekst")
+        payload[kodefelt] = ["Livsoppholdytelser"]
+        yield f"{mal}--ukjent-kode", mal, payload
+        # Mangler både teksten og kodene, skal malen stoppe i stedet for å lage et brev uten begrunnelse.
+        uten_koder = {nøkkel: verdi for nøkkel, verdi in payload.items() if nøkkel != kodefelt}
+        yield f"{mal}--uten-tekst-og-koder", mal, uten_koder
+
+
+def test_ukjent_kode(navn, mal, payload, feil):
+    """En ukjent eller manglende kode skal stoppe rendringen, så et brev aldri sendes uten begrunnelse."""
+    status, body = render(mal, json.dumps(payload).encode())
+    if status == 200:
+        feil.append(f"{navn}: malen '{mal}' rendret brevet selv om koden er ukjent eller mangler")
+        return
+    print(f"OK   {navn} -> {mal} (avvist med HTTP {status}: {body.decode(errors='replace')[:300]})")
+
+
 def test_payload(navn, payload, feil):
     mal = malnavn(navn)
     if not (TEMPLATE_DIR / f"{mal}.typ").is_file():
@@ -301,7 +386,15 @@ def main():
     for datafil in datafiler:
         test_datasett(datafil, feil)
 
-    antall = len(datafiler)
+    varianter = list(hjemmeltekstvarianter())
+    for variant in varianter:
+        test_hjemmeltekstvariant(*variant, feil)
+
+    ukjente = list(ukjente_koder())
+    for variant in ukjente:
+        test_ukjent_kode(*variant, feil)
+
+    antall = len(datafiler) + len(varianter) + len(ukjente)
     print(f"\n{antall - len(feil)}/{antall} datasett ok")
     if feil:
         for f in feil:

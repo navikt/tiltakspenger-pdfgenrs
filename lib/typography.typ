@@ -20,9 +20,11 @@ Ikke redefiner størrelser eller avstander her — endringer skal skje oppstrøm
 
 // Lenker må ha eksplisitt scheme for at PDF-visere skal åpne dem;
 // uten scheme blir URI-annotasjonen tolket som relativ («nav.no» åpner ingenting).
+// Lenketeksten ligger i en box så en adresse aldri brytes over to linjer.
+// Tegnsetting skal stå utenfor lenketeksten: #navLenke("nav.no")[nav.no].
 #let navLenke(path, content) = link(if path.starts-with("http") { path } else { "https://" + path })[
     #set text(fill: rgb("#005bb6"))
-    #content
+    #box(content)
 ]
 
 // Rød markør for manglende data, kun ment å være synlig i utvikling/forhåndsvisning
