@@ -68,10 +68,10 @@ Testdataene bruker en fast, virkelighetsnær testfamilie — ingen tulleord/tull
 Kanoniske verdier: bruker Emil Aremark (fnr `25508631114`), barn Nora/Jakob/Oskar Johan Aremark, saksbehandler Ingrid Bakke, beslutter Martin Holm, saksnummer `202501011001`, tiltaksarrangør Aremark Snekkerverksted AS.
 Datasettene i `testdata/tpts/` er også defaultene i brev-preview (både lokalt og i demoen i dev), så de skal vise et **helt, normalt brev**: ingen forhåndsvisningsvannmerke, ingen plassholdertekst og datoer som henger sammen.
 Kanttilfellene — forhåndsvisning, manglende saksbehandler, automatisk behandling — hører hjemme som varianter i `test/data/`.
-Hjemmeltekster for avslag, stans og opphør ligger i `lib/hjemmeltekster.typ`, og fasiten i `test/fasit/hjemmeltekster.json`.
-Setningen med de samlede hjemlene i avslag med flere grunner lages av `hjemmelsetning` i samme fil når `hjemlerTekst` mangler, og fasiten for den er `test/fasit/hjemler.json`, laget av Kotlin-koden.
-All brevtekst flyttes hit fra saksbehandling-api, og så lenge `valgtHjemmelTekst` sendes, bruker malene den, og den skal være lik teksten i `lib/hjemmeltekster.typ`.
-Testene krever at brev fra koder får samme tekst som brev fra fasiten, så endrer du en tekst, må begge filene oppdateres.
+Hjemmeltekstene for avslag, stans og opphør bor i `lib/hjemmeltekster.typ`, og saksbehandling-api sender bare kodene (`avslagsgrunner`, `stansgrunner`, `opphørsgrunner`) og for avslag `hjemler`.
+Setningen med de samlede hjemlene i avslag med flere grunner lages fra `hjemler` av `hjemmelsetning` i samme fil.
+Fasiten ligger i `test/fasit/`: `hjemmeltekster.json` for tekstene og `hjemler.json` for setningen med hjemlene, laget av Kotlin-koden.
+Testene krever at brevet fra kodene inneholder teksten fra fasiten, så endrer du en tekst, må både malen og fasiten oppdateres.
 Endrer du felleskomponentene (signatur, vedtaksinfo), oppdater innholdskravene i samme endring.
 Testene er deploy-gate i CI (`.github/workflows/.test.yml`).
 

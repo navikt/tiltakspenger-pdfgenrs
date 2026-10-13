@@ -1,15 +1,10 @@
 #import "/lib/mod.typ": *
 
 #let data = json("/data/tpts/vedtakOpphør.json")
-// Finnes feltet valgtHjemmelTekst, brukes det; en tom liste eller null betyr at ingen av de valgte grunnene har tekst, og at begrunnelsen står i tilleggsteksten.
-// Mangler feltet, lages teksten fra opphørsgrunner; som før vises bare den første.
-// Grunner uten tekst (ALDER, FREMMET_FOR_SENT) faller bort, slik at begrunnelsen da står i tilleggsteksten.
-#let hjemmeltekster = if "valgtHjemmelTekst" in data {
-    if data.valgtHjemmelTekst == none { () } else { data.valgtHjemmelTekst }
-} else {
-    assert("opphørsgrunner" in data, message: "Opphørsbrevet mangler både valgtHjemmelTekst og opphørsgrunner")
-    data.opphørsgrunner.map(grunn => hjemmeltekst(grunn, "opphør", data.barnetillegg)).filter(tekst => tekst != none)
-}
+// Teksten lages fra opphørsgrunner med lib/hjemmeltekster.typ, og bare den første vises.
+// Grunner uten tekst (ALDER, FREMMET_FOR_SENT) faller bort, og har ingen av grunnene tekst, står begrunnelsen i tilleggsteksten.
+#assert("opphørsgrunner" in data, message: "Opphørsbrevet mangler opphørsgrunner")
+#let hjemmeltekster = data.opphørsgrunner.map(grunn => hjemmeltekst(grunn, "opphør", data.barnetillegg)).filter(tekst => tekst != none)
 #show: apply-styles
 #show: page-setup(data)
 

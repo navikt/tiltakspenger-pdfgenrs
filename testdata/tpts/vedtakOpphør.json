@@ -14,8 +14,8 @@
     "fraOgMed": "19. januar 2026",
     "tilOgMed": "31. januar 2026"
   },
-  "valgtHjemmelTekst": [
-    "Vilkåret om deltakelse i arbeidsmarkedstiltak er ikke oppfylt i denne perioden.\n\nDu må være deltaker i et arbeidsmarkedstiltak for å ha rett til å få tiltakspenger og barnetillegg.\n\nDette kommer frem av arbeidsmarkedsloven § 13, tiltakspengeforskriften § 2."
+  "opphørsgrunner": [
+    "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK"
   ],
   "barnetillegg": true
 }

@@ -1,13 +1,9 @@
 #import "/lib/mod.typ": *
 
 #let data = json("/data/tpts/stansvedtak.json")
-// Mangler valgtHjemmelTekst, lages teksten fra stansgrunner; som før vises bare den første.
-#let hjemmeltekster = if data.at("valgtHjemmelTekst", default: none) != none {
-    data.valgtHjemmelTekst
-} else {
-    assert(data.at("stansgrunner", default: ()).len() > 0, message: "Stansbrevet mangler både valgtHjemmelTekst og stansgrunner")
-    data.stansgrunner.map(grunn => hjemmeltekst(grunn, "stans", data.barnetillegg))
-}
+// Teksten lages fra stansgrunner med lib/hjemmeltekster.typ, og bare den første vises.
+#assert(data.at("stansgrunner", default: ()).len() > 0, message: "Stansbrevet mangler stansgrunner")
+#let hjemmeltekster = data.stansgrunner.map(grunn => hjemmeltekst(grunn, "stans", data.barnetillegg))
 #show: apply-styles
 #show: page-setup(data)
 

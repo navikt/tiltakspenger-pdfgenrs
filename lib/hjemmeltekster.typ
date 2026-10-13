@@ -1,5 +1,5 @@
-// Hjemmeltekstene er kopiert tegn for tegn fra tiltakspenger-saksbehandling-api: BrevSøknadAvslagDTO.kt, BrevRevurderingStansDTO.kt og BrevOmgjøringOpphørDTO.kt.
-// Avsnitt skilles med «\n\n» og linjer med «\n», som i tekstene malene får i valgtHjemmelTekst.
+// Hjemmeltekstene for avslag, stans og opphør bor her, og tiltakspenger-saksbehandling-api sender bare kodene.
+// Avsnitt skilles med «\n\n» og linjer med «\n».
 // Fasiten i test/fasit/hjemmeltekster.json skal endres i takt med denne fila.
 
 #let avslagstekster(ytelse, medBarnetillegg) = (

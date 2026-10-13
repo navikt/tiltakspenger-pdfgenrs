@@ -14,6 +14,8 @@
     "fraOgMed": "19. januar 2026",
     "tilOgMed": "31. januar 2026"
   },
-  "valgtHjemmelTekst": null,
+  "opphørsgrunner": [
+    "ALDER"
+  ],
   "barnetillegg": true
 }
