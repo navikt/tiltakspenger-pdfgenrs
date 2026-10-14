@@ -72,6 +72,10 @@ INNHOLDSKRAV = {
     "vedtakAvslag": {"krever": ["10.01.2025 fordi:", "Du mottar en annen pengestøtte til livsopphold.", "Dette kommer frem av arbeidsmarkedsloven"]},
     # Én avslagsgrunn: teksten fra avslagsgrunnen fullfører innledningen og har hjemlene selv.
     "vedtakAvslag--en-grunn": {"krever": ["Du får ikke tiltakspenger fra og med", "fordi du mottar lønn", "tiltakspengeforskriften § 8 andre ledd."], "forbyr": ["og barnetillegg fra og med"]},
+    # Begrunnelsene vises hver med sin overskrift; journalnotatet er ikke et brev og har verken klagerett-hale eller signatur.
+    "journalnotat": {"krever": ["Notat om vedtak om tiltakspenger", "Begrunnelse for vilkårsvurderingen", "Begrunnelse for barnetillegg"], "forbyr": ["Med vennlig hilsen", "Du har rett til å klage"]},
+    "journalnotat--kun-barnetillegg": {"krever": ["Begrunnelse for barnetillegg"], "forbyr": ["Begrunnelse for vilkårsvurderingen"]},
+    "journalnotat--meldekort": {"krever": ["Begrunnelse", "meldt fravær"], "forbyr": ["Begrunnelse for"]},
 }
 # Datasett der standardkravene for utgående brev ikke gjelder: automatisk behandlede vedtak har ingen signatur, og klageInnstilling har egen kravliste.
 UTEN_STANDARDKRAV = {"klageInnstilling", "klageInnstilling--uten-saksbehandler", "meldekortvedtak--automatisk"}
@@ -384,6 +388,10 @@ def ukjente_koder():
     yield "vedtakAvslag--uten-hjemler", "vedtakAvslag", payload
     hjemler = [{"rettskilde": "FOLKETRYGDLOVEN", "paragraf": "11", "ledd": None}]
     yield "vedtakAvslag--ukjent-rettskilde", "vedtakAvslag", dict(payload, hjemler=hjemler)
+    # Journalnotatet setter overskriften ut fra begrunnelsestypen, så en ukjent type skal ikke gi en begrunnelse uten overskrift.
+    payload = json.loads((DATA_DIR / "journalnotat.json").read_text())
+    payload["begrunnelser"][0]["type"] = "Vilkårsvurdering"
+    yield "journalnotat--ukjent-begrunnelsestype", "journalnotat", payload
 
 
 def test_ukjent_kode(navn, mal, payload, feil):

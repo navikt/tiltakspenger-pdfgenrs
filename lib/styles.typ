@@ -23,6 +23,9 @@
 // --a-surface-subtle (gray-50) fra Aksel-tokens: shadowBox og «Utfall av korrigeringen»-linjen
 #let surface-subtle = rgb("#F2F3F5")
 
+// --a-border-divider fra Aksel-tokens (grayalpha-300), her som den ugjennomsiktige ekvivalenten på hvit bakgrunn (gray-300): skillelinjen mellom begrunnelsene i journalnotatet
+#let border-divider = rgb("#CBCFD5")
+
 #let apply-styles(body) = {
     // Typst bruker "‣"-ikon for nøstede listeelementer.
     // Denne er ikke støttet i Source Sans 3.

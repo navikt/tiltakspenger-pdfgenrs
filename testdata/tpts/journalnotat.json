@@ -5,10 +5,17 @@
     "etternavn": "Aremark"
   },
   "saksnummer": "202501011001",
-  "tittel": "Notat om vedtak om tiltakspenger",
   "notatsdato": "20. mai 2025",
   "saksbehandlerNavn": "Ingrid Bakke",
   "beslutterNavn": "Martin Holm",
-  "begrunnelseTittel": "Begrunnelse for vilkårsvurderingen",
-  "begrunnelse": "Bruker deltar på arbeidsmarkedstiltak hos Aremark Snekkerverksted AS i hele søknadsperioden.\nBruker mottar lønn fra tiltaksarrangør for arbeidet som utføres i tiltaket, og har derfor ikke rett til tiltakspenger i perioden."
+  "begrunnelser": [
+    {
+      "type": "VILKÅRSVURDERING",
+      "begrunnelse": "Bruker deltar på arbeidsmarkedstiltak hos Aremark Snekkerverksted AS i hele søknadsperioden.\nBruker mottar ikke lønn fra tiltaksarrangør eller andre ytelser som gjør at retten til tiltakspenger faller bort, og vilkårene er oppfylt."
+    },
+    {
+      "type": "BARNETILLEGG",
+      "begrunnelse": "Bruker forsørger Nora og Jakob Aremark, som begge er under 16 år og bor fast hos bruker.\nBruker har derfor rett til barnetillegg for to barn i hele perioden."
+    }
+  ]
 }

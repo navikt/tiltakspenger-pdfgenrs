@@ -1,0 +1,17 @@
+{
+  "personalia": {
+    "ident": "25508631114",
+    "fornavn": "Emil",
+    "etternavn": "Aremark"
+  },
+  "saksnummer": "202501011001",
+  "notatsdato": "20. mai 2025",
+  "saksbehandlerNavn": "Ingrid Bakke",
+  "beslutterNavn": "Martin Holm",
+  "begrunnelser": [
+    {
+      "type": "BARNETILLEGG",
+      "begrunnelse": "Bruker forsørger Nora og Jakob Aremark, som begge er under 16 år og bor fast hos bruker.\nBruker har derfor rett til barnetillegg for to barn i hele perioden."
+    }
+  ]
+}

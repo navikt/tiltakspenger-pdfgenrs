@@ -1,0 +1,17 @@
+{
+  "personalia": {
+    "ident": "25508631114",
+    "fornavn": "Emil",
+    "etternavn": "Aremark"
+  },
+  "saksnummer": "202501011001",
+  "notatsdato": "20. mai 2025",
+  "saksbehandlerNavn": "Ingrid Bakke",
+  "beslutterNavn": "Martin Holm",
+  "begrunnelser": [
+    {
+      "type": "MELDEKORT",
+      "begrunnelse": "Bruker har meldt fravær på grunn av sykdom i to dager, og meldekortet er korrigert i tråd med dokumentasjonen."
+    }
+  ]
+}
