@@ -95,7 +95,9 @@ Typografi, avstander, tabeller og sideoppsett kommer fra et delt Typst-oppsett s
 Målet er å gjenbruke mest mulig og ha minst mulig eget.
 Punktene under er funksjonelle endringer som må avklares med fagsiden, UX og juristene før de tas:
 
-- [ ] **Felles personinfo-blokk (`casedetails`)**: krever at payloadene fra appene får feltene den forventer (navn, dokumentdato m.m. — meldekortvedtak mangler i dag begge).
+- [ ] **Felles personinfo-blokk (`casedetails`)**: alle feltene er valgfrie (rader uten verdi utelates, og dokumentdatoen står til høyre på siste rad), men blokken har bare de faste radene navn, fødselsnummer og saksnummer.
+      Payloadene må få feltene blokken leser (`gjelderNavn`, `gjelderFoedselsnummer`, `saksnummer`, `dokumentDato`), og meldekortvedtak mangler i dag både navn og dokumentdato.
+      Innsendte dokumenter (`personaliaInnsendt`) har egne rader som «Meldekort-ID» og en merket dato («Mottatt:», «Sendt til Nav:»), som blokken ikke støtter.
       DTO-endringer i backendene, deretter kan `personalia`-adapterne fjernes.
 - [ ] **Signatur/avslutning (`closing.typ`)**: bytte vår `signatur`-komponent til den delte avslutningen (annen struktur og tekst, og uten våre røde placeholder-markeringer).
 - [ ] **Lister**: bruke `bulletlist`/`numberedlist` fra det delte oppsettet i malene i stedet for rå `list()`, slik at listeavstand følger kollisjonsmatrisen.
