@@ -30,7 +30,7 @@ jobs:
           persist-credentials: false
       - name: Deploy to NAIS
         # Versjonsoversikt: https://github.com/nais/deploy/tags
-        uses: nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@v3
         env:
           CLUSTER: ${{ inputs.NAIS_ENV }}-gcp
           RESOURCE: ${{ inputs.RESOURCE }}
