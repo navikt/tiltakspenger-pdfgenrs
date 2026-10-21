@@ -1,5 +1,6 @@
 #import "/lib/typography.typ": *
 #import "/lib/styles.typ": *
+#import "/lib/format.typ": tallSomOrd
 
 // De tre seksjonene fra `innvilgelseBase.hbs` som legges mellom vedtaksinnholdet
 // og den felles vedtaksinfoen (klagerett osv.).
@@ -50,13 +51,29 @@
     #body
 ]
 
+// Antall dager per uke som tekst, eller none når antallet varierer i perioden (none fra saksbehandling-api), er 0, er over 10 eller er et oddetall.
+#let dagerPerUke(antallDagerPerMeldeperiode) = {
+    let antall = antallDagerPerMeldeperiode
+    if antall == none or antall == 0 or antall > 10 or calc.odd(antall) {
+        none
+    } else if antall == 2 {
+        "en dag"
+    } else {
+        tallSomOrd(calc.quo(antall, 2)) + " dager"
+    }
+}
+
 // Perioder for tiltakspenger. `medBegrunnelse` legger til "fordi du deltar på
 // arbeidsmarkedstiltak." i enkeltperiode-varianten (søknadsinnvilgelse).
+// Kodene går foran teksten; teksten fjernes når saksbehandling-api bare sender kodene.
 #let innvilgelsesperioder(data, medBegrunnelse) = {
     let perioder = data.innvilgelsesperioder.perioder
-    let dagerTekst = if "antallDagerTekst" in data.innvilgelsesperioder and data.innvilgelsesperioder.antallDagerTekst != none {
-        [ for #data.innvilgelsesperioder.antallDagerTekst per uke]
-    } else { [] }
+    let antallDager = if "antallDagerPerMeldeperiode" in data.innvilgelsesperioder {
+        dagerPerUke(data.innvilgelsesperioder.antallDagerPerMeldeperiode)
+    } else {
+        data.innvilgelsesperioder.at("antallDagerTekst", default: none)
+    }
+    let dagerTekst = if antallDager != none { [ for #antallDager per uke] } else { [] }
 
     if perioder.len() == 1 {
         brødtekst[Du får tiltakspenger fra og med #perioder.at(0).fraOgMed til og med #perioder.at(0).tilOgMed#dagerTekst#if medBegrunnelse [ fordi du deltar på arbeidsmarkedstiltak].]
@@ -68,15 +85,17 @@
     }
 }
 
+#let antallBarn(barnetillegg) = if "antallBarn" in barnetillegg { tallSomOrd(barnetillegg.antallBarn) } else { barnetillegg.antallBarnTekst }
+
 #let barnetilleggPerioder(data) = {
     if "barnetillegg" not in data { return }
     let bt = data.barnetillegg
     if bt.len() == 1 {
-        brødtekst[Du får barnetillegg fra og med #bt.at(0).periode.fraOgMed til og med #bt.at(0).periode.tilOgMed for #bt.at(0).antallBarnTekst barn.]
+        brødtekst[Du får barnetillegg fra og med #bt.at(0).periode.fraOgMed til og med #bt.at(0).periode.tilOgMed for #antallBarn(bt.at(0)) barn.]
     } else if bt.len() > 1 {
         brødtekst[Du får barnetillegg i disse periodene:]
         block(below: space-16)[
-            #list(..bt.map(b => [Fra og med #b.periode.fraOgMed til og med #b.periode.tilOgMed for #b.antallBarnTekst barn.]))
+            #list(..bt.map(b => [Fra og med #b.periode.fraOgMed til og med #b.periode.tilOgMed for #antallBarn(b) barn.]))
         ]
     }
 }

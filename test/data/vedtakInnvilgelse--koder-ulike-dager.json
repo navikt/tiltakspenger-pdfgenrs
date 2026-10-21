@@ -1,0 +1,66 @@
+{
+  "personalia": {
+    "ident": "25508631114",
+    "fornavn": "Emil",
+    "etternavn": "Aremark"
+  },
+  "saksnummer": "202501011001",
+  "saksbehandlerNavn": "Ingrid Bakke",
+  "beslutterNavn": "Martin Holm",
+  "harBarnetillegg": true,
+  "satser": [
+    {
+      "år": 2024,
+      "ordinær": 285,
+      "barnetillegg": 53
+    },
+    {
+      "år": 2025,
+      "ordinær": 298,
+      "barnetillegg": 55
+    }
+  ],
+  "tilleggstekst": "Vi har innvilget søknaden din fordi du deltar på Arbeidstrening hos Aremark Snekkerverksted AS i perioden du har søkt om tiltakspenger for.\n\nDu får barnetillegg for barna du forsørger. Antall barn varierer i perioden, og beløpet er derfor ulikt fra periode til periode.",
+  "forhandsvisning": false,
+  "datoForUtsending": "31. januar 2025",
+  "innvilgelsesperioder": {
+    "perioder": [
+      {
+        "fraOgMed": "1. november 2024",
+        "tilOgMed": "28. februar 2025"
+      },
+      {
+        "fraOgMed": "1. april 2025",
+        "tilOgMed": "30. april 2025"
+      },
+      {
+        "fraOgMed": "2. mai 2025",
+        "tilOgMed": "31. mai 2025"
+      }
+    ],
+    "antallDagerPerMeldeperiode": null
+  },
+  "barnetillegg": [
+    {
+      "antallBarnTekst": "ett",
+      "periode": {
+        "fraOgMed": "1. november 2024",
+        "tilOgMed": "28. februar 2025"
+      }
+    },
+    {
+      "antallBarnTekst": "to",
+      "periode": {
+        "fraOgMed": "1. april 2025",
+        "tilOgMed": "30. april 2025"
+      }
+    },
+    {
+      "antallBarnTekst": "tre",
+      "periode": {
+        "fraOgMed": "2. mai 2025",
+        "tilOgMed": "31. mai 2025"
+      }
+    }
+  ]
+}

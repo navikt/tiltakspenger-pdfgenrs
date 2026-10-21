@@ -25,7 +25,7 @@ Innholdet er 1-til-1 med pdfgen-malen (soknad.hbs).
 
 #let jaNei(cond, ja, nei) = brødtekst[#if cond [#ja] else [#nei]]
 
-#let periodetekst(periode) = [#langdato(periode.fra) - #langdato(periode.til)]
+#let periodetekst(periode) = [#norskLangdato(periode.fra) - #norskLangdato(periode.til)]
 
 #let barnenavn(barn) = {
     let deler = (barn.at("fornavn", default: none), barn.at("mellomnavn", default: none), barn.at("etternavn", default: none))
@@ -50,7 +50,7 @@ Innholdet er 1-til-1 med pdfgen-malen (soknad.hbs).
         ("Navn:", data.personopplysninger.fornavn + " " + data.personopplysninger.etternavn),
         ("Fødselsnummer:", data.personopplysninger.ident),
     ),
-    [Sendt til Nav: #norDatoTid(data.innsendingTidspunkt)],
+    [Sendt til Nav: #norskDatoTid(data.innsendingTidspunkt)],
 )
 
 = #title
@@ -92,7 +92,7 @@ Innholdet er 1-til-1 med pdfgen-malen (soknad.hbs).
         #brødtekst[#spm.tiltak.typeNavn]
     ]
     #list(
-        brødtekst[Startdato *#langdato(spm.tiltak.periode.fra)* - Sluttdato *#langdato(spm.tiltak.periode.til)*],
+        brødtekst[Startdato *#norskLangdato(spm.tiltak.periode.fra)* - Sluttdato *#norskLangdato(spm.tiltak.periode.til)*],
     )
 ]
 
@@ -130,7 +130,7 @@ Innholdet er 1-til-1 med pdfgen-malen (soknad.hbs).
 
 #seksjon("Alderspensjon")[
     #if erJa(spm.alderspensjon.mottar) [
-        #brødtekst[Ja, jeg mottar alderspensjon fra #langdato(spm.alderspensjon.fraDato)]
+        #brødtekst[Ja, jeg mottar alderspensjon fra #norskLangdato(spm.alderspensjon.fraDato)]
     ] else [
         #brødtekst[Nei, jeg mottar ikke alderspensjon i perioden jeg deltar på tiltaket]
     ]
@@ -176,13 +176,13 @@ Innholdet er 1-til-1 med pdfgen-malen (soknad.hbs).
         #brødtekst[Jeg søker ikke om barnetillegg]
     ]
     #for barn in manuelleBarn [
-        #barneoppføring([*#barnenavn(barn)* født #langdato(barn.fødselsdato)], barn)
+        #barneoppføring([*#barnenavn(barn)* født #norskLangdato(barn.fødselsdato)], barn)
     ]
     #for barn in registrerteBarn [
         #if barn.at("fornavn", default: none) != none [
-            #barneoppføring([*#barnenavn(barn)* født #langdato(barn.fødselsdato)], barn)
+            #barneoppføring([*#barnenavn(barn)* født #norskLangdato(barn.fødselsdato)], barn)
         ] else [
-            #barneoppføring([*Barn født #langdato(barn.fødselsdato)*], barn)
+            #barneoppføring([*Barn født #norskLangdato(barn.fødselsdato)*], barn)
         ]
     ]
 ]

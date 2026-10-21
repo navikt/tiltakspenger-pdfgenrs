@@ -65,6 +65,11 @@ INNHOLDSKRAV = {
     "klageInnstilling--uten-saksbehandler": {"krever": ["Har du spørsmål?", "Med vennlig hilsen", "Nav Tiltak Oslo", "Oversendelsesbrev til Nav Klageinstans", "side 1 av", "ingen saksbehandler tildelt"]},
     "vedtakInnvilgelse--tom-beslutter": {"forbyr": ["ingen saksbehandler tildelt"]},
     "vedtakInnvilgelse--tom-saksbehandler": {"krever": ["ingen saksbehandler tildelt"]},
+    # Tall og dager fra kodene i stedet for teksten fra saksbehandling-api.
+    "vedtakInnvilgelse--koder": {"krever": ["for fem dager per uke", "for ett barn.", "for to barn.", "for 16 barn."]},
+    "revurderingInnvilgelse--koder-en-dag": {"krever": ["for en dag per uke"]},
+    # Antallet varierer i perioden: ingen dagtekst, saksbehandler skriver det i tilleggsteksten.
+    "vedtakInnvilgelse--koder-ulike-dager": {"forbyr": ["per uke"]},
     "meldekortvedtak--automatisk": {"krever": ["Automatisk behandlet"], "forbyr": ["Med vennlig hilsen", "Nav Tiltak Oslo"]},
     # Opphør der ingen av grunnene har hjemmeltekst: begrunnelsen står kun i tilleggsteksten.
     "vedtakOpphør--kun-fritekst": {"krever": ["Slik har vi vurdert saken din", "tiltakspengeforskriften § 3"]},

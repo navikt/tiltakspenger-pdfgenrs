@@ -1,13 +1,13 @@
 #let månedsnavn = ("januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember")
 
 // "2025-01-07" -> "7. januar 2025" (tilsvarer pdfgen-helperen `iso_to_long_date`)
-#let langdato(iso) = {
+#let norskLangdato(iso) = {
     let deler = iso.slice(0, 10).split("-")
     str(int(deler.at(2))) + ". " + månedsnavn.at(int(deler.at(1)) - 1) + " " + deler.at(0)
 }
 
 // "2025-01-07T12:30:00" -> "07.01.2025 12:30" (tilsvarer pdfgen-helperen `iso_to_nor_datetime`)
-#let norDatoTid(iso) = {
+#let norskDatoTid(iso) = {
     let dato = iso.slice(0, 10).split("-")
     dato.at(2) + "." + dato.at(1) + "." + dato.at(0) + " " + iso.slice(11, 16)
 }
@@ -28,3 +28,9 @@
     }
     if verdi < 0 { "−" + result } else { result }
 }
+
+// Tall fra 1 til 15 skrives med bokstaver, større tall med sifre, som `toTekst` i tiltakspenger-saksbehandling-api.
+// https://sprakradet.no/godt-og-korrekt-sprak/rettskriving-og-grammatikk/tall-tid-dato/
+#let tallSomOrd(tall) = if tall >= 1 and tall <= 15 {
+    ("ett", "to", "tre", "fire", "fem", "seks", "syv", "åtte", "ni", "ti", "elleve", "tolv", "tretten", "fjorten", "femten").at(tall - 1)
+} else { str(tall) }
