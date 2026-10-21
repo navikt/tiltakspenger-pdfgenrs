@@ -59,7 +59,9 @@ INNHOLDSKRAV = {
     "vedtakInnvilgelse": {"krever": ["Du har rett til innsyn"]},
     "meldekort": {"krever": ["Meldekort for tiltakspenger", "side 1 av"], "forbyr": ["Med vennlig hilsen"]},
     "meldekort-korrigert": {"krever": ["Meldekort for tiltakspenger"], "forbyr": ["Med vennlig hilsen"]},
-    "soknad": {"forbyr": ["Med vennlig hilsen"]},
+    "soknad": {"krever": ["Saksnummer: 202501011001"], "forbyr": ["Med vennlig hilsen"]},
+    # Søknader Arena eier, har ikke saksnummer: footeren viser bare sidetallet.
+    "soknad--uten-saksnummer": {"krever": ["side 1 av"], "forbyr": ["Saksnummer:"]},
     "klageAvvis--uten-saksbehandler": {"krever": ["ingen saksbehandler tildelt"]},
     # Forhåndsvisning før klagebehandlingen er tildelt: samme kravliste som klageInnstilling, pluss plassholderen for saksbehandler.
     "klageInnstilling--uten-saksbehandler": {"krever": ["Har du spørsmål?", "Med vennlig hilsen", "Nav Tiltak Oslo", "Oversendelsesbrev til Nav Klageinstans", "side 1 av", "ingen saksbehandler tildelt"]},

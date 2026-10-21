@@ -5,7 +5,7 @@
 
 /*
 Font, marger, avsnittsavstander og footer-descent kommer fra pageSetup i lib/pensjonsbrev — samme oppsett som brev- og dokumentrøttene der bruker.
-Her legger vi bare på det som er vårt eget: forhåndsvisningsvannmerket og footeren for dokumenter uten saksnummer.
+Her legger vi bare på det som er vårt eget: forhåndsvisningsvannmerket.
 */
 #let page-setup(data) = body => {
     // pageSetup tar ikke imot header, så vannmerket settes utenfor. Set-reglene slås sammen, så margene derfra består.
@@ -22,17 +22,8 @@ Her legger vi bare på det som er vårt eget: forhåndsvisningsvannmerket og foo
         ],
     )
     pageSetup(
-        footer: context {
-            let språk = språkinnstillinger(text.lang)
-            if "saksnummer" in data {
-                pensjonsbrevFooter(data, språk)
-            } else {
-                // Innsendte dokumenter (f.eks. søknad) har ikke saksnummer i payloadet
-                set text(9pt)
-                set align(right)
-                [#språk.sideprefix #counter(page).display() #språk.sideinfix #counter(page).final().first()]
-            }
-        },
+        // Uten saksnummer i dataene viser footeren bare sidetallet, for eksempel på søknader Arena eier.
+        footer: context pensjonsbrevFooter(data.at("saksnummer", default: none), språkinnstillinger(text.lang)),
         {
             // footer.typ og letter-table i lib/pensjonsbrev forutsetter seksjonsmarkører
             section-start(1)
