@@ -65,14 +65,9 @@
 
 // Perioder for tiltakspenger. `medBegrunnelse` legger til "fordi du deltar på
 // arbeidsmarkedstiltak." i enkeltperiode-varianten (søknadsinnvilgelse).
-// Kodene går foran teksten; teksten fjernes når saksbehandling-api bare sender kodene.
 #let innvilgelsesperioder(data, medBegrunnelse) = {
     let perioder = data.innvilgelsesperioder.perioder
-    let antallDager = if "antallDagerPerMeldeperiode" in data.innvilgelsesperioder {
-        dagerPerUke(data.innvilgelsesperioder.antallDagerPerMeldeperiode)
-    } else {
-        data.innvilgelsesperioder.at("antallDagerTekst", default: none)
-    }
+    let antallDager = dagerPerUke(data.innvilgelsesperioder.at("antallDagerPerMeldeperiode", default: none))
     let dagerTekst = if antallDager != none { [ for #antallDager per uke] } else { [] }
 
     if perioder.len() == 1 {
@@ -85,17 +80,16 @@
     }
 }
 
-#let antallBarn(barnetillegg) = if "antallBarn" in barnetillegg { tallSomOrd(barnetillegg.antallBarn) } else { barnetillegg.antallBarnTekst }
 
 #let barnetilleggPerioder(data) = {
     if "barnetillegg" not in data { return }
     let bt = data.barnetillegg
     if bt.len() == 1 {
-        brødtekst[Du får barnetillegg fra og med #bt.at(0).periode.fraOgMed til og med #bt.at(0).periode.tilOgMed for #antallBarn(bt.at(0)) barn.]
+        brødtekst[Du får barnetillegg fra og med #bt.at(0).periode.fraOgMed til og med #bt.at(0).periode.tilOgMed for #tallSomOrd(bt.at(0).antallBarn) barn.]
     } else if bt.len() > 1 {
         brødtekst[Du får barnetillegg i disse periodene:]
         block(below: space-16)[
-            #list(..bt.map(b => [Fra og med #b.periode.fraOgMed til og med #b.periode.tilOgMed for #antallBarn(b) barn.]))
+            #list(..bt.map(b => [Fra og med #b.periode.fraOgMed til og med #b.periode.tilOgMed for #tallSomOrd(b.antallBarn) barn.]))
         ]
     }
 }

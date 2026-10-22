@@ -56,7 +56,8 @@ INNHOLDSKRAV = {
     "klageAvvis": {"krever": ["Du har rett til innsyn"]},
     # klageInnstilling er et oversendelsesbrev, ikke et vedtaksbrev, og har med vilje ingen klagerett-hale.
     "klageInnstilling": {"krever": ["Har du spørsmål?", "Med vennlig hilsen", "Nav Tiltak Oslo", "Oversendelsesbrev til Nav Klageinstans", "side 1 av"]},
-    "vedtakInnvilgelse": {"krever": ["Du har rett til innsyn"]},
+    "vedtakInnvilgelse": {"krever": ["Du har rett til innsyn", "for fem dager per uke", "for ett barn.", "for tre barn."]},
+    "revurderingInnvilgelse": {"krever": ["for fem dager per uke", "for to barn."]},
     "meldekort": {"krever": ["Meldekort for tiltakspenger", "side 1 av"], "forbyr": ["Med vennlig hilsen"]},
     "meldekort-korrigert": {"krever": ["Meldekort for tiltakspenger"], "forbyr": ["Med vennlig hilsen"]},
     "soknad": {"krever": ["Saksnummer: 202501011001"], "forbyr": ["Med vennlig hilsen"]},
@@ -67,7 +68,7 @@ INNHOLDSKRAV = {
     "klageInnstilling--uten-saksbehandler": {"krever": ["Har du spørsmål?", "Med vennlig hilsen", "Nav Tiltak Oslo", "Oversendelsesbrev til Nav Klageinstans", "side 1 av", "ingen saksbehandler tildelt"]},
     "vedtakInnvilgelse--tom-beslutter": {"forbyr": ["ingen saksbehandler tildelt"]},
     "vedtakInnvilgelse--tom-saksbehandler": {"krever": ["ingen saksbehandler tildelt"]},
-    # Tall og dager fra kodene i stedet for teksten fra saksbehandling-api.
+    # Antall dager og barn kommer som tall fra saksbehandling-api, og pdfgenrs skriver dem som ord.
     "vedtakInnvilgelse--koder": {"krever": ["for fem dager per uke", "for ett barn.", "for to barn.", "for 16 barn."]},
     "revurderingInnvilgelse--koder-en-dag": {"krever": ["for en dag per uke"]},
     # Antallet varierer i perioden: ingen dagtekst, saksbehandler skriver det i tilleggsteksten.
