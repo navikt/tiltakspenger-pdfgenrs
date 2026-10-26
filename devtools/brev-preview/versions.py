@@ -77,7 +77,7 @@ def arbeidskatalog_url():
     """En pdfgenrs som garantert serverer arbeidskatalogen (dette repoet, volum-montert).
 
     Brukes når containeren på PDFGEN_URL viser seg å ikke montere repoet
-    (typisk metarepoets compose, som baker malene inn i imaget ved build).
+    (typisk metarepoets compose, som baker malene inn i imaget eller monterer en annen klon).
     """
     global _arbeidskatalog_instance
     with ref_lock:
@@ -134,8 +134,10 @@ def _run_container(container, src_dir, image, label):
             volumes += ["-v", f"{path}:/app/{target}"]
     print(f"pdfgenrs @ {label}: starter {image} som '{container}' på http://localhost:{port} (fjernes ved avslutning)")
     instance = {"url": f"http://localhost:{port}", "container": container}
+    # Eksplisitt pids-grense: podman 4.x tolker en udefinert grense slik at tokio ikke får startet trådene
+    # sine («OS can't spawn worker thread»). 2048 er det compose setter, og det docker også godtar.
     run = subprocess.run(
-        ["docker", "run", "-d", "--rm", "--platform", "linux/amd64", "--name", container,
+        ["docker", "run", "-d", "--rm", "--platform", "linux/amd64", "--pids-limit", "2048", "--name", container,
          "--label", "devtools.opphav=tiltakspenger-pdfgenrs/run_devtools.sh",
          "--label", f"devtools.viser={label}",
          "--label", f"devtools.kilde={src_dir}",

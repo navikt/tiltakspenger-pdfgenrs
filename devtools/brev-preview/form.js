@@ -6,8 +6,8 @@
 // onChange kalles ved hver endring.
 //
 // «sti» er stien inn i flettedataene («meldeperioder[].dager[].status.gjeldende»,
-// der «[]» er et array-ledd), og «felt» er {enum, avledet} for det valgte
-// datasettet — begge slår opp på nettopp den stien.
+// der «[]» er et array-ledd), og «felt» er {enum, avledet, valgfri} for det valgte
+// datasettet — alle slår opp på nettopp den stien.
 function el(tag, className, text) {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -29,7 +29,10 @@ function buildObject(obj, onChange, felt, sti) {
   for (const key of Object.keys(obj)) {
     const barnesti = sti ? `${sti}.${key}` : key;
     const set = (v) => (obj[key] = v);
-    if (obj[key] !== null && typeof obj[key] === "object") {
+    const eksempel = felt.valgfri?.[barnesti];
+    if (eksempel) {
+      wrap.append(buildValgfri(obj, key, eksempel, onChange, felt, barnesti));
+    } else if (obj[key] !== null && typeof obj[key] === "object") {
       const gruppe = el("details", "gruppe");
       gruppe.open = true;
       gruppe.append(el("summary", "key", key), buildEditor(obj[key], set, onChange, felt, barnesti));
@@ -45,6 +48,35 @@ function buildObject(obj, onChange, felt, sti) {
     }
   }
   return wrap;
+}
+
+// Objekt som kan være null (se valgfrie.js): en checkbox slår det av og på,
+// og når det slås på, fylles eksempelet inn.
+function buildValgfri(obj, key, eksempel, onChange, felt, sti) {
+  const gruppe = el("details", "gruppe");
+  gruppe.open = true;
+  const summary = el("summary", "key", key);
+  const på = el("input");
+  på.type = "checkbox";
+  på.title = "Slå av for å sende null";
+  på.onclick = (e) => e.stopPropagation(); // ikke legg sammen gruppen
+  let innhold = el("span");
+  const render = () => {
+    på.checked = obj[key] !== null;
+    const nytt =
+      obj[key] === null ? el("span", "null", "null") : buildEditor(obj[key], (v) => (obj[key] = v), onChange, felt, sti);
+    innhold.replaceWith(nytt);
+    innhold = nytt;
+  };
+  på.onchange = () => {
+    obj[key] = på.checked ? structuredClone(eksempel) : null;
+    render();
+    onChange();
+  };
+  summary.prepend(på);
+  gruppe.append(summary, innhold);
+  render();
+  return gruppe;
 }
 
 // Felt som regnes ut fra andre felt: vises, men kan ikke redigeres.

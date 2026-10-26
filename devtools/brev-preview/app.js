@@ -4,7 +4,7 @@ const $ = (id) => document.getElementById(id);
 
 let defaults = null; // original flettedata fra testdata/tpts
 let current = null; // gjeldende (redigerte) flettedata
-let felt = { enum: {}, avledet: {} }; // enums.js/avledet.js for valgt datasett
+let felt = { enum: {}, avledet: {}, valgfri: {} }; // enums.js/avledet.js/valgfrie.js for valgt datasett
 let fraLenke = null; // flettedata fra en delt lenke, brukes kun ved første lasting
 let mode = "form";
 let generateTimer = null;
@@ -95,7 +95,7 @@ function erEndret() {
 async function loadTemplate() {
   const name = $("template").value;
   localStorage.setItem("devtools-template", name);
-  felt = { enum: enumFeltFor(name), avledet: avledetFeltFor(name) };
+  felt = { enum: enumFeltFor(name), avledet: avledetFeltFor(name), valgfri: valgfrieFeltFor(name) };
   defaults = await (await fetch(`/testdata/tpts/${name}.json`)).json();
   current = fraLenke ?? structuredClone(defaults);
   fraLenke = null; // gjelder kun den første lastingen; bytter du brev, er du tilbake på datasettet

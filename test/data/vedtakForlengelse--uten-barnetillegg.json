@@ -1,0 +1,32 @@
+{
+  "personalia": {
+    "ident": "25508631114",
+    "fornavn": "Emil",
+    "etternavn": "Aremark"
+  },
+  "saksnummer": "202501011001",
+  "saksbehandlerNavn": "Ingrid Bakke",
+  "beslutterNavn": "Martin Holm",
+  "harBarnetillegg": false,
+  "satser": [
+    {
+      "år": 2025,
+      "ordinær": 298,
+      "barnetillegg": 55
+    }
+  ],
+  "tilleggstekst": null,
+  "forhandsvisning": false,
+  "datoForUtsending": "31. mars 2025",
+  "innvilgelsesperioder": {
+    "antallDagerPerMeldeperiode": 10,
+    "perioder": [
+      {
+        "fraOgMed": "1. april 2025",
+        "tilOgMed": "30. juni 2025"
+      }
+    ]
+  },
+  "barnetillegg": [],
+  "barnSomFyller16": null
+}

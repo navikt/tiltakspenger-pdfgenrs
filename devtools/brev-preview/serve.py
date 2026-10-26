@@ -57,18 +57,25 @@ def find_pdfgen():
 def serves_working_tree(url):
     """Sjekker at containeren bak url-en faktisk volummonterer dette repoet.
 
-    Metarepoets compose kjører pdfgenrs på samme port, men UTEN volumer - da er
-    malene bakt inn i imaget ved build, og forhåndsvisningen ville stille vist
-    en gammel versjon i stedet for arbeidskatalogen.
+    Metarepoets compose kjører pdfgenrs på samme port, men enten UTEN volumer (malene
+    er bakt inn i imaget ved build) eller med volumer fra en annen klon. I begge tilfeller
+    ville forhåndsvisningen stille vist en annen versjon enn arbeidskatalogen,
+    og maler som bare finnes her, gir 404.
     Returnerer None når det ikke lar seg avgjøre (ikke en lokal container e.l.).
     """
     port = urllib.parse.urlparse(url).port
+    # Portene leses fra `docker ps` i stedet for `--filter publish=`, som podman ikke støtter.
     ps = subprocess.run(
-        ["docker", "ps", "--filter", f"publish={port}", "--format", "{{.Names}}"],
+        ["docker", "ps", "--format", "{{.Names}}\t{{.Ports}}"],
         capture_output=True, text=True,
     )
-    names = ps.stdout.split()
-    if ps.returncode != 0 or not names:
+    if ps.returncode != 0:
+        return None
+    names = [
+        name for name, _, ports in (line.partition("\t") for line in ps.stdout.splitlines())
+        if re.search(rf":{port}->", ports)
+    ]
+    if not names:
         return None
     mounts = subprocess.run(
         ["docker", "inspect", names[0], "--format", "{{range .Mounts}}{{.Source}}\n{{end}}"],
@@ -76,7 +83,11 @@ def serves_working_tree(url):
     )
     if mounts.returncode != 0:
         return None
-    return any(line.startswith(REPO_ROOT) for line in mounts.stdout.splitlines())
+    # Hele stiledd, så en klon i f.eks. tiltakspenger/tiltakspenger-pdfgenrs ikke regnes som dette repoet.
+    return any(
+        os.path.commonpath([REPO_ROOT, os.path.abspath(line)]) == REPO_ROOT
+        for line in mounts.stdout.splitlines() if line
+    )
 
 
 def start_pdfgen():
@@ -207,7 +218,7 @@ def main():
     # PDFGEN_URL satt eksplisitt betyr at brukeren vet hva de gjør.
     if pdfgen_url and not os.environ.get("PDFGEN_URL") and serves_working_tree(pdfgen_url) is False:
         print(f"ADVARSEL: containeren på {pdfgen_url} monterer ikke dette repoet")
-        print("(sannsynligvis metarepoets compose, som baker malene inn i imaget ved build).")
+        print("(sannsynligvis metarepoets compose, som baker malene inn i imaget eller monterer en annen klon).")
         try:
             pdfgen_url = versions.arbeidskatalog_url()
             print("Starter derfor en egen pdfgenrs for arbeidskatalogen.")

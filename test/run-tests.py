@@ -45,6 +45,7 @@ UTGÅENDE_MALER = {
     "revurderingInnvilgelse",
     "stansvedtak",
     "vedtakAvslag",
+    "vedtakForlengelse",
     "vedtakInnvilgelse",
     "vedtakOpphør",
 }
@@ -58,6 +59,13 @@ INNHOLDSKRAV = {
     "klageInnstilling": {"krever": ["Har du spørsmål?", "Med vennlig hilsen", "Nav Tiltak Oslo", "Oversendelsesbrev til Nav Klageinstans", "side 1 av"]},
     "vedtakInnvilgelse": {"krever": ["Du har rett til innsyn", "for fem dager per uke", "for ett barn.", "for tre barn."]},
     "revurderingInnvilgelse": {"krever": ["for fem dager per uke", "for to barn."]},
+    "vedtakForlengelse": {"krever": ["Tiltakspengene dine er forlenget", "Tiltaket ditt er forlenget.", "om tiltakspenger og barnetillegg.", "for fem dager per uke", "for to barn.", "Barnetillegget for 2025"], "forbyr": ["Barnetillegg gis for hvert barn"]},
+    # Forlengelse uten barnetillegg: verken barnetilleggsperioder eller sats for barnetillegg.
+    "vedtakForlengelse--uten-barnetillegg": {"krever": ["Tiltakspengene dine er forlenget", "om tiltakspenger."], "forbyr": ["og barnetillegg", "Du får barnetillegg", "Barnetillegget for", "Barnetillegg gis for hvert barn", "Vurderingen vår"]},
+    # Barn som fyller 16 år i forlengelsen: samme tekster som fritekst ved automatisk forlengelse.
+    "vedtakForlengelse--ett-barn-fyller-16": {"krever": ["Ett av dine barn fyller 16 år", "for dette barnet"], "forbyr": ["Du er innvilget barnetillegg til og med"]},
+    "vedtakForlengelse--to-barn-fyller-16": {"krever": ["To av dine barn fyller 16 år", "for disse barna"], "forbyr": ["Ett av dine barn"]},
+    "vedtakForlengelse--eneste-barn-fyller-16": {"krever": ["Du er innvilget barnetillegg til og med 14. mai 2025"], "forbyr": ["Barnetillegg gis for hvert barn"]},
     "meldekort": {"krever": ["Meldekort for tiltakspenger", "side 1 av"], "forbyr": ["Med vennlig hilsen"]},
     "meldekort-korrigert": {"krever": ["Meldekort for tiltakspenger"], "forbyr": ["Med vennlig hilsen"]},
     "soknad": {"krever": ["Saksnummer: 202501011001"], "forbyr": ["Med vennlig hilsen"]},

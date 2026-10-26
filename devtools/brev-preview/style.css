@@ -309,6 +309,15 @@ main {
   overflow-wrap: anywhere;
 }
 
+/* Valgfritt objekt som er slått av (se valgfrie.js) */
+.gruppe > .null {
+  display: block;
+  padding: 2px 0 4px 1.25rem;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--tekst-svak);
+}
+
 /* display: flex på <summary> skjuler den innebygde trekanten, så den tegnes selv */
 summary {
   list-style: none;

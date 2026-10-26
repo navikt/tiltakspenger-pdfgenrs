@@ -15,7 +15,8 @@ Fra repo-rota:
 Skriptet trenger bare Python 3 (kun stdlib, ingen avhengigheter).
 Det finner en kjørende pdfgenrs på port 8084, og starter den selv med `docker compose up -d --build` om den ikke svarer.
 
-Om containeren på 8084 ikke volummonterer dette repoet (typisk metarepoets compose, som baker malene inn i imaget ved build og dermed viser en gammel versjon), oppdages det ved oppstart og devtoolsen starter i stedet en egen container for arbeidskatalogen.
+Om containeren på 8084 ikke volummonterer dette repoet (typisk metarepoets compose, som enten baker malene inn i imaget ved build eller monterer en annen klon, og dermed viser en annen versjon), oppdages det ved oppstart og devtoolsen starter i stedet en egen container for arbeidskatalogen.
+Sjekken virker med både docker og podman.
 
 ## Dele en lenke til et bestemt brev
 
@@ -64,6 +65,18 @@ Beløpsfeltene i `meldekortvedtak` ser avledede ut, men er det ikke: `meldeperio
 Å summere dagene i skjemaet ville vært en gjetning, ikke samme regel som backend.
 
 Regelen gjelder bare skjemaet — JSON-modus er rå, og der kan du sette hva du vil.
+
+## Objekter som kan være null
+
+Noen objekter i flettedataene er null i datasettet og bare med i enkelte brev, som `barnSomFyller16` i `vedtakForlengelse`.
+Uten hjelp ville skjemaet vist dem som et tomt tekstfelt, og det som ble skrevet der, ville gått til malen som streng.
+De står derfor i [`valgfrie.js`](valgfrie.js) med et eksempel, og får en checkbox foran nøkkelen: på fyller inn eksempelet, av sender null.
+
+| Datasett            | Felt              | Kilde                  |
+|---------------------|-------------------|------------------------|
+| `vedtakForlengelse` | `barnSomFyller16` | `BrevForlengelseDTO.kt` |
+
+Eksemplene er kopier av variantene i `test/data`, siden demo-imaget ikke inneholder dem.
 
 ## Sammenligne versjoner (pdfgenrs mot pdfgenrs)
 
@@ -115,6 +128,7 @@ Frontend (ren HTML/JS/CSS uten avhengigheter):
   Objekter og lister er sammenleggbare, og lister med mer enn tre ledd starter sammenlagt med første tekstverdi som overskrift — ellers drukner de lange brevene i dager og perioder.
 - `enums.js` er listen over felt som er enum, med sti inn i flettedataene per datasett (se over).
 - `avledet.js` er reglene for felt som regnes ut fra andre felt, med samme stisyntaks.
+- `valgfrie.js` er objektene som kan være null, med eksempelet som fylles inn når de slås på (se over).
 - `lenke.js` pakker brev og flettedata inn i og ut av fragmentet i URL-en (se over).
 - `panel.js` er gjenbrukbar lasting av PDF inn i en iframe (objectURL-opprydding, utdaterte svar ignoreres) — brukes av begge panelene.
 - `compare.js` er versjonssammenligningen (ref-feltene og høyrepanelet).
