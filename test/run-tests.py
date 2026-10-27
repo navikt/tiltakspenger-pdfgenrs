@@ -296,6 +296,14 @@ def pdftekst(body):
         pdf.close()
 
 
+BUNNTEKST = re.compile(r"(Saksnummer:\s*\d+\s*)?(side|page)\s+\d+\s+(av|of)\s+\d+")
+
+
+def uten_bunntekst(tekst):
+    """Fjerner bunnteksten fra lib/pensjonsbrev/footer.typ, så en fasittekst som brytes over to sider fortsatt er sammenhengende."""
+    return BUNNTEKST.sub("", tekst)
+
+
 def uten_mellomrom(tekst):
     """Fjerner alle mellomrom og linjeskift, så tekst fra fasiten kan sammenlignes med tekst brutt over linjer i PDF-en."""
     return "".join(tekst.split())
@@ -311,7 +319,7 @@ def test_mot_fasit(navn, mal, payload, fasittekster, feil):
     if not sjekk_pdf(navn, mal, body, feil):
         lagre_debug(navn, ".feil.pdf", body)
         return
-    tekst = uten_mellomrom(pdftekst(body))
+    tekst = uten_mellomrom(uten_bunntekst(pdftekst(body)))
     mangler = [fasittekst for fasittekst in fasittekster if uten_mellomrom(fasittekst) not in tekst]
     if mangler:
         lagre_debug(navn, ".feil.pdf", body)
