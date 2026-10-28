@@ -40,7 +40,7 @@
       "false": "du har søkt om tiltakspenger for sent.\n\nTiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om tiltakspenger.\n\nDette kommer frem av tiltakspengeforskriften § 11.",
       "true": "du har søkt om tiltakspenger og barnetillegg for sent.\n\nTiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om tiltakspenger og barnetillegg.\n\nDette kommer frem av tiltakspengeforskriften § 11."
     },
-    "FORLENGET_VENTETID": {
+    "RETT_TIL_DAGPENGER": {
       "false": "du som er innvilget dagpenger, har ikke rett til tiltakspenger.\n\nDet gjelder uansett om du faktisk får utbetalt dagpenger i hele eller deler av perioden.\n\nDu har heller ikke rett til tiltakspenger for enkeltdager eller meldeperioder uten utbetaling, eller for perioder der dagpengene er stanset på grunn av sanksjon eller midlertidig har falt bort.\n\nDeltakere som har rett til andre pengestøtter til livsopphold, har ikke samtidig rett til å få tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd.",
       "true": "du som er innvilget dagpenger, har ikke rett til tiltakspenger og barnetillegg.\n\nDet gjelder uansett om du faktisk får utbetalt dagpenger i hele eller deler av perioden.\n\nDu har heller ikke rett til tiltakspenger for enkeltdager eller meldeperioder uten utbetaling, eller for perioder der dagpengene er stanset på grunn av sanksjon eller midlertidig har falt bort.\n\nDeltakere som har rett til andre pengestøtter til livsopphold, har ikke samtidig rett til å få tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd."
     }
@@ -86,7 +86,7 @@
       "false": "Du har søkt om tiltakspenger for sent.\nTiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om tiltakspenger.",
       "true": "Du har søkt om tiltakspenger og barnetillegg for sent.\nTiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om tiltakspenger og barnetillegg."
     },
-    "FORLENGET_VENTETID": {
+    "RETT_TIL_DAGPENGER": {
       "false": "Du som er innvilget dagpenger, har ikke rett til tiltakspenger.\nDet gjelder uansett om du faktisk får utbetalt dagpenger i hele eller deler av perioden.\nDu har heller ikke rett til tiltakspenger for enkeltdager eller meldeperioder uten utbetaling, eller for perioder der dagpengene er stanset på grunn av sanksjon eller midlertidig har falt bort.\nDeltakere som har rett til andre pengestøtter til livsopphold, har ikke samtidig rett til å få tiltakspenger.",
       "true": "Du som er innvilget dagpenger, har ikke rett til tiltakspenger og barnetillegg.\nDet gjelder uansett om du faktisk får utbetalt dagpenger i hele eller deler av perioden.\nDu har heller ikke rett til tiltakspenger for enkeltdager eller meldeperioder uten utbetaling, eller for perioder der dagpengene er stanset på grunn av sanksjon eller midlertidig har falt bort.\nDeltakere som har rett til andre pengestøtter til livsopphold, har ikke samtidig rett til å få tiltakspenger."
     }
@@ -132,7 +132,7 @@
       "false": null,
       "true": null
     },
-    "FORLENGET_VENTETID": {
+    "RETT_TIL_DAGPENGER": {
       "false": null,
       "true": null
     }
