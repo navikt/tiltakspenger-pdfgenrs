@@ -5,6 +5,7 @@ Kjøres i testrunner-containeren via ./run_tests.sh (se docker-compose.test.yml)
 Ved feil skrives responsene til build/test/ for feilsøking.
 """
 import ctypes
+import datetime
 import json
 import os
 import re
@@ -66,9 +67,12 @@ INNHOLDSKRAV = {
     "vedtakForlengelse--ett-barn-fyller-16": {"krever": ["Ett av dine barn fyller 16 år", "for dette barnet"], "forbyr": ["Du er innvilget barnetillegg til og med"]},
     "vedtakForlengelse--to-barn-fyller-16": {"krever": ["To av dine barn fyller 16 år", "for disse barna"], "forbyr": ["Ett av dine barn"]},
     "vedtakForlengelse--eneste-barn-fyller-16": {"krever": ["Du er innvilget barnetillegg til og med 14. mai 2025"], "forbyr": ["Barnetillegg gis for hvert barn"]},
-    "meldekort": {"krever": ["Meldekort for tiltakspenger", "side 1 av"], "forbyr": ["Med vennlig hilsen"]},
-    "meldekort-korrigert": {"krever": ["Meldekort for tiltakspenger"], "forbyr": ["Med vennlig hilsen"]},
-    "soknad": {"krever": ["Saksnummer: 202501011001"], "forbyr": ["Med vennlig hilsen"]},
+    # Samme hode som brevene, men innsendte dokumenter viser mottakstidspunktet med etikett og klokkeslett etter Navs skriveregel, og ingen meldekort-ID.
+    "meldekort": {"krever": ["Meldekort for tiltakspenger", "side 1 av", "Fødselsnummer:", "Mottatt: 15. oktober 2024 kl. 13.05"], "forbyr": ["Med vennlig hilsen", "13:05", "Meldekort-ID"]},
+    "meldekort-korrigert": {"krever": ["Meldekort for tiltakspenger", "Mottatt: 15. oktober 2024 kl. 13.05"], "forbyr": ["Med vennlig hilsen", "Meldekort-ID"]},
+    "meldekort-en": {"krever": ["National identity number:", "Case number:", "Received: 15 October 2024 at 13:05"], "forbyr": ["form ID"]},
+    "meldekort-korrigert-en": {"krever": ["National identity number:", "Received: 15 October 2024 at 13:05"], "forbyr": ["form ID"]},
+    "soknad": {"krever": ["Navn:", "Saksnummer:", "Sendt til Nav: 5. januar 2025 kl. 12.30"], "forbyr": ["Med vennlig hilsen", "12:30"]},
     # Søknader Arena eier, har ikke saksnummer: footeren viser bare sidetallet.
     "soknad--uten-saksnummer": {"krever": ["side 1 av"], "forbyr": ["Saksnummer:"]},
     "klageAvvis--uten-saksbehandler": {"krever": ["ingen saksbehandler tildelt"]},
@@ -81,15 +85,17 @@ INNHOLDSKRAV = {
     "revurderingInnvilgelse--koder-en-dag": {"krever": ["for en dag per uke"]},
     # Antallet varierer i perioden: ingen dagtekst, saksbehandler skriver det i tilleggsteksten.
     "vedtakInnvilgelse--koder-ulike-dager": {"forbyr": ["per uke"]},
+    # Samme personinfo og utsendingsdato som de andre vedtakene, uten klokkeslett.
+    "meldekortvedtak": {"krever": ["Navn:", "Emil Aremark", "Fødselsnummer:", "18. november 2024"], "forbyr": ["Iverksatt", "14:36"]},
     "meldekortvedtak--automatisk": {"krever": ["Automatisk behandlet"], "forbyr": ["Med vennlig hilsen", "Nav Tiltak Oslo"]},
     # Opphør der ingen av grunnene har hjemmeltekst: begrunnelsen står kun i tilleggsteksten.
     "vedtakOpphør--kun-fritekst": {"krever": ["Slik har vi vurdert saken din", "tiltakspengeforskriften § 3"]},
     # Flere avslagsgrunner: punktliste fra avslagsgrunner med de samlede hjemlene fra hjemler under.
-    "vedtakAvslag": {"krever": ["10.01.2025 fordi:", "Du mottar en annen pengestøtte til livsopphold.", "Dette kommer frem av arbeidsmarkedsloven"]},
+    "vedtakAvslag": {"krever": ["10. januar 2025 fordi:", "Du mottar en annen pengestøtte til livsopphold.", "Dette kommer frem av arbeidsmarkedsloven"]},
     # Én avslagsgrunn: teksten fra avslagsgrunnen fullfører innledningen og har hjemlene selv.
     "vedtakAvslag--en-grunn": {"krever": ["Du får ikke tiltakspenger fra og med", "fordi du mottar lønn", "tiltakspengeforskriften § 8 andre ledd."], "forbyr": ["og barnetillegg fra og med"]},
     # Begrunnelsene vises hver med sin overskrift; journalnotatet er ikke et brev og har verken klagerett-hale eller signatur.
-    "journalnotat": {"krever": ["Notat om vedtak om tiltakspenger", "Begrunnelse for vilkårsvurderingen", "Begrunnelse for barnetillegg"], "forbyr": ["Med vennlig hilsen", "Du har rett til å klage"]},
+    "journalnotat": {"krever": ["Notat om vedtak om tiltakspenger", "Begrunnelse for vilkårsvurderingen", "Begrunnelse for barnetillegg", "Notatsdato: 20. mai 2025"], "forbyr": ["Med vennlig hilsen", "Du har rett til å klage"]},
     "journalnotat--kun-barnetillegg": {"krever": ["Begrunnelse for barnetillegg"], "forbyr": ["Begrunnelse for vilkårsvurderingen"]},
     "journalnotat--meldekort": {"krever": ["Begrunnelse", "meldt fravær"], "forbyr": ["Begrunnelse for"]},
 }
@@ -370,31 +376,86 @@ def hjemlervarianter():
 def tekstfeltvarianter():
     """Standarddatasettene med valgtHjemmelTekst og hjemlerTekst lagt til, som malene ikke lenger bruker.
 
-    Gir (navn, mal, payload uten tekstfeltene, payload med tekstfeltene).
+    Gir (navn, mal, payload uten tekstfeltene, payload med tekstfeltene, hva som er endret).
     """
     tekstfelt = {"valgtHjemmelTekst": ["Denne teksten skal ikke stå i brevet."], "hjemlerTekst": "Denne setningen skal ikke stå i brevet."}
     for mal in ("vedtakAvslag", "stansvedtak", "vedtakOpphør"):
         payload = json.loads((DATA_DIR / f"{mal}.json").read_text())
-        yield f"{mal}--med-tekstfelt", mal, payload, dict(payload, **tekstfelt)
+        yield f"{mal}--med-tekstfelt", mal, payload, dict(payload, **tekstfelt), "tekstfeltene"
 
 
-def test_tekstfelt(navn, mal, uten_tekstfelt, med_tekstfelt, feil):
-    """Tekstfeltene i payloaden skal ikke ha noen virkning på brevet."""
-    status, body = render(mal, json.dumps(med_tekstfelt).encode())
+MÅNEDER = ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember"]
+UKEDAGER = ["mandag", "tirsdag", "onsdag", "torsdag", "fredag", "lørdag", "søndag"]
+NORSK_DATO = re.compile(rf"^(\d{{1,2}})\. ({'|'.join(MÅNEDER)}) (\d{{4}})( \d\d:\d\d:\d\d)?$")
+NORSK_UKEDAG_OG_DATO = re.compile(rf"^({'|'.join(UKEDAGER)}) (\d{{1,2}})\. ({'|'.join(MÅNEDER)})$")
+# Malene viser datoene fra saksbehandling-api i disse brevene.
+MALER_MED_DATOER_FRA_SAKSBEHANDLING = UTGÅENDE_MALER | {"journalnotat"}
+
+
+def til_iso_dato(verdi, år):
+    """Datoteksten fra saksbehandling-api som ISO, slik Jackson skriver LocalDate og LocalDateTime.
+
+    Ukedag og dato uten år får året der ukedagen stemmer, blant årene i `år`.
+    Tidspunkt får millisekunder, som Jackson skriver når de ikke er null.
+    """
+    if treff := NORSK_DATO.match(verdi):
+        dag, måned, årstall, klokke = treff.groups()
+        iso = f"{årstall}-{MÅNEDER.index(måned) + 1:02}-{int(dag):02}"
+        return f"{iso}T{klokke.strip()}.123" if klokke else iso
+    if treff := NORSK_UKEDAG_OG_DATO.match(verdi):
+        ukedag, dag, måned = treff.groups()
+        for kandidat in år:
+            dato = datetime.date(kandidat, MÅNEDER.index(måned) + 1, int(dag))
+            if dato.weekday() == UKEDAGER.index(ukedag):
+                return dato.isoformat()
+        raise ValueError(f"fant ikke året til «{verdi}» blant {år}")
+    return verdi
+
+
+def med_iso_datoer(node, år=()):
+    """Kopi av payloaden der all datotekst er byttet ut med ISO; årene fra periodene brukes for datoer uten år."""
+    if isinstance(node, list):
+        return [med_iso_datoer(element, år) for element in node]
+    if isinstance(node, dict):
+        periode = node.get("periode")
+        if isinstance(periode, dict):
+            år = tuple(int(periode[felt][-4:]) for felt in ("fraOgMed", "tilOgMed") if NORSK_DATO.match(str(periode.get(felt, ""))))
+        return {nøkkel: med_iso_datoer(verdi, år) for nøkkel, verdi in node.items()}
+    return til_iso_dato(node, år) if isinstance(node, str) else node
+
+
+def isodatovarianter():
+    """Hvert datasett for brevene fra saksbehandling-api med ISO-datoer i stedet for ferdig tekst.
+
+    Gir (navn, mal, payload med datotekst, payload med ISO-datoer, hva som er endret).
+    """
+    for datafil in sorted(DATA_DIR.glob("*.json")) + sorted(VARIANT_DIR.glob("*.json")):
+        mal = malnavn(datafil.stem)
+        if mal not in MALER_MED_DATOER_FRA_SAKSBEHANDLING:
+            continue
+        payload = json.loads(datafil.read_text())
+        iso = med_iso_datoer(payload)
+        assert iso != payload, f"{datafil.stem}: fant ingen datoer å gjøre om til ISO"
+        yield f"{datafil.stem}--iso-datoer", mal, payload, iso, "ISO-datoene"
+
+
+def test_samme_tekst(navn, mal, referanse, variant, endring, feil):
+    """Endringen i payloaden skal ikke ha noen virkning på teksten i brevet."""
+    status, body = render(mal, json.dumps(variant).encode())
     if status != 200 or not body.startswith(b"%PDF-"):
         sti = lagre_debug(navn, ".feil.txt", body)
-        feil.append(f"{navn}: HTTP {status} fra malen '{mal}' med tekstfeltene (respons i {sti})")
+        feil.append(f"{navn}: HTTP {status} fra malen '{mal}' med {endring} (respons i {sti})")
         return
-    status, referanse = render(mal, json.dumps(uten_tekstfelt).encode())
+    status, referansebody = render(mal, json.dumps(referanse).encode())
     if status != 200:
-        feil.append(f"{navn}: HTTP {status} fra malen '{mal}' uten tekstfeltene")
+        feil.append(f"{navn}: HTTP {status} fra malen '{mal}' uten {endring}")
         return
-    if pdftekst(body) != pdftekst(referanse):
-        lagre_debug(navn, ".med-tekstfelt.pdf", body)
-        lagre_debug(navn, ".uten-tekstfelt.pdf", referanse)
-        feil.append(f"{navn}: tekstfeltene endret brevet")
+    if pdftekst(body) != pdftekst(referansebody):
+        lagre_debug(navn, ".variant.pdf", body)
+        lagre_debug(navn, ".referanse.pdf", referansebody)
+        feil.append(f"{navn}: {endring} endret brevet")
         return
-    print(f"OK   {navn} -> {mal} (tekstfeltene uten virkning)")
+    print(f"OK   {navn} -> {mal} ({endring} uten virkning)")
 
 
 def ukjente_koder():
@@ -466,15 +527,15 @@ def main():
     for variant in fasitvarianter:
         test_mot_fasit(*variant, feil)
 
-    tekstfelt = list(tekstfeltvarianter())
-    for variant in tekstfelt:
-        test_tekstfelt(*variant, feil)
+    samme_tekst = list(tekstfeltvarianter()) + list(isodatovarianter())
+    for variant in samme_tekst:
+        test_samme_tekst(*variant, feil)
 
     ukjente = list(ukjente_koder())
     for variant in ukjente:
         test_ukjent_kode(*variant, feil)
 
-    antall = len(datafiler) + len(fasitvarianter) + len(tekstfelt) + len(ukjente)
+    antall = len(datafiler) + len(fasitvarianter) + len(samme_tekst) + len(ukjente)
     print(f"\n{antall - len(feil)}/{antall} datasett ok")
     if feil:
         for f in feil:

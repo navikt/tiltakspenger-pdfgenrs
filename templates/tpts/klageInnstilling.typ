@@ -11,7 +11,7 @@
 #block(below: space-26)[
     = Klage - Tiltakspenger
     #brødtekst[
-        Vi viser til din klage av #data.innsendingsdato på vedtak av #data.vedtaksdato.
+        Vi viser til din klage av #dato(data.innsendingsdato) på vedtak av #dato(data.vedtaksdato).
     ]
 
     #brødtekst[

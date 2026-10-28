@@ -19,7 +19,7 @@
 #let barnSomFyller16 = data.at("barnSomFyller16", default: none)
 #if barnSomFyller16 != none {
     if barnSomFyller16.antallBarnIVedtaket == 1 {
-        brødtekst[Du er innvilget barnetillegg til og med #barnSomFyller16.sisteDagMedBarnetillegg fordi du ikke har rett til barnetillegg for barn over 16 år. Vi viser til forskriften om tiltakspenger § 3.]
+        brødtekst[Du er innvilget barnetillegg til og med #dato(barnSomFyller16.sisteDagMedBarnetillegg) fordi du ikke har rett til barnetillegg for barn over 16 år. Vi viser til forskriften om tiltakspenger § 3.]
     } else if barnSomFyller16.antall == 1 {
         brødtekst[Barnetillegg gis for hvert barn under 16 år. Ett av dine barn fyller 16 år i tiltaksperioden. Barnetillegget for dette barnet vil derfor stoppe fra den dagen barnet ditt fyller 16 år. Vi viser til forskriften om tiltakspenger § 3.]
     } else {

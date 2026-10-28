@@ -1,10 +1,12 @@
 /*
-Språktekster som de vendorerte komponentene i lib/pensjonsbrev/ trenger (footer.typ og content/table.typ).
+Språktekster som de vendorerte komponentene i lib/pensjonsbrev/ trenger (casedetails.typ, footer.typ og content/table.typ).
 Verdiene er hentet fra oppstrøms LanguageSettings.kt slik at tekstene blir identiske.
 Kun nøklene vi faktisk bruker er tatt med.
 */
 
 #let språkinnstillinger-nb = (
+    navnprefix: "Navn:",
+    foedselsnummerprefix: "Fødselsnummer:",
     saksnummerprefix: "Saksnummer:",
     sideprefix: "side",
     sideinfix: "av",
@@ -13,6 +15,8 @@ Kun nøklene vi faktisk bruker er tatt med.
 )
 
 #let språkinnstillinger-en = (
+    navnprefix: "Name:",
+    foedselsnummerprefix: "National identity number:",
     saksnummerprefix: "Case number:",
     sideprefix: "page",
     sideinfix: "of",

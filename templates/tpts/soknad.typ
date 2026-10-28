@@ -45,12 +45,10 @@ Innholdet er 1-til-1 med pdfgen-malen (soknad.hbs).
 
 #brevlogo
 
-#personaliaInnsendt(
-    (
-        ("Navn:", data.personopplysninger.fornavn + " " + data.personopplysninger.etternavn),
-        ("Fødselsnummer:", data.personopplysninger.ident),
-    ),
-    [Sendt til Nav: #norskDatoTid(data.innsendingTidspunkt)],
+#personinfo(
+    ..personaliaFelt(data.personalia),
+    saksnummer: data.at("saksnummer", default: none),
+    dokumentdato: [Sendt til Nav: #tidspunkt(data.innsendingTidspunkt)],
 )
 
 = #title

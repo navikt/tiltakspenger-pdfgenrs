@@ -2,6 +2,7 @@
 #import "/lib/layout.typ": *
 #import "/lib/typography.typ": *
 #import "/lib/format.typ": *
+#import "/lib/spraak.typ": *
 #import "/lib/components.typ": *
 #import "/lib/meldekortComponents.typ": *
 #import "/lib/hjemmeltekster.typ": *

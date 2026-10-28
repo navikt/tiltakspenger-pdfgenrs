@@ -58,6 +58,50 @@ const MELDEKORTVEDTAK_STATUS = [
 // Valget for tom verdi i nedtrekkslistene.
 const INGEN = [null, "(ingen)"];
 
+// Grunnene for avslag, stans og opphør (GrunnBrevDto.kt i tiltakspenger-saksbehandling-api).
+// Etikettene er de saksbehandlerne ser i tiltakspenger-saksbehandling (AvslagsgrunnTekst).
+// Hver brevtype har bare grunnene saksbehandling-api kan sende for den (tilGrunnBrevDto).
+const GRUNN = {
+  DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK: "Deltar ikke på arbeidsmarkedstiltak",
+  ALDER: "Alder",
+  LIVSOPPHOLDYTELSE: "Livsoppholdytelser",
+  KVALIFISERINGSPROGRAMMET: "Kvalifiseringsprogrammet",
+  INTRODUKSJONSPROGRAMMET: "Introduksjonsprogrammet",
+  LØNN_FRA_TILTAKSARRANGØR: "Lønn fra tiltaksarrangør",
+  LØNN_FRA_ANDRE: "Lønn fra andre",
+  INSTITUSJONSOPPHOLD: "Institusjonsopphold",
+  IKKE_LOVLIG_OPPHOLD: "Ikke lovlig opphold",
+  FREMMET_FOR_SENT: "Fremmet for sent",
+  FORLENGET_VENTETID: "Forlenget ventetid",
+};
+const grunner = (...utenom) => Object.entries(GRUNN).filter(([kode]) => !utenom.includes(kode));
+const AVSLAGSGRUNNER = grunner("IKKE_LOVLIG_OPPHOLD");
+const STANSGRUNNER = grunner("FREMMET_FOR_SENT", "FORLENGET_VENTETID");
+const OPPHØRSGRUNNER = grunner("FORLENGET_VENTETID");
+
+// RettskildeBrevDto i HjemmelBrevDto.kt (tiltakspenger-saksbehandling-api).
+const RETTSKILDE = [
+  ["ARBEIDSMARKEDSLOVEN", "Arbeidsmarkedsloven"],
+  ["FOLKETRYGDLOVEN", "Folketrygdloven"],
+  ["FORELDELSESLOVEN", "Foreldelsesloven"],
+  ["FORVALTNINGSLOVEN", "Forvaltningsloven"],
+  ["TILTAKSPENGEFORSKRIFTEN", "Tiltakspengeforskriften"],
+];
+
+// BegrunnelsestypeDto i JournalnotatDokumentDto.kt; etikettene er overskriftene i templates/tpts/journalnotat.typ.
+const BEGRUNNELSESTYPE = [
+  ["VILKÅRSVURDERING", "Begrunnelse for vilkårsvurderingen"],
+  ["BARNETILLEGG", "Begrunnelse for barnetillegg"],
+  ["MELDEKORT", "Begrunnelse (meldekort)"],
+];
+
+// AntallDagerForMeldeperiode tillater 1–14; null betyr at antallet varierer i perioden.
+// lib/innvilgelseComponents.typ skriver dagteksten bare for partall fra 2 til 10.
+const ANTALL_DAGER = [
+  [null, "Varierer i perioden (ingen dagtekst)"],
+  ...Array.from({ length: 14 }, (_, i) => [i + 1, `${i + 1} dager per meldeperiode`]),
+];
+
 // Enum-feltene per datasett i testdata/tpts. Nøkkelen er stien inn i flettedataene,
 // der «[]» står for et array-ledd.
 const ENUM_FELT = {
@@ -65,6 +109,13 @@ const ENUM_FELT = {
   "meldekort-korrigert": { "dager[].status": MELDEKORT_STATUS_NB },
   "meldekort-en": { "dager[].status": MELDEKORT_STATUS_EN },
   "meldekort-korrigert-en": { "dager[].status": MELDEKORT_STATUS_EN },
+  vedtakAvslag: { "avslagsgrunner[]": AVSLAGSGRUNNER, "hjemler[].rettskilde": RETTSKILDE },
+  stansvedtak: { "stansgrunner[]": STANSGRUNNER },
+  vedtakOpphør: { "opphørsgrunner[]": OPPHØRSGRUNNER },
+  vedtakInnvilgelse: { "innvilgelsesperioder.antallDagerPerMeldeperiode": ANTALL_DAGER },
+  revurderingInnvilgelse: { "innvilgelsesperioder.antallDagerPerMeldeperiode": ANTALL_DAGER },
+  vedtakForlengelse: { "innvilgelsesperioder.antallDagerPerMeldeperiode": ANTALL_DAGER },
+  journalnotat: { "begrunnelser[].type": BEGRUNNELSESTYPE },
   meldekortvedtak: {
     "meldeperioder[].dager[].status.gjeldende": MELDEKORTVEDTAK_STATUS,
     // Forrige status finnes bare når dagen er korrigert.

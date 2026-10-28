@@ -19,13 +19,10 @@ Payload-kontrakt: JournalnotatDokumentDto i tiltakspenger-saksbehandling-api.
 
 #brevlogo
 
-#personaliaInnsendt(
-    (
-        ("Navn:", data.personalia.fornavn + " " + data.personalia.etternavn),
-        ("Fødselsnummer:", data.personalia.ident),
-        ("Saksnummer:", data.saksnummer),
-    ),
-    [Notatsdato: #data.notatsdato],
+#personinfo(
+    ..personaliaFelt(data.personalia),
+    saksnummer: data.saksnummer,
+    dokumentdato: [Notatsdato: #dato(data.notatsdato)],
 )
 
 = #tittel

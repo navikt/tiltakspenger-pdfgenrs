@@ -157,7 +157,7 @@ def _run_container(container, src_dir, image, label):
 
 def _start_instance(sha, ref):
     short_sha = sha[:12]
-    worktree = os.path.join(WORKTREES_DIR, short)
+    worktree = os.path.join(WORKTREES_DIR, short_sha)
     # Rydd rester fra en tidligere økt som ikke fikk avsluttet ordentlig
     run_git("worktree", "remove", "--force", worktree)
     shutil.rmtree(worktree, ignore_errors=True)
@@ -167,9 +167,9 @@ def _start_instance(sha, ref):
     if added.returncode != 0:
         raise RefError(f"git worktree add feilet: {added.stderr.strip()}")
     try:
-        instance = _run_container(f"pdfgenrs-devtools-{short}", worktree, _image_for(sha), f"{ref} ({short})")
+        instance = _run_container(f"pdfgenrs-devtools-{short_sha}", worktree, _image_for(sha), f"{ref} ({short_sha})")
     except RefError:
-        _destroy_instance({"container": f"pdfgenrs-devtools-{short}", "worktree": worktree})
+        _destroy_instance({"container": f"pdfgenrs-devtools-{short_sha}", "worktree": worktree})
         raise
     instance["worktree"] = worktree
     return instance

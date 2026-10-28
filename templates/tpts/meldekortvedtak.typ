@@ -7,16 +7,10 @@
 
 #let title = "Utbetalingsvedtak"
 #show: dokument(title)
+#show: innholdsheader(data)
 
 #block(below: space-26, width: 100%)[
-    #brevlogo
-
     = #title
-
-    #nøkkelinfo((
-        ("Fødselsnummer:", data.fødselsnummer),
-        ("Saksnummer:", data.saksnummer),
-    ))
 
     // Sammendrag med informasjon om hver meldeperiode
     #block(below: space-26)[
@@ -31,11 +25,11 @@
                         stack(
                             dir: ttb,
                             spacing: space-6,
-                            brødtekst[Totalt utbetalt for perioden #mp.periode.fraOgMed - #mp.periode.tilOgMed: *#mp.beløpDiff kroner*],
-                            brødtekst[Ny beregning for perioden #mp.periode.fraOgMed - #mp.periode.tilOgMed: *#mp.beløp kroner*],
+                            brødtekst[Totalt utbetalt for perioden #dato(mp.periode.fraOgMed) - #dato(mp.periode.tilOgMed): *#mp.beløpDiff kroner*],
+                            brødtekst[Ny beregning for perioden #dato(mp.periode.fraOgMed) - #dato(mp.periode.tilOgMed): *#mp.beløp kroner*],
                         )
                     } else {
-                        brødtekst[Totalt utbetalt for perioden #mp.periode.fraOgMed - #mp.periode.tilOgMed: *#mp.beløp kroner*]
+                        brødtekst[Totalt utbetalt for perioden #dato(mp.periode.fraOgMed) - #dato(mp.periode.tilOgMed): *#mp.beløp kroner*]
                     }
                 }),
             )
@@ -54,18 +48,14 @@
 #for mp in data.meldeperioder [
     #block(below: space-26)[
         #if mp.korrigering [
-            #h2[Korrigert meldekort #mp.periode.fraOgMed - #mp.periode.tilOgMed]
+            #h2[Korrigert meldekort #dato(mp.periode.fraOgMed) - #dato(mp.periode.tilOgMed)]
             #h3("Utfall av korrigeringen")
             #meldekortvedtakUtfall(mp.beløpDiff)
         ] else [
-            #h2[Meldekort #mp.periode.fraOgMed - #mp.periode.tilOgMed]
+            #h2[Meldekort #dato(mp.periode.fraOgMed) - #dato(mp.periode.tilOgMed)]
         ]
         #meldekortvedtakTabell(mp)
     ]
-]
-
-#if "iverksattTidspunkt" in data and data.iverksattTidspunkt != none [
-    #brødtekst[*Iverksatt:* #data.iverksattTidspunkt]
 ]
 
 #if data.erAutomatiskBehandlet [

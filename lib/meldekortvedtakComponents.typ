@@ -1,5 +1,6 @@
 #import "/lib/styles.typ": *
 #import "/lib/typography.typ": *
+#import "/lib/format.typ": ukedagOgDato
 #import "/lib/spraak.typ": språkinnstillinger-nb
 #import "/lib/pensjonsbrev/content/table.typ": letter-table
 
@@ -34,7 +35,7 @@ Tabellstilen (sebrastriper, header, linjer) kommer fra letter-table i lib/pensjo
         )
     }
 
-    celler.push([#dag.dato])
+    celler.push([#ukedagOgDato(dag.dato)])
 
     // Status: forrige verdi og korrigert (gjeldende) verdi i hver sin kolonne
     if endret and dag.status.harEndring {

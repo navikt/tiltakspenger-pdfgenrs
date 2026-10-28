@@ -17,7 +17,7 @@
 // Hvert «\n\n»-skilte avsnitt blir eget avsnitt i brevet; det første fullfører innledningen.
 #let avsnitt = hjemmeltekster.at(0).split("\n\n")
 #brødtekst[
-    Tiltakspenger #if data.barnetillegg [og barnetillegg ]stanses fra og med #data.stansFraOgMedDato fordi #medLinjeskift(avsnitt.first())
+    Tiltakspenger #if data.barnetillegg [og barnetillegg ]stanses fra og med #dato(data.stansFraOgMedDato) fordi #medLinjeskift(avsnitt.first())
 ]
 #for resten in avsnitt.slice(1) {
     brødtekst[#medLinjeskift(resten)]

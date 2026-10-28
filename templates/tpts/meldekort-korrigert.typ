@@ -12,13 +12,10 @@
 #block(below: space-26, width: 100%)[
     #brevlogo
 
-    #personaliaInnsendt(
-        (
-            ("Fødselsnummer:", data.fnr),
-            ("Saksnummer:", data.saksnummer),
-            ("Meldekort-ID:", data.id),
-        ),
-        [Mottatt: #data.mottatt],
+    #personinfo(
+        ..personaliaFelt(data.personalia),
+        saksnummer: data.saksnummer,
+        dokumentdato: if data.at("mottatt", default: none) != none [Mottatt: #tidspunkt(data.mottatt)],
     )
 
     = Meldekort for tiltakspenger

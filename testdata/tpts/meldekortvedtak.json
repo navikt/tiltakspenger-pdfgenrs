@@ -14,8 +14,14 @@
   ],
   "iverksattTidspunkt": "18. november 2024 14:36:18",
   "fødselsnummer": "25508631114",
+  "personalia": {
+    "ident": "25508631114",
+    "fornavn": "Emil",
+    "etternavn": "Aremark"
+  },
+  "datoForUtsending": "18. november 2024",
   "totaltBelop": 2198,
-  "totalDifferanse": -338,
+  "totalDifferanse": 1352,
   "brevTekst": "Du hadde meldt fra om at du var syk disse dagene, men vi har fått opplysninger fra tiltaksarrangøren om at du deltok på tiltaket. Vi har derfor endret meldekortet ditt.",
   "forhandsvisning": false,
   "meldeperioder": [

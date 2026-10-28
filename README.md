@@ -26,6 +26,7 @@ Testene rendrer alle datasettene i `testdata/tpts/` og kanttilfellevariantene i 
 * varianter oppfører seg riktig (plassholder ved manglende saksbehandler, ingen signatur ved automatisk behandling, osv.)
 * alle URL-er i brevteksten er klikkbare lenker (`navLenke`) med gyldig `https://`-URI i PDF-annotasjonen
 * ingen tegn rendres oppå hverandre (fanger layoutkollisjoner, f.eks. dato plassert over annen tekst)
+* brevene fra saksbehandling-api gir samme tekst med ISO-datoer som med ferdigformaterte datoer
 
 Innholdskravene ligger i [test/run-tests.py](test/run-tests.py).
 Varianter i `test/data/` følger navnekonvensjonen `<mal>--<variant>.json` og rendres mot malen før `--`.
@@ -95,10 +96,7 @@ Typografi, avstander, tabeller og sideoppsett kommer fra et delt Typst-oppsett s
 Målet er å gjenbruke mest mulig og ha minst mulig eget.
 Punktene under er funksjonelle endringer som må avklares med fagsiden, UX og juristene før de tas:
 
-- [ ] **Felles personinfo-blokk (`casedetails`)**: alle feltene er valgfrie (rader uten verdi utelates, og dokumentdatoen står til høyre på siste rad), men blokken har bare de faste radene navn, fødselsnummer og saksnummer.
-      Payloadene må få feltene blokken leser (`gjelderNavn`, `gjelderFoedselsnummer`, `saksnummer`, `dokumentDato`), og meldekortvedtak mangler i dag både navn og dokumentdato.
-      Innsendte dokumenter (`personaliaInnsendt`) har egne rader som «Meldekort-ID» og en merket dato («Mottatt:», «Sendt til Nav:»), som blokken ikke støtter.
-      DTO-endringer i backendene, deretter kan `personalia`-adapterne fjernes.
+- [ ] **Navn i meldekortet**: alle dokumentene bruker `casedetails` via `personinfo`, men meldekort-api sender ikke navn, så meldekortet viser bare fødselsnummer og saksnummer.
 - [ ] **Signatur/avslutning (`closing.typ`)**: bytte vår `signatur`-komponent til den delte avslutningen (annen struktur og tekst, og uten våre røde placeholder-markeringer).
 - [ ] **Lister**: bruke `bulletlist`/`numberedlist` fra det delte oppsettet i malene i stedet for rå `list()`, slik at listeavstand følger kollisjonsmatrisen.
 - [ ] **Logo**: bytte `resources/img.png` til den vendorerte `lib/pensjonsbrev/NAV_logo.svg`.

@@ -15,7 +15,7 @@
 = Vedtaket ditt om tiltakspenger er endret
 
 #brødtekst[
-    Nav har vurdert saken din på nytt. Vi har omgjort vedtaket slik at du ikke har rett til tiltakspenger #if data.barnetillegg [og barnetillegg ]fra og med #data.vedtaksperiode.fraOgMed til og med #data.vedtaksperiode.tilOgMed.
+    Nav har vurdert saken din på nytt. Vi har omgjort vedtaket slik at du ikke har rett til tiltakspenger #if data.barnetillegg [og barnetillegg ]fra og med #dato(data.vedtaksperiode.fraOgMed) til og med #dato(data.vedtaksperiode.tilOgMed).
 ]
 
 // Hvert «\n\n»-skilte avsnitt blir eget avsnitt i brevet, med vanlig avstand mellom avsnitt.

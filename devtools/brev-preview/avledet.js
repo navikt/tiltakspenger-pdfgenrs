@@ -12,6 +12,8 @@ const AVLEDEDE_FELT = {
     // regnet ut fra nettopp den daglisten som havner i payloaden.
     "meldeperioder[].harBarnetillegg": (meldeperiode) =>
       meldeperiode.dager.some((dag) => (dag.barnetillegg?.gjeldende ?? 0) > 0 || (dag.barnetillegg?.forrige ?? 0) > 0),
+    // BrevMeldekortvedtakDTO.kt: totalDifferanse = meldeperioder.sumOf { it.beløpDiff }.
+    totalDifferanse: (_, data) => data.meldeperioder.reduce((sum, meldeperiode) => sum + (meldeperiode.beløpDiff ?? 0), 0),
   },
 };
 
@@ -20,11 +22,6 @@ const AVLEDEDE_FELT = {
 // mens `dager` i payloaden kommer fra sammenligningen — to lister som DTO-en ikke
 // binder sammen. `totaltBelop` kommer tilsvarende fra `Meldekortbehandling.beløpTotal`.
 // Å summere dagene i skjemaet ville derfor vært en gjetning, ikke samme regel som backend.
-//
-// `totalDifferanse = meldeperioder.sumOf { it.beløpDiff }` er derimot entydig i koden,
-// men testdata/tpts/meldekortvedtak.json har -338 der summen er 1352 (1690 + -338).
-// Regelen er utelatt til det er avklart hvilken av de to som er feil — ellers ville
-// demoen stille vist andre tall enn testdatasettet.
 
 function avledetFeltFor(datasett) {
   return AVLEDEDE_FELT[datasett] ?? {};

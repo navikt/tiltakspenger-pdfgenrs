@@ -120,5 +120,10 @@
     },
     "harBekreftetAlleOpplysninger": true,
     "harBekreftetÅSvareSåGodtManKan": true
+  },
+  "personalia": {
+    "ident": "25508631114",
+    "fornavn": "Emil",
+    "etternavn": "Aremark"
   }
 }

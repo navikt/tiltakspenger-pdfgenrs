@@ -1,6 +1,6 @@
 #import "/lib/typography.typ": *
 #import "/lib/styles.typ": *
-#import "/lib/format.typ": tallSomOrd
+#import "/lib/format.typ": dato, tallSomOrd
 
 // De tre seksjonene fra `innvilgelseBase.hbs` som legges mellom vedtaksinnholdet
 // og den felles vedtaksinfoen (klagerett osv.).
@@ -71,11 +71,11 @@
     let dagerTekst = if antallDager != none { [ for #antallDager per uke] } else { [] }
 
     if perioder.len() == 1 {
-        brødtekst[Du får tiltakspenger fra og med #perioder.at(0).fraOgMed til og med #perioder.at(0).tilOgMed#dagerTekst#if medBegrunnelse [ fordi du deltar på arbeidsmarkedstiltak].]
+        brødtekst[Du får tiltakspenger fra og med #dato(perioder.at(0).fraOgMed) til og med #dato(perioder.at(0).tilOgMed)#dagerTekst#if medBegrunnelse [ fordi du deltar på arbeidsmarkedstiltak].]
     } else if perioder.len() > 1 {
         brødtekst[Du får tiltakspenger#dagerTekst i disse periodene:]
         block(below: space-16)[
-            #list(..perioder.map(p => [Fra og med #p.fraOgMed til og med #p.tilOgMed.]))
+            #list(..perioder.map(p => [Fra og med #dato(p.fraOgMed) til og med #dato(p.tilOgMed).]))
         ]
     }
 }
@@ -85,11 +85,11 @@
     if "barnetillegg" not in data { return }
     let bt = data.barnetillegg
     if bt.len() == 1 {
-        brødtekst[Du får barnetillegg fra og med #bt.at(0).periode.fraOgMed til og med #bt.at(0).periode.tilOgMed for #tallSomOrd(bt.at(0).antallBarn) barn.]
+        brødtekst[Du får barnetillegg fra og med #dato(bt.at(0).periode.fraOgMed) til og med #dato(bt.at(0).periode.tilOgMed) for #tallSomOrd(bt.at(0).antallBarn) barn.]
     } else if bt.len() > 1 {
         brødtekst[Du får barnetillegg i disse periodene:]
         block(below: space-16)[
-            #list(..bt.map(b => [Fra og med #b.periode.fraOgMed til og med #b.periode.tilOgMed for #tallSomOrd(b.antallBarn) barn.]))
+            #list(..bt.map(b => [Fra og med #dato(b.periode.fraOgMed) til og med #dato(b.periode.tilOgMed) for #tallSomOrd(b.antallBarn) barn.]))
         ]
     }
 }

@@ -44,7 +44,7 @@ Typografi, avstander, tabeller og sideoppsett kommer fra et delt Typst-oppsett s
   Beslutter er nullable og vises kun når den finnes; automatisk behandlede vedtak viser «Automatisk behandlet» i stedet for signatur.
 - **Feilmeldinger:** Meldinger i `panic` og `assert` havner i pdfgenrs-loggen og må aldri inneholde andre payload-verdier enn koder.
 - **Innsendte dokumenter** (meldekort, søknad) er ikke brev, men en tro gjengivelse av det brukeren fylte ut — ingen signatur eller klagerett.
-  De bruker samme personinfo-layout som utgående brev via `personaliaInnsendt` (mottatt-tidspunkt til høyre der utgående har utsendingsdato).
+  Alle brev og innsendte dokumenter bruker `personinfo` i `lib/components.typ`, som er `casedetails` fra `lib/pensjonsbrev`: navn, fødselsnummer og saksnummer når de finnes, og datoen til høyre på nederste rad. Alle backendene sender navn og fødselsnummer i `personalia` (`ident`, `fornavn`, `etternavn`); meldekort-api sender bare `ident`. Vedtak viser datoen uten etikett, mens innsendte dokumenter viser for eksempel «Mottatt: 15. oktober 2024 kl. 13.05».
 
 ## Referanser
 
@@ -72,6 +72,8 @@ Hjemmeltekstene for avslag, stans og opphør bor i `lib/hjemmeltekster.typ`, og 
 Setningen med de samlede hjemlene i avslag med flere grunner lages fra `hjemler` av `hjemmelsetning` i samme fil.
 Fasiten ligger i `test/fasit/`: `hjemmeltekster.json` for tekstene og `hjemler.json` for setningen med hjemlene, laget av Kotlin-koden.
 Testene krever at brevet fra kodene inneholder teksten fra fasiten, så endrer du en tekst, må både malen og fasiten oppdateres.
+Datoene fra saksbehandling-api formateres med `dato` og `ukedagOgDato` i `lib/format.typ`, som tar imot ISO og slipper ferdigformatert tekst gjennom i en overgangsperiode.
+Testene gjør om datoene i hvert datasett for disse brevene til ISO og krever samme tekst som før, slik at et datofelt uten hjelpefunksjonen feiler.
 Endrer du felleskomponentene (signatur, vedtaksinfo), oppdater innholdskravene i samme endring.
 Testene er deploy-gate i CI (`.github/workflows/.test.yml`).
 

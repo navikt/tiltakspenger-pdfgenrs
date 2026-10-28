@@ -12,13 +12,11 @@
 #block(below: space-26, width: 100%)[
     #brevlogo
 
-    #personaliaInnsendt(
-        (
-            ("Norwegian national identification number:", data.fnr),
-            ("Case number:", data.saksnummer),
-            ("Employment status form ID:", data.id),
-        ),
-        [Received: #data.mottatt],
+    #personinfo(
+        ..personaliaFelt(data.personalia),
+        saksnummer: data.saksnummer,
+        dokumentdato: if data.at("mottatt", default: none) != none [Received: #engelskTidspunkt(data.mottatt)],
+        språk: språkinnstillinger-en,
     )
 
     = Employment status form for employment scheme benefits

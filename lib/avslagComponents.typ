@@ -1,6 +1,7 @@
 #import "/lib/typography.typ": *
 #import "/lib/styles.typ": *
 #import "/lib/hjemmeltekster.typ": *
+#import "/lib/format.typ": dato
 
 #let medLinjeskift(tekst) = tekst.split("\n").join(linebreak())
 
@@ -16,7 +17,7 @@
         grunner.map(grunn => avslagspunkttekst(grunn, data.harSøktMedBarn))
     }
     let barn = if data.harSøktMedBarn { " og barnetillegg" } else { "" }
-    let innledning = [Du får ikke tiltakspenger#barn fra og med #data.avslagFraOgMed til og med #data.avslagTilOgMed fordi]
+    let innledning = [Du får ikke tiltakspenger#barn fra og med #dato(data.avslagFraOgMed) til og med #dato(data.avslagTilOgMed) fordi]
 
     if tekster.len() == 1 {
         // Hvert «\n\n»-skilte avsnitt blir eget avsnitt i brevet; det første fullfører innledningen.

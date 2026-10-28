@@ -39,13 +39,21 @@ Lenken virker likt lokalt og i demoen i dev; bare vertsnavnet skiller.
 Felt som egentlig er enum vises som nedtrekksliste i skjemaet, med en lesbar etikett i listen og selve verdien som tittel på feltet.
 De står i [`enums.js`](enums.js), med sti inn i flettedataene per datasett i `testdata/tpts`:
 
-| Datasett                | Felt                                    | Kilde                                                     |
-|-------------------------|-----------------------------------------|-----------------------------------------------------------|
-| `meldekort*`            | `dager[].status`                        | `meldekortLabelsNo`/`-En` i `lib/meldekortComponents.typ`  |
-| `meldekortvedtak`       | `…dager[].status.forrige`/`.gjeldende`  | `toStatus()` i `BrevMeldekortvedtakDTO.kt`                 |
+| Datasett                 | Felt                                              | Kilde                                                     |
+|--------------------------|---------------------------------------------------|-----------------------------------------------------------|
+| `meldekort*`             | `dager[].status`                                  | `meldekortLabelsNo`/`-En` i `lib/meldekortComponents.typ` |
+| `meldekortvedtak`        | `…dager[].status.forrige`/`.gjeldende`            | `toStatus()` i `BrevMeldekortvedtakDTO.kt`                |
+| `vedtakAvslag`           | `avslagsgrunner[]`, `hjemler[].rettskilde`        | `GrunnBrevDto.kt` og `HjemmelBrevDto.kt`                  |
+| `stansvedtak`            | `stansgrunner[]`                                  | `GrunnBrevDto.kt`                                         |
+| `vedtakOpphør`           | `opphørsgrunner[]`                                | `GrunnBrevDto.kt`                                         |
+| `vedtakInnvilgelse`      | `innvilgelsesperioder.antallDagerPerMeldeperiode` | `AntallDagerForMeldeperiode` (1–14, eller varierer)       |
+| `revurderingInnvilgelse` | `innvilgelsesperioder.antallDagerPerMeldeperiode` | `AntallDagerForMeldeperiode` (1–14, eller varierer)       |
+| `vedtakForlengelse`      | `innvilgelsesperioder.antallDagerPerMeldeperiode` | `AntallDagerForMeldeperiode` (1–14, eller varierer)       |
+| `journalnotat`           | `begrunnelser[].type`                             | `BegrunnelsestypeDto` i `JournalnotatDokumentDto.kt`      |
 
 Listene er kopier av kilden — verdiene kan ikke leses ut av malene i drift, siden demo-imaget bare inneholder `devtools/brev-preview` og `testdata/tpts`.
 Endres kilden, må listen oppdateres.
+Grunnene og rettskildene viser etikettene saksbehandlerne ser i tiltakspenger-saksbehandling, og hver brevtype har bare grunnene saksbehandling-api kan sende for den.
 En verdi som ikke står i listen (typisk skrevet inn i JSON-modus) blir stående, merket «ukjent verdi».
 
 Resten av feltene er fritekst, tall eller checkbox som før.
@@ -56,9 +64,10 @@ Noen felt i flettedataene er ikke noe saksbehandler fyller ut — backend regner
 De er skrivebeskyttet i skjemaet (stiplet ramme) og oppdateres med det samme grunnlaget endres, så forhåndsvisningen ikke kan komme i utakt med seg selv.
 Reglene står i [`avledet.js`](avledet.js):
 
-| Datasett          | Felt                              | Regel                                                             |
-|-------------------|-----------------------------------|-------------------------------------------------------------------|
-| `meldekortvedtak` | `meldeperioder[].harBarnetillegg` | en dag har barnetillegg > 0 (`BrevMeldekortvedtakDTO.kt`)          |
+| Datasett          | Felt                              | Regel                                                     |
+|-------------------|-----------------------------------|-----------------------------------------------------------|
+| `meldekortvedtak` | `meldeperioder[].harBarnetillegg` | en dag har barnetillegg > 0 (`BrevMeldekortvedtakDTO.kt`) |
+| `meldekortvedtak` | `totalDifferanse`                 | summen av `meldeperioder[].beløpDiff`                     |
 
 Bare felt der backend-regelen kan gjentas nøyaktig fra det payloaden inneholder, står her.
 Beløpsfeltene i `meldekortvedtak` ser avledede ut, men er det ikke: `meldeperioder[].beløp` summerer dagene i *beregningen*, mens `dager` i payloaden kommer fra sammenligningen, og `totaltBelop` hentes fra behandlingen.

@@ -1,5 +1,8 @@
 #import "/lib/typography.typ": *
 #import "/lib/styles.typ": *
+#import "/lib/format.typ": dato
+#import "/lib/spraak.typ": språkinnstillinger-nb
+#import "/lib/pensjonsbrev/casedetails.typ": casedetails
 
 #let dokument(title, lang: "no") = body => {
     set document(
@@ -16,21 +19,28 @@
     #image("/resources/img.png", height: space-16, alt: "NAV logo")
 ]
 
-// Ren tekst i grid-cellene: brødtekst (withSpacing) er for flyt-avsnitt og skal ikke brukes i celler (jf. casedetails.typ i lib/pensjonsbrev).
+/*
+Person- og saksinfo med dokumentdatoen til høyre på nederste rad, som i Aksel og pensjonsbrev; felt som er none, utelates.
+Alle brev og innsendte dokumenter bruker denne, slik at hodet er likt.
+*/
+#let personinfo(navn: none, fødselsnummer: none, saksnummer: none, dokumentdato: none, språk: språkinnstillinger-nb) = block(below: space-48, casedetails(
+    (gjelderNavn: navn, gjelderFoedselsnummer: fødselsnummer, saksnummer: saksnummer, dokumentDato: dokumentdato),
+    språk,
+    above: 0pt,
+))
+
+// Navn og fødselsnummer fra `personalia`, som alle backendene sender i samme form; meldekort-api har ikke navnet.
+#let personaliaFelt(personalia) = (
+    navn: if "fornavn" in personalia { personalia.fornavn + " " + personalia.etternavn },
+    fødselsnummer: personalia.ident,
+)
+
 #let personalia(data) = body => {
-    block(below: space-48)[
-        #stack(
-            dir: ltr,
-            grid(
-                columns: (20%, 1fr),
-                gutter: 0.5em,
-                [Navn:], [#data.personalia.fornavn #data.personalia.etternavn],
-                [Fødselsnummer:], [#data.personalia.ident],
-                [Saksnummer:], [#data.saksnummer],
-            ),
-            [#align(right + bottom)[#data.datoForUtsending]],
-        )
-    ]
+    personinfo(
+        ..personaliaFelt(data.personalia),
+        saksnummer: data.saksnummer,
+        dokumentdato: dato(data.datoForUtsending),
+    )
     body
 }
 
@@ -41,23 +51,6 @@
         #body
     ]
 }
-
-/*
-Personinfo for innsendte dokumenter (meldekort/søknad): samme layout som utgående brev (personalia), men med mottatt-tidspunkt der utgående har utsendingsdato.
-Labels er parametre siden innsendte dokumenter også finnes på engelsk.
-*/
-#let personaliaInnsendt(rader, mottatt) = block(below: space-48)[
-    #stack(
-        dir: ltr,
-        grid(
-            columns: (auto, 1fr),
-            gutter: 0.5em,
-            ..rader.map(((label, verdi)) => ([#label], [#verdi])).flatten(),
-        ),
-    )
-    #align(right + bottom)[#mottatt]
-]
-
 
 /*
 Felles hale for alle utgående vedtaksbrev — skal være identisk fra og med «Du har rett til å klage».
