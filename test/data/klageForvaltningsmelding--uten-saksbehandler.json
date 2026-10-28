@@ -1,0 +1,22 @@
+{
+  "personalia": {
+    "ident": "25508631114",
+    "fornavn": "Emil",
+    "etternavn": "Aremark"
+  },
+  "saksnummer": "202501011001",
+  "saksbehandlerNavn": null,
+  "forhandsvisning": true,
+  "innsendingsdato": "18. februar 2025",
+  "tilleggstekst": [
+    {
+      "tittel": "Svartid",
+      "tekst": "Saken vil bli behandlet innen ca. 3 måneder.\nHvis saken ikke blir avgjort i løpet av denne tiden, vil du høre nærmere fra oss."
+    },
+    {
+      "tittel": "Begrunnelse for saksbehandlingstiden vår",
+      "tekst": "Vi har mange saker til behandling og det vil derfor ta noe tid før vi får behandlet saken din.\n\nPå grunn av stor arbeidsmengde er saksbehandlingstiden ca. 3 måneder. Saksbehandlingstiden er beregnet fra vi mottok din klage."
+    }
+  ],
+  "datoForUtsending": "4. mars 2025"
+}
