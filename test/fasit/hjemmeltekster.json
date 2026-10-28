@@ -41,8 +41,8 @@
       "true": "du har søkt om tiltakspenger og barnetillegg for sent.\n\nTiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om tiltakspenger og barnetillegg.\n\nDette kommer frem av tiltakspengeforskriften § 11."
     },
     "RETT_TIL_DAGPENGER": {
-      "false": "du som er innvilget dagpenger, har ikke rett til tiltakspenger.\n\nDet gjelder uansett om du faktisk får utbetalt dagpenger i hele eller deler av perioden.\n\nDu har heller ikke rett til tiltakspenger for enkeltdager eller meldeperioder uten utbetaling, eller for perioder der dagpengene er stanset på grunn av sanksjon eller midlertidig har falt bort.\n\nDeltakere som har rett til andre pengestøtter til livsopphold, har ikke samtidig rett til å få tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd.",
-      "true": "du som er innvilget dagpenger, har ikke rett til tiltakspenger og barnetillegg.\n\nDet gjelder uansett om du faktisk får utbetalt dagpenger i hele eller deler av perioden.\n\nDu har heller ikke rett til tiltakspenger for enkeltdager eller meldeperioder uten utbetaling, eller for perioder der dagpengene er stanset på grunn av sanksjon eller midlertidig har falt bort.\n\nDeltakere som har rett til andre pengestøtter til livsopphold, har ikke samtidig rett til å få tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd."
+      "false": "du er innvilget dagpenger i denne perioden.\n\nDu har ikke rett til tiltakspenger for samme periode som du er innvilget dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd.",
+      "true": "du er innvilget dagpenger i denne perioden.\n\nDu har ikke rett til tiltakspenger og barnetillegg for samme periode som du er innvilget dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd."
     }
   },
   "avslagspunkt": {
@@ -87,8 +87,8 @@
       "true": "Du har søkt om tiltakspenger og barnetillegg for sent.\nTiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om tiltakspenger og barnetillegg."
     },
     "RETT_TIL_DAGPENGER": {
-      "false": "Du som er innvilget dagpenger, har ikke rett til tiltakspenger.\nDet gjelder uansett om du faktisk får utbetalt dagpenger i hele eller deler av perioden.\nDu har heller ikke rett til tiltakspenger for enkeltdager eller meldeperioder uten utbetaling, eller for perioder der dagpengene er stanset på grunn av sanksjon eller midlertidig har falt bort.\nDeltakere som har rett til andre pengestøtter til livsopphold, har ikke samtidig rett til å få tiltakspenger.",
-      "true": "Du som er innvilget dagpenger, har ikke rett til tiltakspenger og barnetillegg.\nDet gjelder uansett om du faktisk får utbetalt dagpenger i hele eller deler av perioden.\nDu har heller ikke rett til tiltakspenger for enkeltdager eller meldeperioder uten utbetaling, eller for perioder der dagpengene er stanset på grunn av sanksjon eller midlertidig har falt bort.\nDeltakere som har rett til andre pengestøtter til livsopphold, har ikke samtidig rett til å få tiltakspenger."
+      "false": "Du er innvilget dagpenger i denne perioden.\nDu har ikke rett til tiltakspenger for samme periode som du er innvilget dagpenger.\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.",
+      "true": "Du er innvilget dagpenger i denne perioden.\nDu har ikke rett til tiltakspenger og barnetillegg for samme periode som du er innvilget dagpenger.\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger."
     }
   },
   "stans": {
