@@ -12,7 +12,7 @@
 
 #block(above: space-26, below: space-26)[
     #brødtekst[
-        Vi viser til klagen din av #data.innsendingsdato.
+        Vi viser til klagen din av #dato(data.innsendingsdato).
     ]
 
     #for tillegg in data.tilleggstekst {
