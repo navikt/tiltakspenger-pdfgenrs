@@ -40,6 +40,7 @@ DATASETT_TIL_MAL = {
 # Alle utgående brev skal ha den felles halen (vedtaksinfo) og den felles signaturen; unntakene står i UTEN_STANDARDKRAV.
 UTGÅENDE_MALER = {
     "klageAvvis",
+    "klageForvaltningsmelding",
     "klageInnstilling",
     "meldekortvedtak",
     "revurderingInnvilgelse",
@@ -57,6 +58,9 @@ INNHOLDSKRAV = {
     "klageAvvis": {"krever": ["Du har rett til innsyn"]},
     # klageInnstilling er et oversendelsesbrev, ikke et vedtaksbrev, og har med vilje ingen klagerett-hale.
     "klageInnstilling": {"krever": ["Har du spørsmål?", "Med vennlig hilsen", "Nav Tiltak Oslo", "Oversendelsesbrev til Nav Klageinstans", "side 1 av"]},
+    # Forvaltningsmeldingen er informasjon om saksbehandlingstid, ikke et vedtak, og har med vilje ingen klagerett-hale.
+    "klageForvaltningsmelding": {"krever": ["Informasjon om saksbehandlingstiden vår", "Vi viser til klagen din av 18. februar 2025", "Svartid", "Du må melde fra om endringer", "Skjer det endringer som kan ha betydning for saken din", "Har du spørsmål?", "Med vennlig hilsen", "Nav Tiltak Oslo", "side 1 av"], "forbyr": ["Du har rett til å klage"]},
+    "klageForvaltningsmelding--uten-saksbehandler": {"krever": ["Informasjon om saksbehandlingstiden vår", "Du må melde fra om endringer", "Har du spørsmål?", "Med vennlig hilsen", "side 1 av", "ingen saksbehandler tildelt"], "forbyr": ["Du har rett til å klage"]},
     "vedtakInnvilgelse": {"krever": ["Du har rett til innsyn", "for fem dager per uke", "for ett barn.", "for tre barn."]},
     "revurderingInnvilgelse": {"krever": ["for fem dager per uke", "for to barn."]},
     "vedtakForlengelse": {"krever": ["Tiltakspengene dine er forlenget", "Tiltaket ditt er forlenget.", "om tiltakspenger og barnetillegg.", "for fem dager per uke", "for to barn.", "Barnetillegget for 2025"], "forbyr": ["Barnetillegg gis for hvert barn"]},
@@ -98,8 +102,14 @@ INNHOLDSKRAV = {
     "journalnotat--kun-barnetillegg": {"krever": ["Begrunnelse for barnetillegg"], "forbyr": ["Begrunnelse for vilkårsvurderingen"]},
     "journalnotat--meldekort": {"krever": ["Begrunnelse", "meldt fravær"], "forbyr": ["Begrunnelse for"]},
 }
-# Datasett der standardkravene for utgående brev ikke gjelder: automatisk behandlede vedtak har ingen signatur, og klageInnstilling har egen kravliste.
-UTEN_STANDARDKRAV = {"klageInnstilling", "klageInnstilling--uten-saksbehandler", "meldekortvedtak--automatisk"}
+# Datasett der standardkravene for utgående brev ikke gjelder: automatisk behandlede vedtak har ingen signatur, og klageInnstilling og klageForvaltningsmelding har egne kravlister.
+UTEN_STANDARDKRAV = {
+    "klageForvaltningsmelding",
+    "klageForvaltningsmelding--uten-saksbehandler",
+    "klageInnstilling",
+    "klageInnstilling--uten-saksbehandler",
+    "meldekortvedtak--automatisk",
+}
 
 
 def malnavn(datasettnavn):
