@@ -72,12 +72,12 @@ const GRUNN = {
   INSTITUSJONSOPPHOLD: "Institusjonsopphold",
   IKKE_LOVLIG_OPPHOLD: "Ikke lovlig opphold",
   FREMMET_FOR_SENT: "Fremmet for sent",
-  FORLENGET_VENTETID: "Forlenget ventetid",
+  RETT_TIL_DAGPENGER: "Sanksjonsperiode/Dagpenger",
 };
 const grunner = (...utenom) => Object.entries(GRUNN).filter(([kode]) => !utenom.includes(kode));
 const AVSLAGSGRUNNER = grunner("IKKE_LOVLIG_OPPHOLD");
-const STANSGRUNNER = grunner("FREMMET_FOR_SENT", "FORLENGET_VENTETID");
-const OPPHØRSGRUNNER = grunner("FORLENGET_VENTETID");
+const STANSGRUNNER = grunner("FREMMET_FOR_SENT", "RETT_TIL_DAGPENGER");
+const OPPHØRSGRUNNER = grunner("RETT_TIL_DAGPENGER");
 
 // RettskildeBrevDto i HjemmelBrevDto.kt (tiltakspenger-saksbehandling-api).
 const RETTSKILDE = [
