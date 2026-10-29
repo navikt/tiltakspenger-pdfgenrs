@@ -7,13 +7,12 @@
 }
 
 
-// Datoene fra saksbehandling-api, formatert som `norskDatoFormatter` og `norskUkedagOgDatoUtenÅrFormatter` i tiltakspenger-libs.
-// Overgang: saksbehandling-api sender fortsatt ferdigformatert tekst som slipper uendret gjennom, og grenen fjernes når saksbehandling-api bare sender ISO.
+// Saksbehandling-api sender datoer som ISO.
 #let ukedager = ("mandag", "tirsdag", "onsdag", "torsdag", "fredag", "lørdag", "søndag")
 
 #let erIsoDato(verdi) = verdi.match(regex("^\d{4}-\d{2}-\d{2}")) != none
 
-// "2024-10-15" og "15.10.2024 13:05" (fra meldekort-api) -> "2024-10-15"; annen tekst gir none.
+// "2024-10-15" og "15.10.2024 13:05" fra meldekort-api -> "2024-10-15"; annen tekst gir none.
 #let isoDato(verdi) = if erIsoDato(verdi) {
     verdi.slice(0, 10)
 } else if verdi.match(regex("^\d{2}\.\d{2}\.\d{4}")) != none {
@@ -23,8 +22,11 @@
 
 #let engelskeMånedsnavn = ("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
 
-// "2024-11-04" og "04.11.2024 13:05" -> "4. november 2024"
-#let dato(verdi) = if isoDato(verdi) != none { norskLangdato(isoDato(verdi)) } else { verdi }
+// "2024-11-04" og "04.11.2024 13:05" -> "4. november 2024"; ugyldig format stopper rendringen.
+#let dato(verdi) = {
+    let iso = isoDato(verdi)
+    if iso != none { norskLangdato(iso) } else { panic("Ugyldig datoformat.") }
+}
 
 // "2024-11-04" og "04.11.2024 13:05" -> "4 November 2024", som `engelskDatoFormatter` i tiltakspenger-libs.
 #let engelskDato(verdi) = if isoDato(verdi) != none {
@@ -32,12 +34,12 @@
     str(int(deler.at(2))) + " " + engelskeMånedsnavn.at(int(deler.at(1)) - 1) + " " + deler.at(0)
 } else { verdi }
 
-// "2024-11-04" -> "mandag 4. november"
+// "2024-11-04" -> "mandag 4. november"; ugyldig format stopper rendringen.
 #let ukedagOgDato(verdi) = if erIsoDato(verdi) {
     let deler = verdi.slice(0, 10).split("-").map(int)
     let ukedag = datetime(year: deler.at(0), month: deler.at(1), day: deler.at(2)).weekday()
     ukedager.at(ukedag - 1) + " " + str(deler.at(2)) + ". " + månedsnavn.at(deler.at(1) - 1)
-} else { verdi }
+} else { panic("Ugyldig datoformat.") }
 
 // Mottakstidspunktet for innsendte dokumenter etter Navs skriveregel: "2025-01-05T12:30:15" og "05.01.2025 12:30" -> "5. januar 2025 kl. 12.30".
 #let klokkeslett(verdi) = { let treff = verdi.match(regex("\d{2}:\d{2}")); if treff != none { treff.text } }

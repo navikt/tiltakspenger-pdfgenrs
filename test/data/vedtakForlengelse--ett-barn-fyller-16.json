@@ -17,13 +17,13 @@
   ],
   "tilleggstekst": "Tiltaksarrangøren har bekreftet at du fortsetter på tiltaket.",
   "forhandsvisning": false,
-  "datoForUtsending": "31. mars 2025",
+  "datoForUtsending": "2025-03-31",
   "innvilgelsesperioder": {
     "antallDagerPerMeldeperiode": 10,
     "perioder": [
       {
-        "fraOgMed": "1. april 2025",
-        "tilOgMed": "30. juni 2025"
+        "fraOgMed": "2025-04-01",
+        "tilOgMed": "2025-06-30"
       }
     ]
   },
@@ -31,21 +31,21 @@
     {
       "antallBarn": 2,
       "periode": {
-        "fraOgMed": "1. april 2025",
-        "tilOgMed": "14. mai 2025"
+        "fraOgMed": "2025-04-01",
+        "tilOgMed": "2025-05-14"
       }
     },
     {
       "antallBarn": 1,
       "periode": {
-        "fraOgMed": "15. mai 2025",
-        "tilOgMed": "30. juni 2025"
+        "fraOgMed": "2025-05-15",
+        "tilOgMed": "2025-06-30"
       }
     }
   ],
   "barnSomFyller16": {
     "antall": 1,
     "antallBarnIVedtaket": 2,
-    "sisteDagMedBarnetillegg": "30. juni 2025"
+    "sisteDagMedBarnetillegg": "2025-06-30"
   }
 }

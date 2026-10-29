@@ -22,20 +22,20 @@
   ],
   "tilleggstekst": "Vi har vurdert saken din på nytt etter at vi fikk nye opplysninger om tiltaksdeltakelsen din.\n\nVi har lagt vekt på at du deltok på tiltaket i hele perioden, og at tiltaksarrangøren har bekreftet dette.",
   "forhandsvisning": false,
-  "datoForUtsending": "31. januar 2025",
+  "datoForUtsending": "2025-01-31",
   "innvilgelsesperioder": {
     "perioder": [
       {
-        "fraOgMed": "1. november 2024",
-        "tilOgMed": "28. februar 2025"
+        "fraOgMed": "2024-11-01",
+        "tilOgMed": "2025-02-28"
       },
       {
-        "fraOgMed": "1. april 2025",
-        "tilOgMed": "30. april 2025"
+        "fraOgMed": "2025-04-01",
+        "tilOgMed": "2025-04-30"
       },
       {
-        "fraOgMed": "2. mai 2025",
-        "tilOgMed": "31. mai 2025"
+        "fraOgMed": "2025-05-02",
+        "tilOgMed": "2025-05-31"
       }
     ],
     "antallDagerPerMeldeperiode": 2
@@ -43,22 +43,22 @@
   "barnetillegg": [
     {
       "periode": {
-        "fraOgMed": "1. november 2024",
-        "tilOgMed": "28. februar 2025"
+        "fraOgMed": "2024-11-01",
+        "tilOgMed": "2025-02-28"
       },
       "antallBarn": 1
     },
     {
       "periode": {
-        "fraOgMed": "1. april 2025",
-        "tilOgMed": "30. april 2025"
+        "fraOgMed": "2025-04-01",
+        "tilOgMed": "2025-04-30"
       },
       "antallBarn": 2
     },
     {
       "periode": {
-        "fraOgMed": "2. mai 2025",
-        "tilOgMed": "31. mai 2025"
+        "fraOgMed": "2025-05-02",
+        "tilOgMed": "2025-05-31"
       },
       "antallBarn": 3
     }

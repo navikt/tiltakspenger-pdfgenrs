@@ -7,8 +7,8 @@
   "saksnummer": "202501011001",
   "saksbehandlerNavn": null,
   "forhandsvisning": true,
-  "innsendingsdato": "18. februar 2025",
-  "vedtaksdato": "3. februar 2025",
+  "innsendingsdato": "2025-02-18",
+  "vedtaksdato": "2025-02-03",
   "tilleggstekst": [
     {
       "tittel": "Klagens anførsler",
@@ -19,5 +19,5 @@
       "tekst": "Vi har vurdert saken din på nytt med opplysningene i klagen din.\n\nTiltaksarrangøren har bekreftet at du var borte fra tiltaket i perioden, og vi har ikke fått opplysninger som endrer vurderingen vår. Vi opprettholder derfor vedtaket, og sender saken videre til Nav Klageinstans."
     }
   ],
-  "datoForUtsending": "12. mars 2025"
+  "datoForUtsending": "2025-03-12"
 }

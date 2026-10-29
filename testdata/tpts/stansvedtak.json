@@ -4,12 +4,12 @@
     "fornavn": "Emil",
     "etternavn": "Aremark"
   },
-  "datoForUtsending": "1. januar 2025",
+  "datoForUtsending": "2025-01-01",
   "saksnummer": "202501011001",
   "barnetillegg": true,
   "saksbehandlerNavn": "Ingrid Bakke",
   "beslutterNavn": "Martin Holm",
-  "stansFraOgMedDato": "1. januar 2025",
+  "stansFraOgMedDato": "2025-01-01",
   "stansgrunner": [
     "LIVSOPPHOLDYTELSE"
   ],

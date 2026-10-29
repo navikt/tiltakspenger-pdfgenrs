@@ -5,7 +5,6 @@ Kjøres i testrunner-containeren via ./run_tests.sh (se docker-compose.test.yml)
 Ved feil skrives responsene til build/test/ for feilsøking.
 """
 import ctypes
-import datetime
 import json
 import os
 import re
@@ -282,6 +281,10 @@ def sjekk_pdf(navn, mal, body, feil):
             if streng in tekst:
                 feil.append(f"{navn}: skal ikke inneholde teksten «{streng}»")
                 ok = False
+        # Datoene fra saksbehandling-api kommer som ISO, så en ISO-dato i brevet er et felt som ikke er formatert.
+        if (mal in UTGÅENDE_MALER or mal == "journalnotat") and (treff := re.search(r"\d{4}-\d{2}-\d{2}", tekst)):
+            feil.append(f"{navn}: inneholder den uformaterte datoen «{treff.group()}»")
+            ok = False
         return ok
     finally:
         pdf.close()
@@ -384,61 +387,6 @@ def tekstfeltvarianter():
         yield f"{mal}--med-tekstfelt", mal, payload, dict(payload, **tekstfelt), "tekstfeltene"
 
 
-MÅNEDER = ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember"]
-UKEDAGER = ["mandag", "tirsdag", "onsdag", "torsdag", "fredag", "lørdag", "søndag"]
-NORSK_DATO = re.compile(rf"^(\d{{1,2}})\. ({'|'.join(MÅNEDER)}) (\d{{4}})( \d\d:\d\d:\d\d)?$")
-NORSK_UKEDAG_OG_DATO = re.compile(rf"^({'|'.join(UKEDAGER)}) (\d{{1,2}})\. ({'|'.join(MÅNEDER)})$")
-# Malene viser datoene fra saksbehandling-api i disse brevene.
-MALER_MED_DATOER_FRA_SAKSBEHANDLING = UTGÅENDE_MALER | {"journalnotat"}
-
-
-def til_iso_dato(verdi, år):
-    """Datoteksten fra saksbehandling-api som ISO, slik Jackson skriver LocalDate og LocalDateTime.
-
-    Ukedag og dato uten år får året der ukedagen stemmer, blant årene i `år`.
-    Tidspunkt får millisekunder, som Jackson skriver når de ikke er null.
-    """
-    if treff := NORSK_DATO.match(verdi):
-        dag, måned, årstall, klokke = treff.groups()
-        iso = f"{årstall}-{MÅNEDER.index(måned) + 1:02}-{int(dag):02}"
-        return f"{iso}T{klokke.strip()}.123" if klokke else iso
-    if treff := NORSK_UKEDAG_OG_DATO.match(verdi):
-        ukedag, dag, måned = treff.groups()
-        for kandidat in år:
-            dato = datetime.date(kandidat, MÅNEDER.index(måned) + 1, int(dag))
-            if dato.weekday() == UKEDAGER.index(ukedag):
-                return dato.isoformat()
-        raise ValueError(f"fant ikke året til «{verdi}» blant {år}")
-    return verdi
-
-
-def med_iso_datoer(node, år=()):
-    """Kopi av payloaden der all datotekst er byttet ut med ISO; årene fra periodene brukes for datoer uten år."""
-    if isinstance(node, list):
-        return [med_iso_datoer(element, år) for element in node]
-    if isinstance(node, dict):
-        periode = node.get("periode")
-        if isinstance(periode, dict):
-            år = tuple(int(periode[felt][-4:]) for felt in ("fraOgMed", "tilOgMed") if NORSK_DATO.match(str(periode.get(felt, ""))))
-        return {nøkkel: med_iso_datoer(verdi, år) for nøkkel, verdi in node.items()}
-    return til_iso_dato(node, år) if isinstance(node, str) else node
-
-
-def isodatovarianter():
-    """Hvert datasett for brevene fra saksbehandling-api med ISO-datoer i stedet for ferdig tekst.
-
-    Gir (navn, mal, payload med datotekst, payload med ISO-datoer, hva som er endret).
-    """
-    for datafil in sorted(DATA_DIR.glob("*.json")) + sorted(VARIANT_DIR.glob("*.json")):
-        mal = malnavn(datafil.stem)
-        if mal not in MALER_MED_DATOER_FRA_SAKSBEHANDLING:
-            continue
-        payload = json.loads(datafil.read_text())
-        iso = med_iso_datoer(payload)
-        assert iso != payload, f"{datafil.stem}: fant ingen datoer å gjøre om til ISO"
-        yield f"{datafil.stem}--iso-datoer", mal, payload, iso, "ISO-datoene"
-
-
 def test_samme_tekst(navn, mal, referanse, variant, endring, feil):
     """Endringen i payloaden skal ikke ha noen virkning på teksten i brevet."""
     status, body = render(mal, json.dumps(variant).encode())
@@ -488,6 +436,17 @@ def test_ukjent_kode(navn, mal, payload, feil):
     print(f"OK   {navn} -> {mal} (avvist med HTTP {status}: {body.decode(errors='replace')[:300]})")
 
 
+def test_ferdig_datotekst(feil):
+    mal = "vedtakInnvilgelse"
+    payload = json.loads((DATA_DIR / f"{mal}.json").read_text())
+    payload["datoForUtsending"] = "31. januar 2025"
+    status, _ = render(mal, json.dumps(payload).encode())
+    if status == 200:
+        feil.append("dato-format--ferdig-tekst: malen godtok ferdigformatert dato i datoForUtsending")
+        return
+    print(f"OK   dato-format--ferdig-tekst -> {mal} (avvist med HTTP {status})")
+
+
 def test_payload(navn, payload, feil):
     mal = malnavn(navn)
     if not (TEMPLATE_DIR / f"{mal}.typ").is_file():
@@ -527,7 +486,7 @@ def main():
     for variant in fasitvarianter:
         test_mot_fasit(*variant, feil)
 
-    samme_tekst = list(tekstfeltvarianter()) + list(isodatovarianter())
+    samme_tekst = list(tekstfeltvarianter())
     for variant in samme_tekst:
         test_samme_tekst(*variant, feil)
 
@@ -535,7 +494,9 @@ def main():
     for variant in ukjente:
         test_ukjent_kode(*variant, feil)
 
-    antall = len(datafiler) + len(fasitvarianter) + len(samme_tekst) + len(ukjente)
+    test_ferdig_datotekst(feil)
+
+    antall = len(datafiler) + len(fasitvarianter) + len(samme_tekst) + len(ukjente) + 1
     print(f"\n{antall - len(feil)}/{antall} datasett ok")
     if feil:
         for f in feil:

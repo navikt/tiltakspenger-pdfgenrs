@@ -2,8 +2,8 @@
   "meldekortId": "meldekort_01JCQV1M22WR1D9VGC43MSRP0P",
   "saksnummer": "202501011001",
   "periode": {
-    "fraOgMed": "4. november 2024",
-    "tilOgMed": "15. november 2024"
+    "fraOgMed": "2024-11-04",
+    "tilOgMed": "2024-11-15"
   },
   "erAutomatiskBehandlet": true,
   "saksbehandlerNavn": null,
@@ -12,14 +12,14 @@
     "Arbeidsmarkedsopplæring (gruppe)",
     "Jobbklubb"
   ],
-  "iverksattTidspunkt": "18. november 2024 14:36:18",
+  "iverksattTidspunkt": "2024-11-18T14:36:18.123",
   "fødselsnummer": "25508631114",
   "personalia": {
     "ident": "25508631114",
     "fornavn": "Emil",
     "etternavn": "Aremark"
   },
-  "datoForUtsending": "18. november 2024",
+  "datoForUtsending": "2024-11-18",
   "totaltBelop": 2198,
   "totalDifferanse": 1352,
   "brevTekst": "Du hadde meldt fra om at du var syk disse dagene, men vi har fått opplysninger fra tiltaksarrangøren om at du deltok på tiltaket. Vi har derfor endret meldekortet ditt.",
@@ -28,15 +28,15 @@
     {
       "korrigering": false,
       "periode": {
-        "fraOgMed": "4. november 2024",
-        "tilOgMed": "10. november 2024"
+        "fraOgMed": "2024-11-04",
+        "tilOgMed": "2024-11-10"
       },
       "beløp": 1690,
       "beløpDiff": 1690,
       "harBarnetillegg": true,
       "dager": [
         {
-          "dato": "mandag 4. november",
+          "dato": "2024-11-04",
           "status": {
             "forrige": null,
             "gjeldende": "Deltatt",
@@ -60,7 +60,7 @@
           "harEndring": true
         },
         {
-          "dato": "tirsdag 5. november",
+          "dato": "2024-11-05",
           "status": {
             "forrige": null,
             "gjeldende": "Deltatt",
@@ -84,7 +84,7 @@
           "harEndring": true
         },
         {
-          "dato": "onsdag 6. november",
+          "dato": "2024-11-06",
           "status": {
             "forrige": null,
             "gjeldende": "Deltatt",
@@ -108,7 +108,7 @@
           "harEndring": true
         },
         {
-          "dato": "torsdag 7. november",
+          "dato": "2024-11-07",
           "status": {
             "forrige": null,
             "gjeldende": "Deltatt",
@@ -132,7 +132,7 @@
           "harEndring": true
         },
         {
-          "dato": "fredag 8. november",
+          "dato": "2024-11-08",
           "status": {
             "forrige": null,
             "gjeldende": "Deltatt",
@@ -156,7 +156,7 @@
           "harEndring": true
         },
         {
-          "dato": "lørdag 9. november",
+          "dato": "2024-11-09",
           "status": {
             "forrige": null,
             "gjeldende": "Ikke tiltaksdag",
@@ -180,7 +180,7 @@
           "harEndring": true
         },
         {
-          "dato": "søndag 10. november",
+          "dato": "2024-11-10",
           "status": {
             "forrige": null,
             "gjeldende": "Ikke tiltaksdag",
@@ -208,15 +208,15 @@
     {
       "korrigering": true,
       "periode": {
-        "fraOgMed": "11. november 2024",
-        "tilOgMed": "15. november 2024"
+        "fraOgMed": "2024-11-11",
+        "tilOgMed": "2024-11-15"
       },
       "beløp": 508,
       "beløpDiff": -338,
       "harBarnetillegg": true,
       "dager": [
         {
-          "dato": "mandag 11. november",
+          "dato": "2024-11-11",
           "status": {
             "forrige": "Syk",
             "gjeldende": "Deltatt",
@@ -240,7 +240,7 @@
           "harEndring": true
         },
         {
-          "dato": "tirsdag 12. november",
+          "dato": "2024-11-12",
           "status": {
             "forrige": "Deltatt",
             "gjeldende": "Ikke tiltaksdag",
@@ -264,7 +264,7 @@
           "harEndring": true
         },
         {
-          "dato": "onsdag 13. november",
+          "dato": "2024-11-13",
           "status": {
             "forrige": "Deltatt",
             "gjeldende": "Ikke besvart",
@@ -288,7 +288,7 @@
           "harEndring": true
         },
         {
-          "dato": "torsdag 14. november",
+          "dato": "2024-11-14",
           "status": {
             "forrige": "Deltatt",
             "gjeldende": "Deltatt",
@@ -312,7 +312,7 @@
           "harEndring": false
         },
         {
-          "dato": "fredag 15. november",
+          "dato": "2024-11-15",
           "status": {
             "forrige": "Deltatt",
             "gjeldende": "Deltatt",

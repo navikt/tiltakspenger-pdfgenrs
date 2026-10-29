@@ -7,12 +7,12 @@
   "saksnummer": "202501011001",
   "saksbehandlerNavn": "Ingrid Bakke",
   "beslutterNavn": "Martin Holm",
-  "datoForUtsending": "13. februar 2026",
+  "datoForUtsending": "2026-02-13",
   "tilleggstekst": "Vi har vurdert saken din på nytt.",
   "forhandsvisning": false,
   "vedtaksperiode": {
-    "fraOgMed": "19. januar 2026",
-    "tilOgMed": "31. januar 2026"
+    "fraOgMed": "2026-01-19",
+    "tilOgMed": "2026-01-31"
   },
   "opphørsgrunner": [
     "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK"

@@ -9,7 +9,7 @@ const VALGFRIE_FELT = {
   vedtakForlengelse: {
     // BrevForlengelseDTO.kt: barn som fyller 16 år i forlengelsen.
     // Se test/data/vedtakForlengelse--*-fyller-16.json for de tre tekstvariantene.
-    barnSomFyller16: { antall: 1, antallBarnIVedtaket: 2, sisteDagMedBarnetillegg: "30. juni 2025" },
+    barnSomFyller16: { antall: 1, antallBarnIVedtaket: 2, sisteDagMedBarnetillegg: "2025-06-30" },
   },
 };
 

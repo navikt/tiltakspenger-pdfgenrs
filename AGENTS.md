@@ -72,8 +72,9 @@ Hjemmeltekstene for avslag, stans og opphør bor i `lib/hjemmeltekster.typ`, og 
 Setningen med de samlede hjemlene i avslag med flere grunner lages fra `hjemler` av `hjemmelsetning` i samme fil.
 Fasiten ligger i `test/fasit/`: `hjemmeltekster.json` for tekstene og `hjemler.json` for setningen med hjemlene, laget av Kotlin-koden.
 Testene krever at brevet fra kodene inneholder teksten fra fasiten, så endrer du en tekst, må både malen og fasiten oppdateres.
-Datoene fra saksbehandling-api formateres med `dato` og `ukedagOgDato` i `lib/format.typ`, som tar imot ISO og slipper ferdigformatert tekst gjennom i en overgangsperiode.
-Testene gjør om datoene i hvert datasett for disse brevene til ISO og krever samme tekst som før, slik at et datofelt uten hjelpefunksjonen feiler.
+Datoene fra saksbehandling-api sendes som ISO og formateres med `dato` og `ukedagOgDato` i `lib/format.typ`; ferdig datotekst gir feil ved rendring.
+`tidspunkt` støtter fortsatt mottakstidspunkt fra meldekort-api på formatet `dd.mm.åååå tt:mm`.
+Testdata for malene fra saksbehandling-api bruker ISO, og testene sjekker at ferdig datotekst i `datoForUtsending` gir feil, og at ingen av disse brevene viser en uformatert ISO-dato.
 Endrer du felleskomponentene (signatur, vedtaksinfo), oppdater innholdskravene i samme endring.
 Testene er deploy-gate i CI (`.github/workflows/.test.yml`).
 
