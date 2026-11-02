@@ -20,7 +20,7 @@ jobs:
         run: ./run_tests.sh
       - name: Last opp debugfiler
         if: failure()
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: test-debug
           path: build/test/
