@@ -8,7 +8,7 @@
 # og kan ikke bumpe en pinnet digest. Flytende tagg gir nyeste bygg ved hver push til main (nais/docker-build-push har pull: true).
 # Playbooken anbefaler det samme; digestabot er alternativet om vi en gang vil pinne.
 # I CI logger nais/docker-build-push inn selv; lokalt kreves `gcloud auth configure-docker europe-north1-docker.pkg.dev` én gang.
-FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/python:3.14
+FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/python:3.15
 
 WORKDIR /app
 
