@@ -11,15 +11,7 @@
 = Du har fått innvilget tiltakspenger
 
 #h2("Vedtak")
-#innvilgelsesperioder(data, true)
-
-#barnetilleggPerioder(data)
-
-#brødtekst[#data.satser.map(s => [Tiltakspengene for #s.år er #kroner(s.ordinær) kroner per dag.]).join([ ])]
-
-#if data.harBarnetillegg [
-    #brødtekst[#data.satser.map(s => [Barnetillegget for #s.år er #kroner(s.barnetillegg) kroner per barn, per dag.]).join([ ])]
-]
+#perioderMedBeløp(data, true)
 
 #brødtekst[For å få tiltakspenger må du gjennomføre avtalt aktivitet og delta hele den avtalte tiden i tiltaket ditt.]
 
