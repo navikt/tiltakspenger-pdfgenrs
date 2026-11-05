@@ -27,7 +27,7 @@
     ],
     "antallDagerPerMeldeperiode": 10
   },
-  "satshistorikk": null,
+  "sisteKjenteSatsår": 2026,
   "perioder": [
     {
       "periode": {

@@ -110,9 +110,10 @@
 
 // Innvilgede perioder med dagsbeløp fra `data.perioder`, vist i én tabell per periode.
 // `medBegrunnelse` har samme betydning som i `innvilgelsesperioder`.
+// `data.sisteKjenteSatsår` er året den siste kjente satsen trådte i kraft.
+// Beløp etter dette året er beregnet med satsene for dette året, og brevet sier fra om det.
 #let perioderMedBeløp(data, medBegrunnelse) = {
-    let historikk = data.at("satshistorikk", default: none)
-    let sisteKjenteÅr = if historikk != none { historikk.last().år } else { none }
+    let sisteKjenteÅr = data.at("sisteKjenteSatsår", default: none)
     let perioder = data.perioder.map(p => p + (beløp: p.beløp.map(delVedÅrsskifte).flatten()))
     let antallDager = dagerPerUke(data.innvilgelsesperioder.at("antallDagerPerMeldeperiode", default: none))
     let dagerTekst = if antallDager != none { [ for #antallDager per uke] } else { [] }

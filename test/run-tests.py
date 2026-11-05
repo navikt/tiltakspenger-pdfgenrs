@@ -113,8 +113,8 @@ INNHOLDSKRAV = {
     "vedtakInnvilgelse--uten-barnetillegg": {"krever": ["Barnetillegg", "Totalt per dag", "298", "0"], "forbyr": ["Du får barnetillegg", "Barnetillegget for", "For null barn", "Satsene for"]},
     # Antall barn endres midt i perioden: to beløp innenfor samme periode.
     "vedtakInnvilgelse--barn-endres-i-perioden": {"krever": ["353", "408", "For ett barn", "For to barn"], "forbyr": ["Satsene for"]},
-    # Satsforbeholdet gjelder bare beløpene for neste år, ikke den eldre satshistorikken.
-    "vedtakInnvilgelse--satshistorikk": {
+    # Satsene for neste år er ukjente: forbeholdet gjelder bare beløpene etter sisteKjenteSatsår.
+    "vedtakInnvilgelse--ukjent-sats": {
         "krever": [
             "368",
             "312",
@@ -130,7 +130,7 @@ INNHOLDSKRAV = {
             "blir beløpet justert automatisk",
         ],
     },
-    "vedtakInnvilgelse--satshistorikk-kun-neste-aar": {
+    "vedtakInnvilgelse--ukjent-sats-kun-neste-aar": {
         "krever": [
             "Satsene for 2027 er ikke fastsatt ennå.",
             "Beløpene for 2027 er derfor vist med satsene for 2026.",
@@ -144,7 +144,7 @@ INNHOLDSKRAV = {
         ],
         "forbyr": ["blir beløpet justert automatisk", "Tiltakspengene for 2025 er"],
     },
-    "vedtakInnvilgelse--satshistorikk-flere-perioder": {
+    "vedtakInnvilgelse--ukjent-sats-flere-perioder": {
         "krever": [
             "Fra og med 1. september 2026 til og med 30. september 2026",
             "Fra og med 1. november 2026 til og med 28. februar 2027",
@@ -471,17 +471,6 @@ def tekstfeltvarianter():
         yield f"{mal}--med-tekstfelt", mal, payload, dict(payload, **tekstfelt), "tekstfeltene"
 
 
-def satshistorikkvarianter():
-    """Bare årstallet fra satshistorikken skal påvirke brevet, ikke beløpene."""
-    mal = "vedtakInnvilgelse"
-    payload = json.loads((VARIANT_DIR / f"{mal}--satshistorikk.json").read_text())
-    historikk = [
-        dict(sats, ordinær=sats["ordinær"] + 1, barnetillegg=sats["barnetillegg"] + 1)
-        for sats in payload["satshistorikk"]
-    ]
-    yield f"{mal}--endrede-historiske-beløp", mal, payload, dict(payload, satshistorikk=historikk), "beløpene i satshistorikken"
-
-
 def test_samme_tekst(navn, mal, referanse, variant, endring, feil):
     """Endringen i payloaden skal ikke ha noen virkning på teksten i brevet."""
     status, body = render(mal, json.dumps(variant).encode())
@@ -581,7 +570,7 @@ def main():
     for variant in fasitvarianter:
         test_mot_fasit(*variant, feil)
 
-    samme_tekst = list(tekstfeltvarianter()) + list(satshistorikkvarianter())
+    samme_tekst = list(tekstfeltvarianter())
     for variant in samme_tekst:
         test_samme_tekst(*variant, feil)
 

@@ -31,18 +31,7 @@
     ],
     "antallDagerPerMeldeperiode": 10
   },
-  "satshistorikk": [
-    {
-      "år": 2025,
-      "ordinær": 298,
-      "barnetillegg": 55
-    },
-    {
-      "år": 2026,
-      "ordinær": 312,
-      "barnetillegg": 56
-    }
-  ],
+  "sisteKjenteSatsår": 2026,
   "perioder": [
     {
       "periode": {
