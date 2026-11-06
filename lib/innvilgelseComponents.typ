@@ -93,7 +93,7 @@
 
     if sisteKjenteÅr != none and perioder.any(p => int(p.periode.tilOgMed.slice(0, 4)) > sisteKjenteÅr) {
         let nesteÅr = sisteKjenteÅr + 1
-        brødtekst[*Satsene for #nesteÅr er ikke fastsatt ennå.*
+        brødtekst[*Satsene for #nesteÅr er ikke fastsatt.*
             Beløpene for #nesteÅr er derfor vist med satsene for #sisteKjenteÅr.]
     }
 

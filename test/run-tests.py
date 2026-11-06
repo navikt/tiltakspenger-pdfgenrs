@@ -118,7 +118,7 @@ INNHOLDSKRAV = {
         "krever": [
             "368",
             "312",
-            "Satsene for 2027 er ikke fastsatt ennå.",
+            "Satsene for 2027 er ikke fastsatt.",
             "Beløpene for 2027 er derfor vist med satsene for 2026.",
             "Med satsene for 2026",
             "31. desember 2026",
@@ -132,7 +132,7 @@ INNHOLDSKRAV = {
     },
     "vedtakInnvilgelse--ukjent-sats-kun-neste-aar": {
         "krever": [
-            "Satsene for 2027 er ikke fastsatt ennå.",
+            "Satsene for 2027 er ikke fastsatt.",
             "Beløpene for 2027 er derfor vist med satsene for 2026.",
             "Med satsene for 2026",
             "1. januar 2027",
@@ -154,7 +154,7 @@ INNHOLDSKRAV = {
             "424",
             "For ett barn",
             "For to barn",
-            "Satsene for 2027 er ikke fastsatt ennå.",
+            "Satsene for 2027 er ikke fastsatt.",
             "Beløpene for 2027 er derfor vist med satsene for 2026.",
             "Med satsene for 2026",
         ],
@@ -164,7 +164,7 @@ INNHOLDSKRAV = {
         "krever": [
             "Vedtaket ditt om tiltakspenger er endret",
             "368",
-            "Satsene for 2027 er ikke fastsatt ennå.",
+            "Satsene for 2027 er ikke fastsatt.",
             "Beløpene for 2027 er derfor vist med satsene for 2026.",
             "Med satsene for 2026",
             "31. desember 2026",
@@ -176,7 +176,7 @@ INNHOLDSKRAV = {
         "krever": [
             "Tiltakspengene dine er forlenget",
             "368",
-            "Satsene for 2027 er ikke fastsatt ennå.",
+            "Satsene for 2027 er ikke fastsatt.",
             "Beløpene for 2027 er derfor vist med satsene for 2026.",
             "Med satsene for 2026",
             "31. desember 2026",
