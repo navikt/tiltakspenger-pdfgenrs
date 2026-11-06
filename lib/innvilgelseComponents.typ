@@ -65,37 +65,6 @@
     }
 }
 
-// Perioder for tiltakspenger. `medBegrunnelse` legger til "fordi du deltar på
-// arbeidsmarkedstiltak." i enkeltperiode-varianten (søknadsinnvilgelse).
-#let innvilgelsesperioder(data, medBegrunnelse) = {
-    let perioder = data.innvilgelsesperioder.perioder
-    let antallDager = dagerPerUke(data.innvilgelsesperioder.at("antallDagerPerMeldeperiode", default: none))
-    let dagerTekst = if antallDager != none { [ for #antallDager per uke] } else { [] }
-
-    if perioder.len() == 1 {
-        brødtekst[Du får tiltakspenger fra og med #dato(perioder.at(0).fraOgMed) til og med #dato(perioder.at(0).tilOgMed)#dagerTekst#if medBegrunnelse [ fordi du deltar på arbeidsmarkedstiltak].]
-    } else if perioder.len() > 1 {
-        brødtekst[Du får tiltakspenger#dagerTekst i disse periodene:]
-        block(below: space-16)[
-            #list(..perioder.map(p => [Fra og med #dato(p.fraOgMed) til og med #dato(p.tilOgMed).]))
-        ]
-    }
-}
-
-
-#let barnetilleggPerioder(data) = {
-    if "barnetillegg" not in data { return }
-    let bt = data.barnetillegg
-    if bt.len() == 1 {
-        brødtekst[Du får barnetillegg fra og med #dato(bt.at(0).periode.fraOgMed) til og med #dato(bt.at(0).periode.tilOgMed) for #tallSomOrd(bt.at(0).antallBarn) barn.]
-    } else if bt.len() > 1 {
-        brødtekst[Du får barnetillegg i disse periodene:]
-        block(below: space-16)[
-            #list(..bt.map(b => [Fra og med #dato(b.periode.fraOgMed) til og med #dato(b.periode.tilOgMed) for #tallSomOrd(b.antallBarn) barn.]))
-        ]
-    }
-}
-
 // Deler et beløp i én del per kalenderår, med samme beløp i hver del.
 // Backend slår sammen like nabodager, så et beløp kan krysse årsskiftet når satsen for neste år ikke er kjent ennå.
 // Datoene er ISO-strenger ("2026-11-01"), så året er de fire første tegnene.
@@ -109,7 +78,7 @@
 }
 
 // Innvilgede perioder med dagsbeløp fra `data.perioder`, vist i én tabell per periode.
-// `medBegrunnelse` har samme betydning som i `innvilgelsesperioder`.
+// `medBegrunnelse` legger til «fordi du deltar på arbeidsmarkedstiltak» (søknadsinnvilgelse).
 // `data.sisteKjenteSatsår` er året den siste kjente satsen trådte i kraft.
 // Beløp etter dette året er beregnet med satsene for dette året, og brevet sier fra om det.
 #let perioderMedBeløp(data, medBegrunnelse) = {

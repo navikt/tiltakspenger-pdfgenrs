@@ -10,9 +10,10 @@
 
 = Tiltakspengene dine er forlenget
 
+#h2("Vedtak")
 #brødtekst[Tiltaket ditt er forlenget. Vi forlenger derfor vedtaket ditt om tiltakspenger#if data.harBarnetillegg [ og barnetillegg].]
 
-#innvilgelsesperioder(data, false)
+#perioderMedBeløp(data, false)
 
 // Barn som fyller 16 år i forlengelsen, slik at barnetillegget stopper for dem.
 // Samme tekster som fritekst ved automatisk forlengelse i tiltakspenger-saksbehandling-api.
@@ -27,14 +28,6 @@
         brødtekst[Barnetillegg gis for hvert barn under 16 år. #(upper(antall.first()) + antall.slice(antall.first().len())) av dine barn fyller 16 år i tiltaksperioden. Barnetillegget for disse barna vil derfor stoppe fra den dagen hvert av barna fyller 16 år. Vi viser til forskriften om tiltakspenger § 3.]
     }
 }
-
-#barnetilleggPerioder(data)
-
-#brødtekst[#data.satser.map(s => [Tiltakspengene for #s.år er #kroner(s.ordinær) kroner per dag du deltar i arbeidsmarkedstiltak.]).join([ ])]
-
-#if data.harBarnetillegg [
-    #brødtekst[#data.satser.map(s => [Barnetillegget for #s.år er #kroner(s.barnetillegg) kroner per barn per dag du deltar i arbeidsmarkedstiltak.]).join([ ])]
-]
 
 #brødtekst[For å få tiltakspenger må du gjennomføre avtalt aktivitet og delta hele den avtalte tiden i tiltaket ditt.]
 

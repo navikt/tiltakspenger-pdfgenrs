@@ -83,14 +83,14 @@ INNHOLDSKRAV = {
         ],
         "forbyr": ["Satsene for"],
     },
-    "revurderingInnvilgelse": {"krever": ["for fem dager per uke", "for to barn."]},
-    "vedtakForlengelse": {"krever": ["Tiltakspengene dine er forlenget", "Tiltaket ditt er forlenget.", "om tiltakspenger og barnetillegg.", "for fem dager per uke", "for to barn.", "Barnetillegget for 2025"], "forbyr": ["Barnetillegg gis for hvert barn"]},
+    "revurderingInnvilgelse": {"krever": ["Vedtaket ditt om tiltakspenger er endret", "for fem dager per uke", "Totalt per dag", "For ett barn", "For to barn", "For tre barn", "338", "353", "408", "463"], "forbyr": ["Tiltakspengene for 20", "Barnetillegget for", "Du får barnetillegg"]},
+    "vedtakForlengelse": {"krever": ["Tiltakspengene dine er forlenget", "Tiltaket ditt er forlenget.", "om tiltakspenger og barnetillegg.", "for fem dager per uke", "Totalt per dag", "For to barn", "408"], "forbyr": ["Barnetillegg gis for hvert barn", "Tiltakspengene for 20", "Barnetillegget for", "Du får barnetillegg"]},
     # Forlengelse uten barnetillegg: verken barnetilleggsperioder eller sats for barnetillegg.
-    "vedtakForlengelse--uten-barnetillegg": {"krever": ["Tiltakspengene dine er forlenget", "om tiltakspenger."], "forbyr": ["og barnetillegg", "Du får barnetillegg", "Barnetillegget for", "Barnetillegg gis for hvert barn", "Vurderingen vår"]},
+    "vedtakForlengelse--uten-barnetillegg": {"krever": ["Tiltakspengene dine er forlenget", "om tiltakspenger.", "Totalt per dag", "298"], "forbyr": ["og barnetillegg", "For ett barn", "Du får barnetillegg", "Barnetillegget for", "Barnetillegg gis for hvert barn", "Vurderingen vår"]},
     # Barn som fyller 16 år i forlengelsen: samme tekster som fritekst ved automatisk forlengelse.
-    "vedtakForlengelse--ett-barn-fyller-16": {"krever": ["Ett av dine barn fyller 16 år", "for dette barnet"], "forbyr": ["Du er innvilget barnetillegg til og med"]},
-    "vedtakForlengelse--to-barn-fyller-16": {"krever": ["To av dine barn fyller 16 år", "for disse barna"], "forbyr": ["Ett av dine barn"]},
-    "vedtakForlengelse--eneste-barn-fyller-16": {"krever": ["Du er innvilget barnetillegg til og med 14. mai 2025"], "forbyr": ["Barnetillegg gis for hvert barn"]},
+    "vedtakForlengelse--ett-barn-fyller-16": {"krever": ["Ett av dine barn fyller 16 år", "for dette barnet", "For to barn", "For ett barn", "408", "353"], "forbyr": ["Du er innvilget barnetillegg til og med"]},
+    "vedtakForlengelse--to-barn-fyller-16": {"krever": ["To av dine barn fyller 16 år", "for disse barna", "For tre barn", "For ett barn", "463", "353"], "forbyr": ["Ett av dine barn"]},
+    "vedtakForlengelse--eneste-barn-fyller-16": {"krever": ["Du er innvilget barnetillegg til og med 14. mai 2025", "For ett barn", "353", "298"], "forbyr": ["Barnetillegg gis for hvert barn"]},
     # Samme hode som brevene, men innsendte dokumenter viser mottakstidspunktet med etikett og klokkeslett etter Navs skriveregel, og ingen meldekort-ID.
     "meldekort": {"krever": ["Meldekort for tiltakspenger", "side 1 av", "Fødselsnummer:", "Mottatt: 15. oktober 2024 kl. 13.05"], "forbyr": ["Med vennlig hilsen", "13:05", "Meldekort-ID"]},
     "meldekort-korrigert": {"krever": ["Meldekort for tiltakspenger", "Mottatt: 15. oktober 2024 kl. 13.05"], "forbyr": ["Med vennlig hilsen", "Meldekort-ID"]},
@@ -159,6 +159,30 @@ INNHOLDSKRAV = {
             "Med satsene for 2026",
         ],
         "forbyr": ["blir beløpet justert automatisk", "Tiltakspengene for 2025 er"],
+    },
+    "revurderingInnvilgelse--ukjent-sats": {
+        "krever": [
+            "Vedtaket ditt om tiltakspenger er endret",
+            "368",
+            "Satsene for 2027 er ikke fastsatt ennå.",
+            "Beløpene for 2027 er derfor vist med satsene for 2026.",
+            "Med satsene for 2026",
+            "31. desember 2026",
+            "1. januar 2027",
+        ],
+        "forbyr": ["Tiltakspengene for 20", "Barnetillegget for"],
+    },
+    "vedtakForlengelse--ukjent-sats": {
+        "krever": [
+            "Tiltakspengene dine er forlenget",
+            "368",
+            "Satsene for 2027 er ikke fastsatt ennå.",
+            "Beløpene for 2027 er derfor vist med satsene for 2026.",
+            "Med satsene for 2026",
+            "31. desember 2026",
+            "1. januar 2027",
+        ],
+        "forbyr": ["Tiltakspengene for 20", "Barnetillegget for", "Barnetillegg gis for hvert barn"],
     },
     # Samme personinfo og utsendingsdato som de andre vedtakene, uten klokkeslett.
     "meldekortvedtak": {"krever": ["Navn:", "Emil Aremark", "Fødselsnummer:", "18. november 2024"], "forbyr": ["Iverksatt", "14:36"]},

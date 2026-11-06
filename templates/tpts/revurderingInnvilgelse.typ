@@ -10,15 +10,8 @@
 
 = Vedtaket ditt om tiltakspenger er endret
 
-#innvilgelsesperioder(data, false)
-
-#barnetilleggPerioder(data)
-
-#brødtekst[#data.satser.map(s => [Tiltakspengene for #s.år er #kroner(s.ordinær) kroner per dag du deltar i arbeidsmarkedstiltak.]).join([ ])]
-
-#if data.harBarnetillegg [
-    #brødtekst[#data.satser.map(s => [Barnetillegget for #s.år er #kroner(s.barnetillegg) kroner per barn per dag du deltar i arbeidsmarkedstiltak.]).join([ ])]
-]
+#h2("Vedtak")
+#perioderMedBeløp(data, false)
 
 #brødtekst[For å få tiltakspenger må du gjennomføre avtalt aktivitet og delta hele den avtalte tiden i tiltaket ditt.]
 
