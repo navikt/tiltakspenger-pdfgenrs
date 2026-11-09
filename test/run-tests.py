@@ -61,15 +61,36 @@ INNHOLDSKRAV = {
     # Forvaltningsmeldingen er informasjon om saksbehandlingstid, ikke et vedtak, og har med vilje ingen klagerett-hale.
     "klageForvaltningsmelding": {"krever": ["Informasjon om saksbehandlingstiden vår", "Vi viser til klagen din av 18. februar 2025", "Svartid", "Du må melde fra om endringer", "Skjer det endringer som kan ha betydning for saken din", "Har du spørsmål?", "Med vennlig hilsen", "Nav Tiltak Oslo", "side 1 av"], "forbyr": ["Du har rett til å klage"]},
     "klageForvaltningsmelding--uten-saksbehandler": {"krever": ["Informasjon om saksbehandlingstiden vår", "Du må melde fra om endringer", "Har du spørsmål?", "Med vennlig hilsen", "side 1 av", "ingen saksbehandler tildelt"], "forbyr": ["Du har rett til å klage"]},
-    "vedtakInnvilgelse": {"krever": ["Du har rett til innsyn", "for fem dager per uke", "for ett barn.", "for tre barn."]},
-    "revurderingInnvilgelse": {"krever": ["for fem dager per uke", "for to barn."]},
-    "vedtakForlengelse": {"krever": ["Tiltakspengene dine er forlenget", "Tiltaket ditt er forlenget.", "om tiltakspenger og barnetillegg.", "for fem dager per uke", "for to barn.", "Barnetillegget for 2025"], "forbyr": ["Barnetillegg gis for hvert barn"]},
+    "vedtakInnvilgelse": {
+        "krever": [
+            "Du har rett til innsyn",
+            "Du må sende meldekort",
+            "Når får du pengene?",
+            "Du må melde om endringer",
+            "Periode",
+            "Tiltakspenger",
+            "Barnetillegg",
+            "Totalt per dag",
+            "for fem dager per uke",
+            "For ett barn",
+            "For to barn",
+            "For tre barn",
+            "338",
+            "408",
+            "463",
+            "arbeidsmarkedsloven § 13 første ledd",
+            "tiltakspengeforskriften §§ 2, 3 og 6",
+        ],
+        "forbyr": ["Satsene for"],
+    },
+    "revurderingInnvilgelse": {"krever": ["Vedtaket ditt om tiltakspenger er endret", "for fem dager per uke", "Totalt per dag", "For ett barn", "For to barn", "For tre barn", "338", "353", "408", "463"], "forbyr": ["Tiltakspengene for 20", "Barnetillegget for", "Du får barnetillegg"]},
+    "vedtakForlengelse": {"krever": ["Tiltakspengene dine er forlenget", "Tiltaket ditt er forlenget.", "om tiltakspenger og barnetillegg.", "for fem dager per uke", "Totalt per dag", "For to barn", "408"], "forbyr": ["Barnetillegg gis for hvert barn", "Tiltakspengene for 20", "Barnetillegget for", "Du får barnetillegg"]},
     # Forlengelse uten barnetillegg: verken barnetilleggsperioder eller sats for barnetillegg.
-    "vedtakForlengelse--uten-barnetillegg": {"krever": ["Tiltakspengene dine er forlenget", "om tiltakspenger."], "forbyr": ["og barnetillegg", "Du får barnetillegg", "Barnetillegget for", "Barnetillegg gis for hvert barn", "Vurderingen vår"]},
+    "vedtakForlengelse--uten-barnetillegg": {"krever": ["Tiltakspengene dine er forlenget", "om tiltakspenger.", "Totalt per dag", "298"], "forbyr": ["og barnetillegg", "For ett barn", "Du får barnetillegg", "Barnetillegget for", "Barnetillegg gis for hvert barn", "Vurderingen vår"]},
     # Barn som fyller 16 år i forlengelsen: samme tekster som fritekst ved automatisk forlengelse.
-    "vedtakForlengelse--ett-barn-fyller-16": {"krever": ["Ett av dine barn fyller 16 år", "for dette barnet"], "forbyr": ["Du er innvilget barnetillegg til og med"]},
-    "vedtakForlengelse--to-barn-fyller-16": {"krever": ["To av dine barn fyller 16 år", "for disse barna"], "forbyr": ["Ett av dine barn"]},
-    "vedtakForlengelse--eneste-barn-fyller-16": {"krever": ["Du er innvilget barnetillegg til og med 14. mai 2025"], "forbyr": ["Barnetillegg gis for hvert barn"]},
+    "vedtakForlengelse--ett-barn-fyller-16": {"krever": ["Ett av dine barn fyller 16 år", "for dette barnet", "For to barn", "For ett barn", "408", "353"], "forbyr": ["Du er innvilget barnetillegg til og med"]},
+    "vedtakForlengelse--to-barn-fyller-16": {"krever": ["To av dine barn fyller 16 år", "for disse barna", "For tre barn", "For ett barn", "463", "353"], "forbyr": ["Ett av dine barn"]},
+    "vedtakForlengelse--eneste-barn-fyller-16": {"krever": ["Du er innvilget barnetillegg til og med 14. mai 2025", "For ett barn", "353", "298"], "forbyr": ["Barnetillegg gis for hvert barn"]},
     # Samme hode som brevene, men innsendte dokumenter viser mottakstidspunktet med etikett og klokkeslett etter Navs skriveregel, og ingen meldekort-ID.
     "meldekort": {"krever": ["Meldekort for tiltakspenger", "side 1 av", "Fødselsnummer:", "Mottatt: 15. oktober 2024 kl. 13.05"], "forbyr": ["Med vennlig hilsen", "13:05", "Meldekort-ID"]},
     "meldekort-korrigert": {"krever": ["Meldekort for tiltakspenger", "Mottatt: 15. oktober 2024 kl. 13.05"], "forbyr": ["Med vennlig hilsen", "Meldekort-ID"]},
@@ -81,13 +102,83 @@ INNHOLDSKRAV = {
     "klageAvvis--uten-saksbehandler": {"krever": ["ingen saksbehandler tildelt"]},
     # Forhåndsvisning før klagebehandlingen er tildelt: samme kravliste som klageInnstilling, pluss plassholderen for saksbehandler.
     "klageInnstilling--uten-saksbehandler": {"krever": ["Har du spørsmål?", "Med vennlig hilsen", "Nav Tiltak Oslo", "Oversendelsesbrev til Nav Klageinstans", "side 1 av", "ingen saksbehandler tildelt"]},
-    "vedtakInnvilgelse--tom-beslutter": {"forbyr": ["ingen saksbehandler tildelt"]},
-    "vedtakInnvilgelse--tom-saksbehandler": {"krever": ["ingen saksbehandler tildelt"]},
+    "vedtakInnvilgelse--tom-beslutter": {"forbyr": ["ingen saksbehandler tildelt", "Satsene for"]},
+    "vedtakInnvilgelse--tom-saksbehandler": {"krever": ["ingen saksbehandler tildelt"], "forbyr": ["Satsene for"]},
     # Antall dager og barn kommer som tall fra saksbehandling-api, og pdfgenrs skriver dem som ord.
-    "vedtakInnvilgelse--koder": {"krever": ["for fem dager per uke", "for ett barn.", "for to barn.", "for 16 barn."]},
+    "vedtakInnvilgelse--koder": {"krever": ["for fem dager per uke", "For ett barn", "For to barn", "For 16 barn"], "forbyr": ["for null barn", "Satsene for"]},
     "revurderingInnvilgelse--koder-en-dag": {"krever": ["for en dag per uke"]},
     # Antallet varierer i perioden: ingen dagtekst, saksbehandler skriver det i tilleggsteksten.
-    "vedtakInnvilgelse--koder-ulike-dager": {"forbyr": ["per uke"]},
+    "vedtakInnvilgelse--koder-ulike-dager": {"forbyr": ["per uke", "Satsene for"]},
+    # Uten barn: barnetilleggskolonnen viser 0, og totalen er bare tiltakspengene.
+    "vedtakInnvilgelse--uten-barnetillegg": {"krever": ["Barnetillegg", "Totalt per dag", "298", "0"], "forbyr": ["Du får barnetillegg", "Barnetillegget for", "For null barn", "Satsene for"]},
+    # Antall barn endres midt i perioden: to beløp innenfor samme periode.
+    "vedtakInnvilgelse--barn-endres-i-perioden": {"krever": ["353", "408", "For ett barn", "For to barn"], "forbyr": ["Satsene for"]},
+    # Satsene for neste år er ukjente: forbeholdet gjelder bare beløpene etter sisteKjenteSatsår.
+    "vedtakInnvilgelse--ukjent-sats": {
+        "krever": [
+            "368",
+            "312",
+            "Siden satsene for 2027 ikke er fastsatt, gjelder satsene for 2026.",
+            "Med satsene for 2026",
+            "31. desember 2026",
+            "1. januar 2027",
+        ],
+        "forbyr": [
+            "Tiltakspengene for 2025 er",
+            "Vedtaket ditt gjelder også i",
+            "blir beløpet justert automatisk",
+        ],
+    },
+    "vedtakInnvilgelse--ukjent-sats-kun-neste-aar": {
+        "krever": [
+            "Siden satsene for 2027 ikke er fastsatt, gjelder satsene for 2026.",
+            "Med satsene for 2026",
+            "1. januar 2027",
+            "31. januar 2027",
+            "312",
+            "56",
+            "368",
+            "For ett barn",
+        ],
+        "forbyr": ["blir beløpet justert automatisk", "Tiltakspengene for 2025 er"],
+    },
+    "vedtakInnvilgelse--ukjent-sats-flere-perioder": {
+        "krever": [
+            "Fra og med 1. september 2026 til og med 30. september 2026",
+            "Fra og med 1. november 2026 til og med 28. februar 2027",
+            "0",
+            "312",
+            "368",
+            "424",
+            "For ett barn",
+            "For to barn",
+            "Siden satsene for 2027 ikke er fastsatt, gjelder satsene for 2026.",
+            "Med satsene for 2026",
+        ],
+        "forbyr": ["blir beløpet justert automatisk", "Tiltakspengene for 2025 er"],
+    },
+    "revurderingInnvilgelse--ukjent-sats": {
+        "krever": [
+            "Vedtaket ditt om tiltakspenger er endret",
+            "368",
+            "Siden satsene for 2027 ikke er fastsatt, gjelder satsene for 2026.",
+            "Med satsene for 2026",
+            "31. desember 2026",
+            "1. januar 2027",
+        ],
+        "forbyr": ["Tiltakspengene for 20", "Barnetillegget for"],
+    },
+    "vedtakForlengelse--ukjent-sats": {
+        "krever": [
+            "Tiltakspengene dine er forlenget",
+            "368",
+            "Siden satsene for 2027 ikke er fastsatt, gjelder satsene for 2026.",
+            "Med satsene for 2026",
+            "31. desember 2026",
+            "1. januar 2027",
+        ],
+        "forbyr": ["Tiltakspengene for 20", "Barnetillegget for", "Barnetillegg gis for hvert barn"],
+    },
     # Samme personinfo og utsendingsdato som de andre vedtakene, uten klokkeslett.
     "meldekortvedtak": {"krever": ["Navn:", "Emil Aremark", "Fødselsnummer:", "18. november 2024"], "forbyr": ["Iverksatt", "14:36"]},
     "meldekortvedtak--automatisk": {"krever": ["Automatisk behandlet"], "forbyr": ["Med vennlig hilsen", "Nav Tiltak Oslo"]},
@@ -284,7 +375,9 @@ def sjekk_pdf(navn, mal, body, feil):
             side.close()
         krever, forbyr = innholdskrav(navn, mal)
         for streng in krever:
-            if streng not in tekst:
+            # Et tabellbeløp skal finnes som et eget tall, ikke bare som del av saksnummeret eller en dato.
+            finnes = re.search(rf"(?<!\d){re.escape(streng)}(?!\d)", tekst) is not None if streng.isdecimal() else streng in tekst
+            if not finnes:
                 feil.append(f"{navn}: mangler teksten «{streng}»")
                 ok = False
         for streng in forbyr:

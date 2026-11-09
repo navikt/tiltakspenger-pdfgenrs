@@ -27,6 +27,37 @@
       }
     ]
   },
+  "sisteKjenteSatsår": 2026,
+  "perioder": [
+    {
+      "periode": {
+        "fraOgMed": "2025-04-01",
+        "tilOgMed": "2025-06-30"
+      },
+      "beløp": [
+        {
+          "periode": {
+            "fraOgMed": "2025-04-01",
+            "tilOgMed": "2025-05-14"
+          },
+          "antallBarn": 3,
+          "tiltakspenger": 298,
+          "barnetilleggBeløp": 165,
+          "total": 463
+        },
+        {
+          "periode": {
+            "fraOgMed": "2025-05-15",
+            "tilOgMed": "2025-06-30"
+          },
+          "antallBarn": 1,
+          "tiltakspenger": 298,
+          "barnetilleggBeløp": 55,
+          "total": 353
+        }
+      ]
+    }
+  ],
   "barnetillegg": [
     {
       "antallBarn": 3,

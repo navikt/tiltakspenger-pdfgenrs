@@ -1,6 +1,8 @@
 #import "/lib/typography.typ": *
 #import "/lib/styles.typ": *
-#import "/lib/format.typ": dato, tallSomOrd
+#import "/lib/format.typ": dato, kroner, tallSomOrd
+#import "/lib/spraak.typ": språkinnstillinger-nb
+#import "/lib/pensjonsbrev/content/table.typ": letter-table
 
 // De tre seksjonene fra `innvilgelseBase.hbs` som legges mellom vedtaksinnholdet
 // og den felles vedtaksinfoen (klagerett osv.).
@@ -63,33 +65,61 @@
     }
 }
 
-// Perioder for tiltakspenger. `medBegrunnelse` legger til "fordi du deltar på
-// arbeidsmarkedstiltak." i enkeltperiode-varianten (søknadsinnvilgelse).
-#let innvilgelsesperioder(data, medBegrunnelse) = {
-    let perioder = data.innvilgelsesperioder.perioder
+// Deler et beløp i én del per kalenderår, med samme beløp i hver del.
+// Backend slår sammen like nabodager, så et beløp kan krysse årsskiftet når satsen for neste år ikke er kjent ennå.
+// Datoene er ISO-strenger ("2026-11-01"), så året er de fire første tegnene.
+#let delVedÅrsskifte(beløp) = {
+    let fraÅr = int(beløp.periode.fraOgMed.slice(0, 4))
+    let tilÅr = int(beløp.periode.tilOgMed.slice(0, 4))
+    range(fraÅr, tilÅr + 1).map(år => beløp + (periode: (
+        fraOgMed: if år == fraÅr { beløp.periode.fraOgMed } else { str(år) + "-01-01" },
+        tilOgMed: if år == tilÅr { beløp.periode.tilOgMed } else { str(år) + "-12-31" },
+    )))
+}
+
+// Innvilgede perioder med dagsbeløp fra `data.perioder`, vist i én tabell per periode.
+// `medBegrunnelse` legger til «fordi du deltar på arbeidsmarkedstiltak» (søknadsinnvilgelse).
+// `data.sisteKjenteSatsår` er året den siste kjente satsen trådte i kraft.
+// Etter dette året gjelder satsene for dette året, og brevet sier fra om det.
+#let perioderMedBeløp(data, medBegrunnelse) = {
+    let sisteKjenteÅr = data.at("sisteKjenteSatsår", default: none)
+    let perioder = data.perioder.map(p => p + (beløp: p.beløp.map(delVedÅrsskifte).flatten()))
     let antallDager = dagerPerUke(data.innvilgelsesperioder.at("antallDagerPerMeldeperiode", default: none))
     let dagerTekst = if antallDager != none { [ for #antallDager per uke] } else { [] }
 
-    if perioder.len() == 1 {
-        brødtekst[Du får tiltakspenger fra og med #dato(perioder.at(0).fraOgMed) til og med #dato(perioder.at(0).tilOgMed)#dagerTekst#if medBegrunnelse [ fordi du deltar på arbeidsmarkedstiltak].]
-    } else if perioder.len() > 1 {
-        brødtekst[Du får tiltakspenger#dagerTekst i disse periodene:]
-        block(below: space-16)[
-            #list(..perioder.map(p => [Fra og med #dato(p.fraOgMed) til og med #dato(p.tilOgMed).]))
-        ]
+    brødtekst[Du får tiltakspenger#dagerTekst#if medBegrunnelse [ fordi du deltar på arbeidsmarkedstiltak].]
+    brødtekst[Tabellene viser beløp i kroner per dag, ikke utbetalingen for hele perioden.
+        Vi beregner utbetalingen ut fra opplysningene på meldekortet ditt.]
+
+    if sisteKjenteÅr != none and perioder.any(p => int(p.periode.tilOgMed.slice(0, 4)) > sisteKjenteÅr) {
+        let nesteÅr = sisteKjenteÅr + 1
+        brødtekst[*Siden satsene for #nesteÅr ikke er fastsatt, gjelder satsene for #sisteKjenteÅr.*]
     }
-}
 
-
-#let barnetilleggPerioder(data) = {
-    if "barnetillegg" not in data { return }
-    let bt = data.barnetillegg
-    if bt.len() == 1 {
-        brødtekst[Du får barnetillegg fra og med #dato(bt.at(0).periode.fraOgMed) til og med #dato(bt.at(0).periode.tilOgMed) for #tallSomOrd(bt.at(0).antallBarn) barn.]
-    } else if bt.len() > 1 {
-        brødtekst[Du får barnetillegg i disse periodene:]
-        block(below: space-16)[
-            #list(..bt.map(b => [Fra og med #dato(b.periode.fraOgMed) til og med #dato(b.periode.tilOgMed) for #tallSomOrd(b.antallBarn) barn.]))
-        ]
+    for p in perioder {
+        h3([Fra og med #dato(p.periode.fraOgMed) til og med #dato(p.periode.tilOgMed)])
+        letter-table(
+            språkinnstillinger-nb,
+            columns: (1.8fr, 1fr, 1fr, 1fr),
+            column-align: (left, right, right, right),
+            [Periode], [Tiltakspenger], [Barnetillegg], [Totalt per dag],
+            ..p.beløp.map(b => (
+                [
+                    Fra og med #dato(b.periode.fraOgMed) \
+                    til og med #dato(b.periode.tilOgMed)
+                    #if sisteKjenteÅr != none and int(b.periode.fraOgMed.slice(0, 4)) > sisteKjenteÅr [\
+                        Med satsene for #sisteKjenteÅr
+                    ]
+                ],
+                [#kroner(b.tiltakspenger)],
+                [
+                    #kroner(b.barnetilleggBeløp)
+                    #if b.antallBarn > 0 [\
+                        For #tallSomOrd(b.antallBarn) barn
+                    ]
+                ],
+                [*#kroner(b.total)*],
+            )).flatten(),
+        )
     }
 }

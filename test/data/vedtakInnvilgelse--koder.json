@@ -40,6 +40,28 @@
     ],
     "antallDagerPerMeldeperiode": 10
   },
+  "sisteKjenteSatsår": 2026,
+  "perioder": [
+    {
+      "periode": { "fraOgMed": "2024-11-01", "tilOgMed": "2025-02-28" },
+      "beløp": [
+        { "periode": { "fraOgMed": "2024-11-01", "tilOgMed": "2024-12-31" }, "antallBarn": 1, "tiltakspenger": 285, "barnetilleggBeløp": 53, "total": 338 },
+        { "periode": { "fraOgMed": "2025-01-01", "tilOgMed": "2025-02-28" }, "antallBarn": 1, "tiltakspenger": 298, "barnetilleggBeløp": 55, "total": 353 }
+      ]
+    },
+    {
+      "periode": { "fraOgMed": "2025-04-01", "tilOgMed": "2025-04-30" },
+      "beløp": [
+        { "periode": { "fraOgMed": "2025-04-01", "tilOgMed": "2025-04-30" }, "antallBarn": 2, "tiltakspenger": 298, "barnetilleggBeløp": 110, "total": 408 }
+      ]
+    },
+    {
+      "periode": { "fraOgMed": "2025-05-02", "tilOgMed": "2025-05-31" },
+      "beløp": [
+        { "periode": { "fraOgMed": "2025-05-02", "tilOgMed": "2025-05-31" }, "antallBarn": 16, "tiltakspenger": 298, "barnetilleggBeløp": 880, "total": 1178 }
+      ]
+    }
+  ],
   "barnetillegg": [
     {
       "periode": {
