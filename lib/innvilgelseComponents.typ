@@ -80,7 +80,7 @@
 // Innvilgede perioder med dagsbeløp fra `data.perioder`, vist i én tabell per periode.
 // `medBegrunnelse` legger til «fordi du deltar på arbeidsmarkedstiltak» (søknadsinnvilgelse).
 // `data.sisteKjenteSatsår` er året den siste kjente satsen trådte i kraft.
-// Beløp etter dette året er beregnet med satsene for dette året, og brevet sier fra om det.
+// Etter dette året gjelder satsene for dette året, og brevet sier fra om det.
 #let perioderMedBeløp(data, medBegrunnelse) = {
     let sisteKjenteÅr = data.at("sisteKjenteSatsår", default: none)
     let perioder = data.perioder.map(p => p + (beløp: p.beløp.map(delVedÅrsskifte).flatten()))
@@ -93,8 +93,7 @@
 
     if sisteKjenteÅr != none and perioder.any(p => int(p.periode.tilOgMed.slice(0, 4)) > sisteKjenteÅr) {
         let nesteÅr = sisteKjenteÅr + 1
-        brødtekst[*Satsene for #nesteÅr er ikke fastsatt.*
-            Beløpene for #nesteÅr er derfor vist med satsene for #sisteKjenteÅr.]
+        brødtekst[*Siden satsene for #nesteÅr ikke er fastsatt, gjelder satsene for #sisteKjenteÅr.*]
     }
 
     for p in perioder {
