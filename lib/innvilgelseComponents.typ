@@ -9,7 +9,7 @@
 #let meldekortinfo = body => [
     #block(below: space-26)[
         #h2("Du må sende meldekort")
-        #brødtekst[Du må sende inn meldekort hver 14. dag. Logg inn på #navLenke("nav.no")[nav.no] for å se når du skal sende neste meldekort, og hvilken periode meldekortet gjelder for. Du er på en ny meldekortløsning for tiltakspenger. Du finner informasjonen du trenger, når du åpner det nye meldekortet. Informasjonen om utfylling av meldekort på #navLenke("nav.no")[nav.no] gjelder for den gamle løsningen og passer derfor ikke helt for ditt meldekort.]
+        #brødtekst[Du må sende inn meldekort hver 14. dag. Logg inn på #navLenke("nav.no")[nav.no] for å se når du skal sende neste meldekort, og hvilken periode meldekortet gjelder for.]
 
         #brødtekst("På meldekortet må du gi oss opplysninger om hvilke dager du har deltatt i tiltaket som avtalt, og hvilke avtalte tiltaksdager du har hatt fravær eller mottatt lønn. Dersom du har hatt fravær, må du i tillegg oppgi grunnen til at du ikke deltok i tiltaket som avtalt. Nav trenger dette for å beregne hvor mye du skal ha i tiltakspenger.")
 
