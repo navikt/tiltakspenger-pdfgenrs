@@ -1,32 +1,78 @@
-// Hjemmeltekstene for avslag, stans og opphør bor her, og tiltakspenger-saksbehandling-api sender bare kodene.
-// Avsnitt skilles med «\n\n» og linjer med «\n».
+// Avslagsbegrunnelsene og hjemmeltekstene for stans og opphør bor her.
+// En avslagsbegrunnelse består av et faktum uten punktum, samme faktum som leddsetning etter «fordi» og forklaringen som avsnitt.
+// Faktumet brukes i punktlisten når det er flere grunner; leddsetningen brukes i konklusjonen når det er én grunn.
+// Avsnitt i stans- og opphørstekstene skilles med «\n\n».
 // Fasiten i test/fasit/hjemmeltekster.json skal endres i takt med denne fila.
 
-#let avslagstekster(ytelse, medBarnetillegg) = (
-    "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK": "du ikke deltar på arbeidsmarkedstiltak som gir rett til tiltakspenger.\n\nFor å få " + ytelse + " må du delta i arbeidsmarkedstiltak som gir rett til " + ytelse + ".\n\nDette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften " + (if medBarnetillegg { "§§ 2 og 3" } else { "§ 2" }) + ".",
-    "ALDER": "du ikke har fylt 18 år. Du må ha fylt 18 år for å ha rett til å få " + ytelse + ".\n\nDette kommer frem av tiltakspengeforskriften § 3.",
-    "LIVSOPPHOLDYTELSE": "du mottar en annen pengestøtte til livsopphold. Deltakere som har rett til andre pengestøtter til livsopphold har ikke samtidig rett til å få " + ytelse + ".\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og tiltakspengeforskriften § 7 første ledd.",
-    "KVALIFISERINGSPROGRAMMET": "du deltar på kvalifiseringsprogram. Deltakere i kvalifiseringsprogram har ikke rett til " + ytelse + ".\n\nDette kommer frem av tiltakspengeforskriften § 7 tredje ledd.",
-    "INTRODUKSJONSPROGRAMMET": "du deltar på introduksjonsprogram. Deltakere i introduksjonsprogram har ikke rett til " + ytelse + ".\n\nDette kommer frem av tiltakspengeforskriften § 7 tredje ledd.",
-    "LØNN_FRA_TILTAKSARRANGØR": "du mottar lønn fra tiltaksarrangør for tiden i arbeidsmarkedstiltaket.\n\nDeltakere som mottar lønn fra tiltaksarrangør for tid i arbeidsmarkedstiltaket har ikke rett til " + ytelse + ".\n\nDette kommer frem av tiltakspengeforskriften § 8.",
-    "LØNN_FRA_ANDRE": "du mottar lønn for arbeid som er en del av tiltaksdeltakelsen og du derfor har dekning av utgifter til livsopphold.\n\nDeltaker i arbeidsmarkedstiltak som har rett til å få dekket utgifter til livsopphold på annen måte har ikke rett til " + ytelse + ". Lønn anses som dekning av utgifter til livsopphold på annen måte, når du får lønnen for arbeid som er en del av tiltaksdeltakelsen.\n\nLønn fra arbeid utenom tiltaksdeltakelsen har ikke betydning for din rett til tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften § 8 andre ledd.",
-    "INSTITUSJONSOPPHOLD": "du oppholder deg på en institusjon med gratis opphold, mat og drikke.\n\nDeltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til " + ytelse + ".\n\nDet er gjort unntak for opphold i barnevernsinstitusjoner. Dette kommer frem av tiltakspengeforskriften § 9.",
-    "FREMMET_FOR_SENT": "du har søkt om " + ytelse + " for sent.\n\nTiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om " + ytelse + ".\n\nDette kommer frem av tiltakspengeforskriften § 11.",
-    "RETT_TIL_DAGPENGER": "du er innvilget dagpenger i denne perioden.\n\nDu har ikke rett til " + ytelse + " for samme periode som du er innvilget dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd.",
+#let ytelsen(medBarnetillegg) = "tiltakspenger" + if medBarnetillegg { " og barnetillegg" } else { "" }
+
+#let avslagsbegrunnelser(ytelse) = (
+    "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK": (
+        faktum: "Du deltar ikke på arbeidsmarkedstiltak som gir rett til tiltakspenger",
+        fordi: "du ikke deltar på arbeidsmarkedstiltak som gir rett til tiltakspenger",
+        forklaring: ("For å få " + ytelse + " må du delta i arbeidsmarkedstiltak som gir rett til " + ytelse + ".",),
+    ),
+    "ALDER": (
+        faktum: "Du har ikke fylt 18 år",
+        fordi: "du ikke har fylt 18 år",
+        forklaring: ("Du må ha fylt 18 år for å ha rett til å få " + ytelse + ".",),
+    ),
+    "LIVSOPPHOLDYTELSE": (
+        faktum: "Du mottar en annen pengestøtte til livsopphold",
+        fordi: "du mottar en annen pengestøtte til livsopphold",
+        forklaring: ("Deltakere som har rett til andre pengestøtter til livsopphold har ikke samtidig rett til å få " + ytelse + ".",),
+    ),
+    "KVALIFISERINGSPROGRAMMET": (
+        faktum: "Du deltar på kvalifiseringsprogram",
+        fordi: "du deltar på kvalifiseringsprogram",
+        forklaring: ("Deltakere i kvalifiseringsprogram har ikke rett til " + ytelse + ".",),
+    ),
+    "INTRODUKSJONSPROGRAMMET": (
+        faktum: "Du deltar på introduksjonsprogram",
+        fordi: "du deltar på introduksjonsprogram",
+        forklaring: ("Deltakere i introduksjonsprogram har ikke rett til " + ytelse + ".",),
+    ),
+    "LØNN_FRA_TILTAKSARRANGØR": (
+        faktum: "Du mottar lønn fra tiltaksarrangør for tiden i arbeidsmarkedstiltaket",
+        fordi: "du mottar lønn fra tiltaksarrangør for tiden i arbeidsmarkedstiltaket",
+        forklaring: ("Deltakere som mottar lønn fra tiltaksarrangør for tid i arbeidsmarkedstiltaket har ikke rett til " + ytelse + ".",),
+    ),
+    "LØNN_FRA_ANDRE": (
+        faktum: "Du mottar lønn for arbeid som er en del av tiltaksdeltakelsen og du derfor har dekning av utgifter til livsopphold",
+        fordi: "du mottar lønn for arbeid som er en del av tiltaksdeltakelsen og du derfor har dekning av utgifter til livsopphold",
+        forklaring: (
+            "Deltaker i arbeidsmarkedstiltak som har rett til å få dekket utgifter til livsopphold på annen måte har ikke rett til " + ytelse + ". Lønn anses som dekning av utgifter til livsopphold på annen måte, når du får lønnen for arbeid som er en del av tiltaksdeltakelsen.",
+            "Lønn fra arbeid utenom tiltaksdeltakelsen har ikke betydning for din rett til tiltakspenger.",
+        ),
+    ),
+    "INSTITUSJONSOPPHOLD": (
+        faktum: "Du oppholder deg på en institusjon med gratis opphold, mat og drikke",
+        fordi: "du oppholder deg på en institusjon med gratis opphold, mat og drikke",
+        forklaring: (
+            "Deltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til " + ytelse + ".",
+            "Det er gjort unntak for opphold i barnevernsinstitusjoner.",
+        ),
+    ),
+    "FREMMET_FOR_SENT": (
+        faktum: "Du har søkt om " + ytelse + " for sent",
+        fordi: "du har søkt om " + ytelse + " for sent",
+        forklaring: ("Tiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om " + ytelse + ".",),
+    ),
+    "RETT_TIL_DAGPENGER": (
+        faktum: "Du har rett til dagpenger i denne perioden",
+        fordi: "du har rett til dagpenger i denne perioden",
+        forklaring: (
+            "Du har ikke rett til " + ytelse + " for samme periode som du har rett til dagpenger.",
+            "Dette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.",
+        ),
+    ),
 )
 
-#let avslagspunkttekster(ytelse) = (
-    "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK": "Du deltar ikke på arbeidsmarkedstiltak som gir rett til tiltakspenger.\nFor å få " + ytelse + " må du delta i arbeidsmarkedstiltak som gir rett til " + ytelse + ".",
-    "ALDER": "Du har ikke fylt 18 år.\nDu må ha fylt 18 år for å ha rett til å få " + ytelse + ".",
-    "LIVSOPPHOLDYTELSE": "Du mottar en annen pengestøtte til livsopphold.\nDeltakere som har rett til andre pengestøtter til livsopphold har ikke samtidig rett til å få " + ytelse + ".",
-    "KVALIFISERINGSPROGRAMMET": "Du deltar på kvalifiseringsprogram.\nDeltakere i kvalifiseringsprogram har ikke rett til " + ytelse + ".",
-    "INTRODUKSJONSPROGRAMMET": "Du deltar på introduksjonsprogram.\nDeltakere i introduksjonsprogram har ikke rett til " + ytelse + ".",
-    "LØNN_FRA_TILTAKSARRANGØR": "Du mottar lønn fra tiltaksarrangør for tiden i arbeidsmarkedstiltaket.\nDeltakere som mottar lønn fra tiltaksarrangør for tid i arbeidsmarkedstiltaket har ikke rett til " + ytelse + ".",
-    "LØNN_FRA_ANDRE": "Du mottar lønn for arbeid som er en del av tiltaksdeltakelsen og du derfor har dekning av utgifter til livsopphold.\nDeltaker i arbeidsmarkedstiltak som har rett til å få dekket utgifter til livsopphold på annen måte har ikke rett til " + ytelse + ". Lønn anses som dekning av utgifter til livsopphold på annen måte, når du får lønnen for arbeid som er en del av tiltaksdeltakelsen.\nLønn fra arbeid utenom tiltaksdeltakelsen har ikke betydning for din rett til tiltakspenger.",
-    "INSTITUSJONSOPPHOLD": "Du oppholder deg på en institusjon med gratis opphold, mat og drikke.\nDeltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til " + ytelse + ".",
-    "FREMMET_FOR_SENT": "Du har søkt om " + ytelse + " for sent.\nTiltakspenger gis for opptil tre måneder før den måneden tiltaksdeltakeren søkte om " + ytelse + ".",
-    "RETT_TIL_DAGPENGER": "Du er innvilget dagpenger i denne perioden.\nDu har ikke rett til " + ytelse + " for samme periode som du er innvilget dagpenger.\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.",
-)
+#let avslagsbegrunnelse(grunn, medBarnetillegg) = {
+    let begrunnelser = avslagsbegrunnelser(ytelsen(medBarnetillegg))
+    if grunn not in begrunnelser { panic("Ukjent avslagsgrunn: " + grunn) }
+    begrunnelser.at(grunn)
+}
 
 #let stanstekster(ytelse) = (
     "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK": "du ikke lenger deltar på arbeidsmarkedstiltak.\n\nDu må være deltaker i et arbeidsmarkedstiltak for å ha rett til å få " + ytelse + ".\n\nDette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften § 2.",
@@ -38,7 +84,7 @@
     "LØNN_FRA_ANDRE": "du mottar lønn for arbeid som er en del av tiltaksdeltakelsen og du derfor har dekning av utgifter til livsopphold.\n\nDeltaker i arbeidsmarkedstiltak som har rett til å få dekket utgifter til livsopphold på annen måte har ikke rett til " + ytelse + ". Lønn anses som dekning av utgifter til livsopphold på annen måte, når du får lønnen for arbeid som er en del av tiltaksdeltakelsen.\n\nLønn fra arbeid utenom tiltaksdeltakelsen har ikke betydning for din rett til tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 og tiltakspengeforskriften § 8 andre ledd.",
     "INSTITUSJONSOPPHOLD": "du oppholder deg på en institusjon med gratis opphold, mat og drikke.\n\nDeltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til " + ytelse + ".\n\nDet er gjort unntak for opphold i barnevernsinstitusjoner. Dette kommer frem av tiltakspengeforskriften § 9.",
     "IKKE_LOVLIG_OPPHOLD": "du i denne perioden ikke har lovlig opphold i Norge.\n\nDu må ha lovlig opphold i Norge, for å ha rett til " + ytelse + ".\n\nDette kommer frem av arbeidsmarkedsloven § 2.",
-    "RETT_TIL_DAGPENGER": "du er innvilget dagpenger i denne perioden.\n\nDu har ikke rett til " + ytelse + " for samme periode som du er innvilget dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd.",
+    "RETT_TIL_DAGPENGER": "du ikke har rett til " + ytelse + " for samme periode som du har rett til dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd.",
 )
 
 // ALDER og FREMMET_FOR_SENT har ingen standardtekst i opphør; begrunnelsen står da i tilleggsteksten.
@@ -53,17 +99,15 @@
     "LØNN_FRA_ANDRE": "Du mottar i denne perioden lønn for arbeid som er en del av tiltaksdeltakelsen. Du har derfor dekning av utgifter til livsopphold.\n\nDeltaker i arbeidsmarkedstiltak som har rett til å få dekket utgifter til livsopphold på annen måte har ikke rett til " + ytelse + ". Lønn anses som dekning av utgifter til livsopphold på annen måte, når du får lønnen for arbeid som er en del av tiltaksdeltakelsen.\n\nLønn fra arbeid utenom tiltaksdeltakelsen har ikke betydning for din rett til tiltakspenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13, tiltakspengeforskriften § 8 andre ledd.",
     "INSTITUSJONSOPPHOLD": "Du oppholder deg på en institusjon med gratis opphold, mat og drikke i denne perioden.\n\nDeltakere som har opphold i institusjon med gratis opphold, mat og drikke under gjennomføringen av arbeidsmarkedstiltaket har ikke rett til " + ytelse + ".\n\nDet er gjort unntak for opphold i barnevernsinstitusjoner. Dette kommer frem av tiltakspengeforskriften § 9.",
     "IKKE_LOVLIG_OPPHOLD": "I denne perioden har du ikke lovlig opphold i Norge.\n\nDu må ha lovlig opphold i Norge, for å ha rett til " + ytelse + ".\n\nDette kommer frem av arbeidsmarkedsloven § 2.",
-    "RETT_TIL_DAGPENGER": "Du er innvilget dagpenger i denne perioden.\n\nDu har ikke rett til " + ytelse + " for samme periode som du er innvilget dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd.",
+    "RETT_TIL_DAGPENGER": "Du har ikke rett til " + ytelse + " for samme periode som du har rett til dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd.",
 )
 
-#let ytelsen(medBarnetillegg) = "tiltakspenger" + if medBarnetillegg { " og barnetillegg" } else { "" }
-
-// Hele teksten for én grunn, eller none når brevtypen med vilje ikke har tekst for grunnen.
-// brevtype er "avslag", "stans" eller "opphør".
+// Teksten for én stans- eller opphørsgrunn, eller none når opphør med vilje ikke har tekst for grunnen.
+// brevtype er "stans" eller "opphør".
 // En ukjent grunn stopper rendringen, slik at en feil kode aldri gir et brev uten begrunnelse.
 #let hjemmeltekst(grunn, brevtype, medBarnetillegg) = {
     let ytelse = ytelsen(medBarnetillegg)
-    let tekster = if brevtype == "avslag" { avslagstekster(ytelse, medBarnetillegg) } else if brevtype == "stans" { stanstekster(ytelse) } else if brevtype == "opphør" { opphørstekster(ytelse) } else { panic("Ukjent brevtype: " + brevtype) }
+    let tekster = if brevtype == "stans" { stanstekster(ytelse) } else if brevtype == "opphør" { opphørstekster(ytelse) } else { panic("Ukjent brevtype") }
     if grunn not in tekster { panic("Ukjent grunn for " + brevtype + ": " + grunn) }
     tekster.at(grunn)
 }
@@ -97,7 +141,7 @@
     (if deler.len() == 1 { "§ " } else { "§§ " }) + deler.join(", ", last: " og ")
 }
 
-// Setningen med de samlede hjemlene under punktlisten i avslag med flere grunner.
+// Setningen med de samlede hjemlene nederst i avslagsbrevet.
 // Gir samme tekst som createBrevForskrifter i BrevSøknadAvslagDTO.kt; fasiten er test/fasit/hjemler.json.
 // hjemler er en liste med rettskilde, paragraf og ledd, med duplikater og usortert.
 #let hjemmelsetning(hjemler) = {
@@ -112,11 +156,4 @@
     }
     if deler.len() == 0 { panic("Fant ingen hjemler") }
     "Dette kommer frem av " + deler.join(", og ") + "."
-}
-
-// Kortere tekst uten hjemler til punktlisten i avslag med flere grunner.
-#let avslagspunkttekst(grunn, medBarnetillegg) = {
-    let tekster = avslagspunkttekster(ytelsen(medBarnetillegg))
-    if grunn not in tekster { panic("Ukjent avslagsgrunn: " + grunn) }
-    tekster.at(grunn)
 }

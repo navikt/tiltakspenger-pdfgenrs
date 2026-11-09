@@ -4,6 +4,8 @@
 #import "/lib/spraak.typ": språkinnstillinger-nb
 #import "/lib/pensjonsbrev/casedetails.typ": casedetails
 
+#let medLinjeskift(tekst) = tekst.split("\n").join(linebreak())
+
 #let dokument(title, lang: "no") = body => {
     set document(
         title: title,

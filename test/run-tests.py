@@ -184,10 +184,9 @@ INNHOLDSKRAV = {
     "meldekortvedtak--automatisk": {"krever": ["Automatisk behandlet"], "forbyr": ["Med vennlig hilsen", "Nav Tiltak Oslo"]},
     # Opphør der ingen av grunnene har hjemmeltekst: begrunnelsen står kun i tilleggsteksten.
     "vedtakOpphør--kun-fritekst": {"krever": ["Slik har vi vurdert saken din", "tiltakspengeforskriften § 3"]},
-    # Flere avslagsgrunner: punktliste fra avslagsgrunner med de samlede hjemlene fra hjemler under.
-    "vedtakAvslag": {"krever": ["10. januar 2025 fordi:", "Du mottar en annen pengestøtte til livsopphold.", "Dette kommer frem av arbeidsmarkedsloven"]},
-    # Én avslagsgrunn: teksten fra avslagsgrunnen fullfører innledningen og har hjemlene selv.
-    "vedtakAvslag--en-grunn": {"krever": ["Du får ikke tiltakspenger fra og med", "fordi du mottar lønn", "tiltakspengeforskriften § 8 andre ledd."], "forbyr": ["og barnetillegg fra og med"]},
+    # Flere avslagsgrunner står som punktliste etter «Grunnene er:»; én grunn står i konklusjonen etter «fordi». Hjemlene samles til slutt.
+    "vedtakAvslag": {"krever": ["1. januar 2025 til og med 10. januar 2025.", "Grunnene er:", "Du deltar ikke på arbeidsmarkedstiltak", "Du mottar en annen pengestøtte til livsopphold.", "Dette kommer frem av arbeidsmarkedsloven"], "forbyr": ["fordi"]},
+    "vedtakAvslag--en-grunn": {"krever": ["Du får ikke tiltakspenger fra og med", "10. januar 2025 fordi", "Deltaker i arbeidsmarkedstiltak som har rett til å få dekket", "tiltakspengeforskriften § 8 andre ledd."], "forbyr": ["og barnetillegg fra og med", "Grunnen er", "Grunnene er"]},
     # Begrunnelsene vises hver med sin overskrift; journalnotatet er ikke et brev og har verken klagerett-hale eller signatur.
     "journalnotat": {"krever": ["Notat om vedtak om tiltakspenger", "Begrunnelse for vilkårsvurderingen", "Begrunnelse for barnetillegg", "Notatsdato: 20. mai 2025"], "forbyr": ["Med vennlig hilsen", "Du har rett til å klage"]},
     "journalnotat--kun-barnetillegg": {"krever": ["Begrunnelse for barnetillegg"], "forbyr": ["Begrunnelse for vilkårsvurderingen"]},
@@ -441,10 +440,10 @@ def test_mot_fasit(navn, mal, payload, fasittekster, feil):
 
 
 def hjemmeltekstvarianter():
-    """Hver kode i test/fasit/hjemmeltekster.json rendret alene, og avslag med flere grunner.
+    """Hver kode i test/fasit/hjemmeltekster.json rendret alene, og avslag med alle grunner samlet.
 
     Gir (navn, mal, payload med koder, tekstene fra fasiten brevet skal inneholde).
-    Kombinasjoner Kotlin ikke kan lage (avslag med IKKE_LOVLIG_OPPHOLD, stans med FREMMET_FOR_SENT) hoppes over.
+    Stans med FREMMET_FOR_SENT hoppes over fordi den kombinasjonen ikke kan oppstå.
     Opphørsgrunner uten tekst gir ingen tekst å lete etter, men brevet skal fortsatt rendres.
     """
     fasit = json.loads(FASIT_HJEMMELTEKSTER.read_text())
@@ -458,14 +457,15 @@ def hjemmeltekstvarianter():
                 payload = dict(base, **{kodefelt: [kode]})
                 if brevtype == "avslag":
                     payload["harSøktMedBarn"] = flagg == "true"
+                    tekst = tekst["alene"]
                 else:
                     payload["barnetillegg"] = flagg == "true"
                 yield f"{mal}--koder-{kode}-barnetillegg-{flagg}", mal, payload, [] if tekst is None else [tekst]
     base = json.loads((DATA_DIR / "vedtakAvslag.json").read_text())
-    koder = [kode for kode, tekster in fasit["avslagspunkt"].items() if tekster["false"] is not None]
+    koder = list(fasit["avslag"])
     for flagg in ("false", "true"):
         payload = dict(base, avslagsgrunner=koder, harSøktMedBarn=flagg == "true")
-        yield f"vedtakAvslag--koder-flere-grunner-barnetillegg-{flagg}", "vedtakAvslag", payload, [fasit["avslagspunkt"][kode][flagg] for kode in koder]
+        yield f"vedtakAvslag--koder-flere-grunner-barnetillegg-{flagg}", "vedtakAvslag", payload, [fasit["avslag"][kode][flagg]["blantFlere"] for kode in koder]
 
 
 def hjemlervarianter():

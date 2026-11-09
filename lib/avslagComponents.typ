@@ -3,42 +3,31 @@
 #import "/lib/hjemmeltekster.typ": *
 #import "/lib/format.typ": dato
 
-#let medLinjeskift(tekst) = tekst.split("\n").join(linebreak())
+// Faktum i halvfet, regelen rett under i vanlig skrift; blokken deles ikke over sideskift.
+#let grunnblokk(begrunnelse) = block(breakable: false)[
+    #strong(begrunnelse.faktum + ".")#linebreak()#begrunnelse.forklaring.first()
+    #for avsnitt in begrunnelse.forklaring.slice(1) {
+        block(above: space-12, below: 0pt, avsnitt)
+    }
+]
 
-// Tekstene lages fra avslagsgrunner med lib/hjemmeltekster.typ.
-// Én avslagsgrunn: hele teksten med hjemler fullfører innledningen.
-// Flere avslagsgrunner: én punkttekst per grunn, med setningen om de samlede hjemlene under punktlisten, laget fra hjemler med hjemmelsetning.
+// Én grunn står i konklusjonen etter «fordi»; flere grunner står som punktliste etter «Grunnene er:».
 #let avslagsgrunner(data) = {
     assert(data.at("avslagsgrunner", default: ()).len() > 0, message: "Avslagsbrevet mangler avslagsgrunner")
-    let grunner = data.avslagsgrunner
-    let tekster = if grunner.len() == 1 {
-        (hjemmeltekst(grunner.first(), "avslag", data.harSøktMedBarn),)
+    assert(data.at("hjemler", default: ()).len() > 0, message: "Avslagsbrevet mangler hjemler")
+    let ytelse = ytelsen(data.harSøktMedBarn)
+    let periode = [fra og med #dato(data.avslagFraOgMed) til og med #dato(data.avslagTilOgMed)]
+    let begrunnelser = data.avslagsgrunner.map(grunn => avslagsbegrunnelse(grunn, data.harSøktMedBarn))
+    if begrunnelser.len() == 1 {
+        let begrunnelse = begrunnelser.first()
+        brødtekst[Du får ikke #ytelse #periode fordi #begrunnelse.fordi.]
+        for avsnitt in begrunnelse.forklaring { brødtekst(avsnitt) }
     } else {
-        grunner.map(grunn => avslagspunkttekst(grunn, data.harSøktMedBarn))
-    }
-    let barn = if data.harSøktMedBarn { " og barnetillegg" } else { "" }
-    let innledning = [Du får ikke tiltakspenger#barn fra og med #dato(data.avslagFraOgMed) til og med #dato(data.avslagTilOgMed) fordi]
-
-    if tekster.len() == 1 {
-        // Hvert «\n\n»-skilte avsnitt blir eget avsnitt i brevet; det første fullfører innledningen.
-        let avsnitt = tekster.at(0).split("\n\n")
-        brødtekst[#innledning #medLinjeskift(avsnitt.first())]
-        for resten in avsnitt.slice(1) {
-            brødtekst[#medLinjeskift(resten)]
-        }
-    } else if tekster.len() > 1 {
-        brødtekst[#innledning:]
-        block(below: space-16)[
-            #list(
-                spacing: space-16,
-                ..tekster.map(tekst => {
-                    // Første linje er selve punktet, resten er forklarende tekst under punktet.
-                    set block(spacing: space-4)
-                    brødtekst[#medLinjeskift(tekst)]
-                }),
-            )
+        // Konklusjonen følger første punkt over sideskift, og ekstra luft under listen skiller hjemmelsetningen fra siste punkt.
+        block(sticky: true, brødtekst[Du får ikke #ytelse #periode.#linebreak()Grunnene er:])
+        block(below: space-26)[
+            #list(spacing: space-20, ..begrunnelser.map(grunnblokk))
         ]
-        assert(data.at("hjemler", default: ()).len() > 0, message: "Avslagsbrevet mangler hjemler")
-        brødtekst[#hjemmelsetning(data.hjemler)]
     }
+    brødtekst[#hjemmelsetning(data.hjemler)]
 }

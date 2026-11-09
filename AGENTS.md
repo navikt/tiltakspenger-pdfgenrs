@@ -68,9 +68,14 @@ Testdataene bruker en fast, virkelighetsnær testfamilie — ingen tulleord/tull
 Kanoniske verdier: bruker Emil Aremark (fnr `25508631114`), barn Nora/Jakob/Oskar Johan Aremark, saksbehandler Ingrid Bakke, beslutter Martin Holm, saksnummer `202501011001`, tiltaksarrangør Aremark Snekkerverksted AS.
 Datasettene i `testdata/tpts/` er også defaultene i brev-preview (både lokalt og i demoen i dev), så de skal vise et **helt, normalt brev**: ingen forhåndsvisningsvannmerke, ingen plassholdertekst og datoer som henger sammen.
 Kanttilfellene — forhåndsvisning, manglende saksbehandler, automatisk behandling — hører hjemme som varianter i `test/data/`.
-Hjemmeltekstene for avslag, stans og opphør bor i `lib/hjemmeltekster.typ`, og saksbehandling-api sender bare kodene (`avslagsgrunner`, `stansgrunner`, `opphørsgrunner`) og for avslag `hjemler`.
-Setningen med de samlede hjemlene i avslag med flere grunner lages fra `hjemler` av `hjemmelsetning` i samme fil.
-Fasiten ligger i `test/fasit/`: `hjemmeltekster.json` for tekstene og `hjemler.json` for setningen med hjemlene, laget av Kotlin-koden.
+Avslagsbegrunnelsene og standardtekstene for stans og opphør bor i `lib/hjemmeltekster.typ`.
+Saksbehandling-api sender bare kodene (`avslagsgrunner`, `stansgrunner`, `opphørsgrunner`) og hjemlene for avslag.
+Med én avslagsgrunn står grunnen i konklusjonen («Du får ikke … til og med … fordi …»), og forklaringen følger som egne avsnitt.
+Med flere grunner følger «Grunnene er:» konklusjonen, og hver grunn er et punkt med faktum i halvfet og forklaringen rett under.
+Begge varianter slutter med setningen med de samlede hjemlene.
+Hver avslagsgrunn har derfor både `faktum` (hovedsetning) og `fordi` (leddsetning med riktig plassering av «ikke»).
+Setningen med de samlede hjemlene lages fra `hjemler` av `hjemmelsetning` i samme fil.
+Fasiten ligger i `test/fasit/`: `hjemmeltekster.json` for avslagsbegrunnelsene (`alene` når grunnen står i konklusjonen, `blantFlere` når den står i punktlisten) og tekstene for stans og opphør, og `hjemler.json` for setningen med hjemlene, laget av Kotlin-koden.
 Testene krever at brevet fra kodene inneholder teksten fra fasiten, så endrer du en tekst, må både malen og fasiten oppdateres.
 Datoene fra saksbehandling-api sendes som ISO og formateres med `dato` og `ukedagOgDato` i `lib/format.typ`; ferdig datotekst gir feil ved rendring.
 `tidspunkt` støtter fortsatt mottakstidspunkt fra meldekort-api på formatet `dd.mm.åååå tt:mm`.
