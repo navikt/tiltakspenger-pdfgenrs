@@ -1,7 +1,7 @@
 # Dockerfile
 # Digest-pinnet, så referansen er uforanderlig: en tagg kan flyttes, en digest kan ikke.
 # Dependabot bumper tagg og digest sammen.
-FROM ghcr.io/navikt/pdfgenrs:1.0.48@sha256:8e8a28d532fd6350d99263b099b9afc04cafb534b281634b6dd8b3652f8e2bad
+FROM ghcr.io/navikt/pdfgenrs:1.0.54@sha256:120986ceb2d0501739360c0bc9b07e93e43504a7fe3e2776981cd489ccd8219a
 
 # Søknadsvedleggene konverteres bilde → PDF via /api/v1/genpdf/image, og serverens default på 2 MiB er for lavt for dem.
 # Grensen gjelder per request (RequestBodyLimitLayer), altså hver enkelt fil og hver enkelt rendrede PDF-side — ikke hele søknaden.
