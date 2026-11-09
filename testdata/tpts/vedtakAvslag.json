@@ -17,27 +17,32 @@
     {
       "rettskilde": "TILTAKSPENGEFORSKRIFTEN",
       "paragraf": "2",
-      "ledd": null
+      "ledd": null,
+      "punktum": null
     },
     {
       "rettskilde": "ARBEIDSMARKEDSLOVEN",
       "paragraf": "13",
-      "ledd": null
+      "ledd": null,
+      "punktum": null
     },
     {
       "rettskilde": "TILTAKSPENGEFORSKRIFTEN",
       "paragraf": "7",
-      "ledd": 1
+      "ledd": 1,
+      "punktum": null
     },
     {
       "rettskilde": "ARBEIDSMARKEDSLOVEN",
       "paragraf": "13",
-      "ledd": 1
+      "ledd": 1,
+      "punktum": null
     },
     {
       "rettskilde": "TILTAKSPENGEFORSKRIFTEN",
       "paragraf": "3",
-      "ledd": null
+      "ledd": null,
+      "punktum": null
     }
   ],
   "forhandsvisning": false,

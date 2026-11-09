@@ -75,7 +75,9 @@ Med flere grunner følger «Grunnene er:» konklusjonen, og hver grunn er et pun
 Begge varianter slutter med setningen med de samlede hjemlene.
 Hver avslagsgrunn har derfor både `faktum` (hovedsetning) og `fordi` (leddsetning med riktig plassering av «ikke»).
 Setningen med de samlede hjemlene lages fra `hjemler` av `hjemmelsetning` i samme fil.
-Fasiten ligger i `test/fasit/`: `hjemmeltekster.json` for avslagsbegrunnelsene (`alene` når grunnen står i konklusjonen, `blantFlere` når den står i punktlisten) og tekstene for stans og opphør, og `hjemler.json` for setningen med hjemlene, laget av Kotlin-koden.
+Hver hjemmel har `rettskilde`, `paragraf`, `ledd` og valgfritt `punktum`; et punktum vises bare når ingen annen hjemmel viser til hele leddet.
+Setningen har ikke komma foran «og».
+Fasiten ligger i `test/fasit/`: `hjemmeltekster.json` for avslagsbegrunnelsene (`alene` når grunnen står i konklusjonen, `blantFlere` når den står i punktlisten) og tekstene for stans og opphør, og `hjemler.json` for setningen med hjemlene.
 Testene krever at brevet fra kodene inneholder teksten fra fasiten, så endrer du en tekst, må både malen og fasiten oppdateres.
 Datoene fra saksbehandling-api sendes som ISO og formateres med `dato` og `ukedagOgDato` i `lib/format.typ`; ferdig datotekst gir feil ved rendring.
 `tidspunkt` støtter fortsatt mottakstidspunkt fra meldekort-api på formatet `dd.mm.åååå tt:mm`.

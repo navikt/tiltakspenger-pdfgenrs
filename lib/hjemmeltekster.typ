@@ -112,38 +112,55 @@
     tekster.at(grunn)
 }
 
-// Leddene skrives som i createBrevForskrifter i BrevSøknadAvslagDTO.kt, med komma foran «og» ved tre eller flere ledd.
+#let ordenstall(nummer, største, hva) = {
+    if nummer < 1 or nummer > største { panic("Ukjent " + hva + " i hjemler") }
+    ("første", "andre", "tredje", "fjerde", "femte", "sjette").at(nummer - 1)
+}
+
+// Leddene i én paragraf, uten komma foran «og»: «første og tredje ledd», «første ledd tredje punktum og tredje ledd».
+// ledd er en ordbok fra leddnummer til punktumnumrene, der none betyr hele leddet.
 #let leddtekst(ledd) = {
-    let ord = ledd.map(nummer => {
-        if nummer not in (1, 2, 3) { panic("Ukjent leddnummer i hjemler") }
-        ("første", "andre", "tredje").at(nummer - 1)
-    })
-    if ord.len() == 1 { ord.first() + " ledd" } else if ord.len() == 2 { ord.join(" og ") + " ledd" } else { ord.slice(0, -1).join(", ") + ", og " + ord.last() + " ledd" }
+    let numre = ledd.keys().map(int).sorted()
+    let punktumtekst(nummer) = {
+        let punktum = ledd.at(str(nummer))
+        if punktum == none { "" } else { " " + punktum.dedup().sorted().map(p => ordenstall(p, 6, "punktumnummer")).join(", ", last: " og ") + " punktum" }
+    }
+    if numre.all(nummer => ledd.at(str(nummer)) == none) {
+        numre.map(nummer => ordenstall(nummer, 3, "leddnummer")).join(", ", last: " og ") + " ledd"
+    } else {
+        numre.map(nummer => ordenstall(nummer, 3, "leddnummer") + " ledd" + punktumtekst(nummer)).join(", ", last: " og ")
+    }
 }
 
 // Paragrafene i én rettskilde, sortert etter tallet de begynner med (§ 2 før § 11) og deretter som tekst.
-// Paragrafer som ikke begynner med et tall, sorteres sist, som med Int.MAX_VALUE i Kotlin.
+// Paragrafer som ikke begynner med et tall, sorteres sist.
+// Et punktum vises bare når ingen annen hjemmel viser til hele leddet.
 #let paragraftekst(hjemler) = {
     let ledd = (:)
     for hjemmel in hjemler {
-        let liste = ledd.at(hjemmel.paragraf, default: ())
-        if hjemmel.ledd != none { liste.push(hjemmel.ledd) }
-        ledd.insert(hjemmel.paragraf, liste)
+        let leddene = ledd.at(hjemmel.paragraf, default: (:))
+        if hjemmel.ledd != none {
+            let nøkkel = str(hjemmel.ledd)
+            let punktum = hjemmel.at("punktum", default: none)
+            let tidligere = leddene.at(nøkkel, default: ())
+            leddene.insert(nøkkel, if tidligere == none or punktum == none { none } else { tidligere + (punktum,) })
+        }
+        ledd.insert(hjemmel.paragraf, leddene)
     }
     let paragrafer = ledd.keys().sorted(key: paragraf => {
         let tall = paragraf.match(regex("^\d+"))
         (if tall == none { 9223372036854775807 } else { int(tall.text) }, paragraf)
     })
     let deler = paragrafer.map(paragraf => {
-        let liste = ledd.at(paragraf).dedup().sorted()
-        if liste.len() == 0 { paragraf } else { paragraf + " " + leddtekst(liste) }
+        let leddene = ledd.at(paragraf)
+        if leddene.len() == 0 { paragraf } else { paragraf + " " + leddtekst(leddene) }
     })
     (if deler.len() == 1 { "§ " } else { "§§ " }) + deler.join(", ", last: " og ")
 }
 
 // Setningen med de samlede hjemlene nederst i avslagsbrevet.
-// Gir samme tekst som createBrevForskrifter i BrevSøknadAvslagDTO.kt; fasiten er test/fasit/hjemler.json.
-// hjemler er en liste med rettskilde, paragraf og ledd, med duplikater og usortert.
+// Fasiten er test/fasit/hjemler.json.
+// hjemler er en liste med rettskilde, paragraf, ledd og eventuelt punktum, med duplikater og usortert.
 #let hjemmelsetning(hjemler) = {
     let rettskilder = (ARBEIDSMARKEDSLOVEN: "arbeidsmarkedsloven", TILTAKSPENGEFORSKRIFTEN: "tiltakspengeforskriften")
     for hjemmel in hjemler {
@@ -155,5 +172,5 @@
         if utvalg.len() > 0 { deler.push(navn + " " + paragraftekst(utvalg)) }
     }
     if deler.len() == 0 { panic("Fant ingen hjemler") }
-    "Dette kommer frem av " + deler.join(", og ") + "."
+    "Dette kommer frem av " + deler.join(" og ") + "."
 }
