@@ -143,8 +143,8 @@
       "true": null
     },
     "RETT_TIL_DAGPENGER": {
-      "false": "du er innvilget dagpenger i denne perioden.\n\nDu har ikke rett til tiltakspenger for samme periode som du er innvilget dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd.",
-      "true": "du er innvilget dagpenger i denne perioden.\n\nDu har ikke rett til tiltakspenger og barnetillegg for samme periode som du er innvilget dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd."
+      "false": "du ikke har rett til tiltakspenger for samme periode som du har rett til dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd.",
+      "true": "du ikke har rett til tiltakspenger og barnetillegg for samme periode som du har rett til dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd."
     }
   },
   "opphør": {
@@ -189,8 +189,8 @@
       "true": null
     },
     "RETT_TIL_DAGPENGER": {
-      "false": "Du er innvilget dagpenger i denne perioden.\n\nDu har ikke rett til tiltakspenger for samme periode som du er innvilget dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd.",
-      "true": "Du er innvilget dagpenger i denne perioden.\n\nDu har ikke rett til tiltakspenger og barnetillegg for samme periode som du er innvilget dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd."
+      "false": "Du har ikke rett til tiltakspenger for samme periode som du har rett til dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd.",
+      "true": "Du har ikke rett til tiltakspenger og barnetillegg for samme periode som du har rett til dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.\n\nDette kommer frem av arbeidsmarkedsloven § 13 første ledd og forskrift om tiltakspenger § 7 første ledd."
     }
   }
 }
