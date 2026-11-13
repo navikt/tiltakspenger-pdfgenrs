@@ -20,6 +20,7 @@
   "datoForUtsending": "2025-03-31",
   "innvilgelsesperioder": {
     "antallDagerPerMeldeperiode": 10,
+    "tiltak": ["Arbeidstrening hos Aremark Snekkerverksted AS"],
     "perioder": [
       {
         "fraOgMed": "2025-04-01",

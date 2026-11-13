@@ -13,7 +13,7 @@
 #h2("Vedtak")
 #brødtekst[Tiltaket ditt er forlenget. Vi forlenger derfor vedtaket ditt om tiltakspenger#if data.harBarnetillegg [ og barnetillegg].]
 
-#perioderMedBeløp(data, false)
+#perioderMedBeløp(data)
 
 // Barn som fyller 16 år i forlengelsen, slik at barnetillegget stopper for dem.
 // Samme tekster som fritekst ved automatisk forlengelse i tiltakspenger-saksbehandling-api.

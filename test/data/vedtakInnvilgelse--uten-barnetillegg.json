@@ -25,7 +25,8 @@
         "tilOgMed": "2025-06-30"
       }
     ],
-    "antallDagerPerMeldeperiode": 10
+    "antallDagerPerMeldeperiode": 10,
+    "tiltak": ["Arbeidstrening hos Aremark Snekkerverksted AS"]
   },
   "sisteKjenteSatsår": 2026,
   "perioder": [
