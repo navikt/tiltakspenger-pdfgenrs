@@ -96,7 +96,15 @@ INNHOLDSKRAV = {
     "meldekort-korrigert": {"krever": ["Meldekort for tiltakspenger", "Mottatt: 15. oktober 2024 kl. 13.05"], "forbyr": ["Med vennlig hilsen", "Meldekort-ID"]},
     "meldekort-en": {"krever": ["National identity number:", "Case number:", "Received: 15 October 2024 at 13:05"], "forbyr": ["form ID"]},
     "meldekort-korrigert-en": {"krever": ["National identity number:", "Received: 15 October 2024 at 13:05"], "forbyr": ["form ID"]},
-    "soknad": {"krever": ["Navn:", "Saksnummer:", "Sendt til Nav: 5. januar 2025 kl. 12.30"], "forbyr": ["Med vennlig hilsen", "12:30"]},
+    "soknad": {
+        "krever": ["Navn:", "Saksnummer:", "Sendt til Nav: 5. januar 2025 kl. 12.30", "Bor i Norge", "Bor i et annet EØS-land", "Bor utenfor EØS"],
+        "forbyr": ["Med vennlig hilsen", "12:30", "barnet oppholder seg"],
+    },
+    # Søknader fra før søknaden spurte om oppholdssted har bare ja/nei-svaret på om barnet oppholder seg i Norge eller et annet EØS-land.
+    "soknad--uten-oppholdssted": {
+        "krever": ["Ja, barnet oppholder seg i Norge eller et annet EØS-land", "Nei, barnet oppholder seg ikke i Norge eller et annet EØS-land"],
+        "forbyr": ["Bor i Norge", "Bor utenfor EØS"],
+    },
     # Søknader Arena eier, har ikke saksnummer: footeren viser bare sidetallet.
     "soknad--uten-saksnummer": {"krever": ["side 1 av"], "forbyr": ["Saksnummer:"]},
     "klageAvvis--uten-saksbehandler": {"krever": ["ingen saksbehandler tildelt"]},
@@ -528,6 +536,10 @@ def ukjente_koder():
     payload = json.loads((DATA_DIR / "journalnotat.json").read_text())
     payload["begrunnelser"][0]["type"] = "Vilkårsvurdering"
     yield "journalnotat--ukjent-begrunnelsestype", "journalnotat", payload
+    # Søknaden skal ikke vise et oppholdssted den ikke kjenner som om barnet bodde et annet sted.
+    payload = json.loads((DATA_DIR / "soknad.json").read_text())
+    payload["spørsmålsbesvarelser"]["barnetillegg"]["registrerteBarnSøktBarnetilleggFor"][0]["oppholdssted"] = "Norge"
+    yield "soknad--ukjent-oppholdssted", "soknad", payload
 
 
 def test_ukjent_kode(navn, mal, payload, feil):

@@ -3,7 +3,7 @@
 /*
 Innsendt digital søknad om tiltakspenger, generert for journalføring.
 Payload-kontrakt: Søknad/SpørsmålsbesvarelserDTO i tiltakspenger-soknad-api.
-Innholdet er 1-til-1 med pdfgen-malen (soknad.hbs).
+Innholdet er 1-til-1 med pdfgen-malen (soknad.hbs), bortsett fra at barnas oppholdssted vises når søknaden har det.
 */
 
 #let data = json("/data/tpts/soknad.json")
@@ -32,15 +32,28 @@ Innholdet er 1-til-1 med pdfgen-malen (soknad.hbs).
     deler.filter(d => d != none and d != "").join(" ")
 }
 
+#let oppholdsstedtekster = (
+    "NORGE": [Bor i Norge],
+    "ANNET_EØS_LAND": [Bor i et annet EØS-land],
+    "IKKE_EØS_LAND": [Bor utenfor EØS],
+)
+
+// Søknader fra før søknaden spurte om oppholdssted har bare oppholdInnenforEøs.
+#let oppholdstekst(barn) = {
+    let oppholdssted = barn.at("oppholdssted", default: none)
+    if oppholdssted != none {
+        assert(oppholdssted in oppholdsstedtekster, message: "Ukjent oppholdssted: " + oppholdssted)
+        oppholdsstedtekster.at(oppholdssted)
+    } else if barn.oppholdInnenforEøs {
+        [Ja, barnet oppholder seg i Norge eller et annet EØS-land i tiltaksperioden]
+    } else {
+        [Nei, barnet oppholder seg ikke i Norge eller et annet EØS-land i tiltaksperioden]
+    }
+}
+
 #let barneoppføring(tittel, barn) = [
     #brødtekst[#tittel]
-    #list(
-        if barn.oppholdInnenforEøs [
-            #brødtekst[Ja, barnet oppholder seg i Norge eller et annet EØS-land i tiltaksperioden]
-        ] else [
-            #brødtekst[Nei, barnet oppholder seg ikke i Norge eller et annet EØS-land i tiltaksperioden]
-        ],
-    )
+    #list(brødtekst(oppholdstekst(barn)))
 ]
 
 #brevlogo

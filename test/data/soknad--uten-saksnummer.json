@@ -54,7 +54,8 @@
           "mellomnavn": "Johan",
           "etternavn": "Aremark",
           "fødselsdato": "2020-05-17",
-          "oppholdInnenforEøs": true
+          "oppholdInnenforEøs": true,
+          "oppholdssted": "NORGE"
         }
       ],
       "registrerteBarnSøktBarnetilleggFor": [
@@ -64,7 +65,8 @@
           "mellomnavn": null,
           "etternavn": "Aremark",
           "fødselsdato": "2018-03-01",
-          "oppholdInnenforEøs": false
+          "oppholdInnenforEøs": false,
+          "oppholdssted": "IKKE_EØS_LAND"
         },
         {
           "fnr": null,
@@ -72,7 +74,8 @@
           "mellomnavn": null,
           "etternavn": "Aremark",
           "fødselsdato": "2022-11-24",
-          "oppholdInnenforEøs": true
+          "oppholdInnenforEøs": true,
+          "oppholdssted": "ANNET_EØS_LAND"
         }
       ]
     },
