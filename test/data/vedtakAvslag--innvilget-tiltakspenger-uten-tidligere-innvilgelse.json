@@ -1,0 +1,31 @@
+{
+  "personalia": {
+    "ident": "25508631114",
+    "fornavn": "Emil",
+    "etternavn": "Aremark"
+  },
+  "saksnummer": "202501011001",
+  "saksbehandlerNavn": "Ingrid Bakke",
+  "beslutterNavn": "Martin Holm",
+  "tilleggstekst": "Du er innvilget tiltakspenger fra 1. januar 2025 til 31. mars 2025 i vedtak av 20. desember 2024, og fra 1. april 2025 til 30. juni 2025 i vedtak av 15. mars 2025.",
+  "avslagsgrunner": [
+    "INNVILGET_TILTAKSPENGER"
+  ],
+  "harSøktMedBarn": false,
+  "hjemler": [
+    {
+      "rettskilde": "TILTAKSPENGEFORSKRIFTEN",
+      "paragraf": "7",
+      "ledd": 1
+    },
+    {
+      "rettskilde": "ARBEIDSMARKEDSLOVEN",
+      "paragraf": "13",
+      "ledd": 1
+    }
+  ],
+  "forhandsvisning": false,
+  "avslagFraOgMed": "2025-01-01",
+  "avslagTilOgMed": "2025-01-10",
+  "datoForUtsending": "2025-01-15"
+}

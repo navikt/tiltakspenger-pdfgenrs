@@ -458,6 +458,9 @@ def hjemmeltekstvarianter():
     """
     fasit = json.loads(FASIT_HJEMMELTEKSTER.read_text())
     felt = {"avslag": ("vedtakAvslag", "avslagsgrunner"), "stans": ("stansvedtak", "stansgrunner"), "opphør": ("vedtakOpphør", "opphørsgrunner")}
+    # Datoene i fasiten for INNVILGET_TILTAKSPENGER kommer herfra; barnetillegget følger flagget i fasiten.
+    def tidligere_innvilgelse(flagg):
+        return {"fraOgMed": "2025-01-01", "tilOgMed": "2025-03-31", "vedtaksdato": "2024-12-20", "harBarnetillegg": flagg == "true"}
     for brevtype, (mal, kodefelt) in felt.items():
         base = json.loads((DATA_DIR / f"{mal}.json").read_text())
         for kode, tekster in fasit[brevtype].items():
@@ -467,6 +470,7 @@ def hjemmeltekstvarianter():
                 payload = dict(base, **{kodefelt: [kode]})
                 if brevtype == "avslag":
                     payload["harSøktMedBarn"] = flagg == "true"
+                    payload["tidligereInnvilgelse"] = tidligere_innvilgelse(flagg)
                     tekst = tekst["alene"]
                 else:
                     payload["barnetillegg"] = flagg == "true"
@@ -474,8 +478,14 @@ def hjemmeltekstvarianter():
     base = json.loads((DATA_DIR / "vedtakAvslag.json").read_text())
     koder = list(fasit["avslag"])
     for flagg in ("false", "true"):
-        payload = dict(base, avslagsgrunner=koder, harSøktMedBarn=flagg == "true")
+        payload = dict(base, avslagsgrunner=koder, harSøktMedBarn=flagg == "true", tidligereInnvilgelse=tidligere_innvilgelse(flagg))
         yield f"vedtakAvslag--koder-flere-grunner-barnetillegg-{flagg}", "vedtakAvslag", payload, [fasit["avslag"][kode][flagg]["blantFlere"] for kode in koder]
+    # Uten tidligere innvilgelse faller INNVILGET_TILTAKSPENGER tilbake til en tekst uten datoer.
+    # Teksten står her og ikke i fasiten, fordi fasiten er nøklet på avslagskoder.
+    payload = dict(base, avslagsgrunner=["INNVILGET_TILTAKSPENGER"], harSøktMedBarn=False, tidligereInnvilgelse=None)
+    yield "vedtakAvslag--koder-INNVILGET_TILTAKSPENGER-uten-tidligere-innvilgelse", "vedtakAvslag", payload, [
+        " fordi du allerede er innvilget tiltakspenger for denne perioden.\n\nUtbetalingene dine følger vedtaket du allerede har fått."
+    ]
 
 
 def hjemlervarianter():

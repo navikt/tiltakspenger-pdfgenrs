@@ -4,9 +4,30 @@
 // Avsnitt i stans- og opphørstekstene skilles med «\n\n».
 // Fasiten i test/fasit/hjemmeltekster.json skal endres i takt med denne fila.
 
+#import "/lib/format.typ": dato
+
 #let ytelsen(medBarnetillegg) = "tiltakspenger" + if medBarnetillegg { " og barnetillegg" } else { "" }
 
-#let avslagsbegrunnelser(ytelse) = (
+// Avslag fordi brukeren allerede er innvilget tiltakspenger for perioden.
+// tidligereInnvilgelse er none når saken har flere overlappende vedtak.
+// Da skriver saksbehandler periode og vedtaksdato i tilleggsteksten.
+#let innvilgetTiltakspenger(tidligereInnvilgelse) = if tidligereInnvilgelse == none {
+    (
+        faktum: "Du er allerede innvilget tiltakspenger for denne perioden",
+        fordi: "du allerede er innvilget tiltakspenger for denne perioden",
+        forklaring: ("Utbetalingene dine følger vedtaket du allerede har fått.",),
+    )
+} else {
+    let vedtaksdato = dato(tidligereInnvilgelse.vedtaksdato)
+    let innvilgelse = "innvilget tiltakspenger for perioden fra " + dato(tidligereInnvilgelse.fraOgMed) + " til " + dato(tidligereInnvilgelse.tilOgMed) + " i vedtak av " + vedtaksdato
+    (
+        faktum: "Du er allerede " + innvilgelse,
+        fordi: "du allerede er " + innvilgelse,
+        forklaring: ("Vi har derfor avslått søknaden din. Du vil motta " + ytelsen(tidligereInnvilgelse.harBarnetillegg) + " i henhold til vedtaket om tiltakspenger av " + vedtaksdato + ".",),
+    )
+}
+
+#let avslagsbegrunnelser(ytelse, tidligereInnvilgelse) = (
     "DELTAR_IKKE_PÅ_ARBEIDSMARKEDSTILTAK": (
         faktum: "Du deltar ikke på arbeidsmarkedstiltak som gir rett til tiltakspenger",
         fordi: "du ikke deltar på arbeidsmarkedstiltak som gir rett til tiltakspenger",
@@ -66,10 +87,11 @@
             "Dette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.",
         ),
     ),
+    "INNVILGET_TILTAKSPENGER": innvilgetTiltakspenger(tidligereInnvilgelse),
 )
 
-#let avslagsbegrunnelse(grunn, medBarnetillegg) = {
-    let begrunnelser = avslagsbegrunnelser(ytelsen(medBarnetillegg))
+#let avslagsbegrunnelse(grunn, medBarnetillegg, tidligereInnvilgelse: none) = {
+    let begrunnelser = avslagsbegrunnelser(ytelsen(medBarnetillegg), tidligereInnvilgelse)
     if grunn not in begrunnelser { panic("Ukjent avslagsgrunn: " + grunn) }
     begrunnelser.at(grunn)
 }
