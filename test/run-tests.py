@@ -80,11 +80,12 @@ INNHOLDSKRAV = {
             "463",
             "arbeidsmarkedsloven § 13 første ledd",
             "tiltakspengeforskriften §§ 2, 3 og 6",
+            "fordi du deltar på Arbeidstrening hos Aremark", "Snekkerverksted AS.",
         ],
-        "forbyr": ["Satsene for"],
+        "forbyr": ["Satsene for", "deltar på arbeidsmarkedstiltak", "tiltakene:"],
     },
-    "revurderingInnvilgelse": {"krever": ["Vedtaket ditt om tiltakspenger er endret", "for fem dager per uke", "Totalt per dag", "For ett barn", "For to barn", "For tre barn", "338", "353", "408", "463"], "forbyr": ["Tiltakspengene for 20", "Barnetillegget for", "Du får barnetillegg"]},
-    "vedtakForlengelse": {"krever": ["Tiltakspengene dine er forlenget", "Tiltaket ditt er forlenget.", "om tiltakspenger og barnetillegg.", "for fem dager per uke", "Totalt per dag", "For to barn", "408"], "forbyr": ["Barnetillegg gis for hvert barn", "Tiltakspengene for 20", "Barnetillegget for", "Du får barnetillegg"]},
+    "revurderingInnvilgelse": {"krever": ["Vedtaket ditt om tiltakspenger er endret", "for fem dager per uke", "fordi du deltar på Arbeidstrening hos Aremark", "Snekkerverksted AS.", "Totalt per dag", "For ett barn", "For to barn", "For tre barn", "338", "353", "408", "463"], "forbyr": ["Tiltakspengene for 20", "Barnetillegget for", "Du får barnetillegg"]},
+    "vedtakForlengelse": {"krever": ["Tiltakspengene dine er forlenget", "Tiltaket ditt er forlenget.", "om tiltakspenger og barnetillegg.", "for fem dager per uke", "fordi du deltar på Arbeidstrening hos Aremark", "Snekkerverksted AS.", "Totalt per dag", "For to barn", "408"], "forbyr": ["Barnetillegg gis for hvert barn", "Tiltakspengene for 20", "Barnetillegget for", "Du får barnetillegg"]},
     # Forlengelse uten barnetillegg: verken barnetilleggsperioder eller sats for barnetillegg.
     "vedtakForlengelse--uten-barnetillegg": {"krever": ["Tiltakspengene dine er forlenget", "om tiltakspenger.", "Totalt per dag", "298"], "forbyr": ["og barnetillegg", "For ett barn", "Du får barnetillegg", "Barnetillegget for", "Barnetillegg gis for hvert barn", "Vurderingen vår"]},
     # Barn som fyller 16 år i forlengelsen: samme tekster som fritekst ved automatisk forlengelse.
@@ -107,6 +108,10 @@ INNHOLDSKRAV = {
     # Antall dager og barn kommer som tall fra saksbehandling-api, og pdfgenrs skriver dem som ord.
     "vedtakInnvilgelse--koder": {"krever": ["for fem dager per uke", "For ett barn", "For to barn", "For 16 barn"], "forbyr": ["for null barn", "Satsene for"]},
     "revurderingInnvilgelse--koder-en-dag": {"krever": ["for en dag per uke"]},
+    # Tiltaksnavnene kommer fra saksbehandling-api: ett tiltak står i setningen, flere vises som punktliste.
+    "vedtakInnvilgelse--flere-tiltak": {"krever": ["fordi du deltar på tiltakene:", "Arbeidstrening hos Aremark Snekkerverksted AS", "Arbeidsforberedende trening"], "forbyr": ["deltar på arbeidsmarkedstiltak", "Satsene for"]},
+    # Eldre payload uten tiltaksnavn: faller tilbake til «arbeidsmarkedstiltak».
+    "revurderingInnvilgelse--uten-tiltak": {"krever": ["fordi du deltar på arbeidsmarkedstiltak."], "forbyr": ["tiltakene:"]},
     # Antallet varierer i perioden: ingen dagtekst, saksbehandler skriver det i tilleggsteksten.
     "vedtakInnvilgelse--koder-ulike-dager": {"forbyr": ["per uke", "Satsene for"]},
     # Uten barn: barnetilleggskolonnen viser 0, og totalen er bare tiltakspengene.

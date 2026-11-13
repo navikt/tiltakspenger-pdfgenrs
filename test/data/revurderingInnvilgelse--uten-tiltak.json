@@ -1,0 +1,133 @@
+{
+  "personalia": {
+    "ident": "25508631114",
+    "fornavn": "Emil",
+    "etternavn": "Aremark"
+  },
+  "saksnummer": "202501011001",
+  "saksbehandlerNavn": "Ingrid Bakke",
+  "beslutterNavn": "Martin Holm",
+  "harBarnetillegg": true,
+  "satser": [
+    {
+      "år": 2024,
+      "ordinær": 285,
+      "barnetillegg": 53
+    },
+    {
+      "år": 2025,
+      "ordinær": 298,
+      "barnetillegg": 55
+    }
+  ],
+  "tilleggstekst": "Vi har vurdert saken din på nytt etter at vi fikk nye opplysninger om tiltaksdeltakelsen din.\n\nVi har lagt vekt på at du deltok på tiltaket i hele perioden, og at tiltaksarrangøren har bekreftet dette.",
+  "forhandsvisning": false,
+  "datoForUtsending": "2025-01-31",
+  "innvilgelsesperioder": {
+    "antallDagerPerMeldeperiode": 10,
+    "perioder": [
+      {
+        "fraOgMed": "2024-11-01",
+        "tilOgMed": "2025-02-28"
+      },
+      {
+        "fraOgMed": "2025-04-01",
+        "tilOgMed": "2025-04-30"
+      },
+      {
+        "fraOgMed": "2025-05-02",
+        "tilOgMed": "2025-05-31"
+      }
+    ]
+  },
+  "sisteKjenteSatsår": 2026,
+  "perioder": [
+    {
+      "periode": {
+        "fraOgMed": "2024-11-01",
+        "tilOgMed": "2025-02-28"
+      },
+      "beløp": [
+        {
+          "periode": {
+            "fraOgMed": "2024-11-01",
+            "tilOgMed": "2024-12-31"
+          },
+          "antallBarn": 1,
+          "tiltakspenger": 285,
+          "barnetilleggBeløp": 53,
+          "total": 338
+        },
+        {
+          "periode": {
+            "fraOgMed": "2025-01-01",
+            "tilOgMed": "2025-02-28"
+          },
+          "antallBarn": 1,
+          "tiltakspenger": 298,
+          "barnetilleggBeløp": 55,
+          "total": 353
+        }
+      ]
+    },
+    {
+      "periode": {
+        "fraOgMed": "2025-04-01",
+        "tilOgMed": "2025-04-30"
+      },
+      "beløp": [
+        {
+          "periode": {
+            "fraOgMed": "2025-04-01",
+            "tilOgMed": "2025-04-30"
+          },
+          "antallBarn": 2,
+          "tiltakspenger": 298,
+          "barnetilleggBeløp": 110,
+          "total": 408
+        }
+      ]
+    },
+    {
+      "periode": {
+        "fraOgMed": "2025-05-02",
+        "tilOgMed": "2025-05-31"
+      },
+      "beløp": [
+        {
+          "periode": {
+            "fraOgMed": "2025-05-02",
+            "tilOgMed": "2025-05-31"
+          },
+          "antallBarn": 3,
+          "tiltakspenger": 298,
+          "barnetilleggBeløp": 165,
+          "total": 463
+        }
+      ]
+    }
+  ],
+  "barnetillegg": [
+    {
+      "antallBarn": 1,
+      "periode": {
+        "fraOgMed": "2024-11-01",
+        "tilOgMed": "2025-02-28"
+      }
+    },
+    {
+      "antallBarn": 2,
+      "periode": {
+        "fraOgMed": "2025-04-01",
+        "tilOgMed": "2025-04-30"
+      }
+    },
+    {
+      "antallBarn": 3,
+      "periode": {
+        "fraOgMed": "2025-05-02",
+        "tilOgMed": "2025-05-31"
+      }
+    }
+  ]
+}

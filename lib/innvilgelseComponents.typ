@@ -78,16 +78,26 @@
 }
 
 // Innvilgede perioder med dagsbeløp fra `data.perioder`, vist i én tabell per periode.
-// `medBegrunnelse` legger til «fordi du deltar på arbeidsmarkedstiltak» (søknadsinnvilgelse).
+// `data.innvilgelsesperioder.tiltak` er navnene på tiltakene det innvilges for, og gir «fordi du deltar på …».
+// Flere tiltak vises som en punktliste.
+// Uten tiltak (eldre payload) står det «arbeidsmarkedstiltak».
 // `data.sisteKjenteSatsår` er året den siste kjente satsen trådte i kraft.
 // Etter dette året gjelder satsene for dette året, og brevet sier fra om det.
-#let perioderMedBeløp(data, medBegrunnelse) = {
+#let perioderMedBeløp(data) = {
     let sisteKjenteÅr = data.at("sisteKjenteSatsår", default: none)
     let perioder = data.perioder.map(p => p + (beløp: p.beløp.map(delVedÅrsskifte).flatten()))
     let antallDager = dagerPerUke(data.innvilgelsesperioder.at("antallDagerPerMeldeperiode", default: none))
     let dagerTekst = if antallDager != none { [ for #antallDager per uke] } else { [] }
+    let tiltak = data.innvilgelsesperioder.at("tiltak", default: none)
+    if tiltak == none { tiltak = () }
 
-    brødtekst[Du får tiltakspenger#dagerTekst#if medBegrunnelse [ fordi du deltar på arbeidsmarkedstiltak].]
+    if tiltak.len() > 1 {
+        brødtekst[Du får tiltakspenger#dagerTekst fordi du deltar på tiltakene:]
+        list(..tiltak.map(navn => [#navn]))
+    } else {
+        let navn = if tiltak.len() == 1 { tiltak.at(0) } else { "arbeidsmarkedstiltak" }
+        brødtekst[Du får tiltakspenger#dagerTekst fordi du deltar på #navn.]
+    }
     brødtekst[Tabellene viser beløp i kroner per dag, ikke utbetalingen for hele perioden.
         Vi beregner utbetalingen ut fra opplysningene på meldekortet ditt.]
 

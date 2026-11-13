@@ -11,7 +11,7 @@
 = Du har fått innvilget tiltakspenger
 
 #h2("Vedtak")
-#perioderMedBeløp(data, true)
+#perioderMedBeløp(data)
 
 #brødtekst[For å få tiltakspenger må du gjennomføre avtalt aktivitet og delta hele den avtalte tiden i tiltaket ditt.]
 
