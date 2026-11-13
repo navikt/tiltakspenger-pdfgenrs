@@ -81,9 +81,10 @@ Noen objekter i flettedataene er null i datasettet og bare med i enkelte brev, s
 Uten hjelp ville skjemaet vist dem som et tomt tekstfelt, og det som ble skrevet der, ville gått til malen som streng.
 De står derfor i [`valgfrie.js`](valgfrie.js) med et eksempel, og får en checkbox foran nøkkelen: på fyller inn eksempelet, av sender null.
 
-| Datasett            | Felt              | Kilde                  |
-|---------------------|-------------------|------------------------|
-| `vedtakForlengelse` | `barnSomFyller16` | `BrevForlengelseDTO.kt` |
+| Datasett            | Felt                   | Kilde                    |
+|---------------------|------------------------|--------------------------|
+| `vedtakForlengelse` | `barnSomFyller16`      | `BrevForlengelseDTO.kt`  |
+| `vedtakAvslag`      | `tidligereInnvilgelse` | `BrevSøknadAvslagDTO.kt` |
 
 Eksemplene er kopier av variantene i `test/data`, siden demo-imaget ikke inneholder dem.
 

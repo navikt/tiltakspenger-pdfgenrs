@@ -48,5 +48,6 @@
   "forhandsvisning": false,
   "avslagFraOgMed": "2025-01-01",
   "avslagTilOgMed": "2025-01-10",
-  "datoForUtsending": "2025-01-15"
+  "datoForUtsending": "2025-01-15",
+  "tidligereInnvilgelse": null
 }

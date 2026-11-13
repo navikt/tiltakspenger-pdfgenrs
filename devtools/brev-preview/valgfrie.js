@@ -11,6 +11,11 @@ const VALGFRIE_FELT = {
     // Se test/data/vedtakForlengelse--*-fyller-16.json for de tre tekstvariantene.
     barnSomFyller16: { antall: 1, antallBarnIVedtaket: 2, sisteDagMedBarnetillegg: "2025-06-30" },
   },
+  vedtakAvslag: {
+    // BrevSøknadAvslagDTO.kt: den gjeldende innvilgelsen ved avslagsgrunnen INNVILGET_TILTAKSPENGER.
+    // Null gir teksten «denne perioden»; se test/data/vedtakAvslag--innvilget-tiltakspenger-uten-tidligere-innvilgelse.json.
+    tidligereInnvilgelse: { fraOgMed: "2025-01-01", tilOgMed: "2025-03-31", vedtaksdato: "2024-12-20", harBarnetillegg: false },
+  },
 };
 
 function valgfrieFeltFor(datasett) {
