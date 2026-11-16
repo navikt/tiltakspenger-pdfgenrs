@@ -34,6 +34,7 @@
         mot
         <select id="ref-b-select" title="Arbeidskatalogen, en gren eller en commit"></select>
         <input id="ref-b-input" hidden placeholder="gren/tagg/commit-sha" title="Git-ref; tøm feltet for å gå tilbake til listen">
+        <label title="Bruker lokal PDF.js i stedet for nettleserens PDF-viser"><input type="checkbox" id="compare-sync-scroll"> Synkronisert rulling (PDF.js)</label>
       </span>
     </span>
   </header>
@@ -47,11 +48,19 @@
       <figure>
         <figcaption id="caption-a" hidden><span class="label"></span><span class="err"></span></figcaption>
         <iframe id="pdf" title="PDF-forhåndsvisning (pdfgenrs)"></iframe>
+        <div id="pdf-viewer-a" class="pdfjs-viewer" hidden role="region" aria-label="PDF-forhåndsvisning med synkronisert rulling" tabindex="0">
+          <p class="pdfjs-native-link"><a href="" target="_blank" rel="noopener" hidden>Åpne PDF med nettleserens PDF-viser</a></p>
+          <div class="pdfjs-pages"></div>
+        </div>
       </figure>
       <!-- VERSJONSSAMMENLIGNING: pdfgenrs på valgt git-ref -->
       <figure id="figure-b" hidden>
         <figcaption id="caption-b"><span class="label"></span><span class="err"></span></figcaption>
         <iframe id="pdf-b" title="PDF-forhåndsvisning (pdfgenrs på valgt ref)"></iframe>
+        <div id="pdf-viewer-b" class="pdfjs-viewer" hidden role="region" aria-label="PDF-forhåndsvisning av valgt ref med synkronisert rulling" tabindex="0">
+          <p class="pdfjs-native-link"><a href="" target="_blank" rel="noopener" hidden>Åpne PDF med nettleserens PDF-viser</a></p>
+          <div class="pdfjs-pages"></div>
+        </div>
       </figure>
     </section>
   </main>

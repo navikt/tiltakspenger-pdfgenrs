@@ -96,6 +96,11 @@ Huk av «Sammenlign versjoner» i headeren for å se det samme brevet, med de sa
 
 Begge feltene kan settes fritt, så det går også an å sammenligne to commits med hverandre.
 
+Nettleserens innebygde PDF-viser er standard.
+Huk av «Synkronisert rulling (PDF.js)» for å bla i begge dokumentene samtidig.
+Den valgfrie visningen bruker lokalt innlagte PDF.js-filer fra `pdfjs-dist` 6.5.438 under Apache-2.0-lisensen, uten å hente kode fra nettverket.
+Kjør synkroniseringstesten med `node --test devtools/brev-preview/scroll-sync.test.mjs` fra repo-rota.
+
 Bak kulissene lager `versions.py` et git-worktree per ref under `~/.cache/tiltakspenger-pdfgenrs-devtools/` og starter en egen pdfgenrs-container per ref — pdfgenrs er bare upstream-imaget med maler/fonter montert som volumer, så ingenting må bygges. Refs slås opp på nytt ved hver generering, så committer du til grenen du sammenlikner mot, plukkes den nye commiten opp automatisk. Containere og worktrees ryddes når devtoolsen avsluttes.
 
 Containerne er lette å kjenne igjen i `docker ps`:
@@ -130,7 +135,7 @@ Backend (kun Python-stdlib):
 - `versions.py` eier versjonssammenligningen: `GET /api/refs` (forslagsliste), `POST /api/ref/prepare` (worktree + container for en ref) og oppryddingen ved avslutning.
 - `common.py` er det lille som deles: repo-rota og liveness-sjekken.
 
-Frontend (ren HTML/JS/CSS uten avhengigheter):
+Frontend (ren HTML/JS/CSS uten byggsteg):
 
 - `app.js` er kjernen: flettedata-state, mal-valg og hovedpanelet. Ekstra paneler kobler seg på via `window.brevPreview` (`onGenerate`-hooken får mal + flettedata ved hver generering).
 - `form.js` genererer skjemaet rekursivt fra JSON-strukturen: boolske felt blir checkboxer, tall og tekst blir inputs, enum-felt blir nedtrekkslister, og arrays får «Legg til»/«Fjern»-knapper.
@@ -139,7 +144,8 @@ Frontend (ren HTML/JS/CSS uten avhengigheter):
 - `avledet.js` er reglene for felt som regnes ut fra andre felt, med samme stisyntaks.
 - `valgfrie.js` er objektene som kan være null, med eksempelet som fylles inn når de slås på (se over).
 - `lenke.js` pakker brev og flettedata inn i og ut av fragmentet i URL-en (se over).
-- `panel.js` er gjenbrukbar lasting av PDF inn i en iframe (objectURL-opprydding, utdaterte svar ignoreres) — brukes av begge panelene.
+- `panel.js` viser PDF i nettleserens PDF-viser eller lokal PDF.js, rydder objectURL-er og ignorerer utdaterte svar.
 - `compare.js` er versjonssammenligningen (ref-feltene og høyrepanelet).
+- `scroll-sync.mjs` synkroniserer rulleposisjonen når PDF.js-modusen er slått på; testen bruker Node.js sitt innebygde testverktøy.
 
 Brevlisten kommer fra filnavnene i `testdata/tpts/` — nye brev dukker opp automatisk.

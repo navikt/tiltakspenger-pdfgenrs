@@ -79,8 +79,38 @@
   refPicker("b", refsInfo.default);
 
   const showErrorB = (message) => ($("caption-b").querySelector(".err").textContent = message || "");
-  const panelB = pdfPanel($("pdf-b"), showErrorB);
+  const panelB = pdfPanel($("pdf-b"), $("pdf-viewer-b"), showErrorB);
+  let syncEnabled = false;
+  let syncSeq = 0;
+  let stopScrollSync = null;
   const label = (ref) => (ref === WORKTREE ? "arbeidskatalogen (med lokale endringer)" : ref);
+
+  function setSyncScroll(on) {
+    const seq = ++syncSeq;
+    syncEnabled = on;
+    $("compare-sync-scroll").checked = on;
+    if (stopScrollSync) {
+      stopScrollSync();
+      stopScrollSync = null;
+    }
+    const mode = on ? "pdfjs" : "native";
+    window.brevPreview.setPdfViewerMode(mode);
+    panelB.setMode(mode);
+    localStorage.setItem("devtools-sync-scroll", on ? "1" : "");
+    if (!on) return;
+
+    import(new URL("./scroll-sync.mjs", document.baseURI).href)
+      .then(({ synchronizeScroll }) => {
+        if (seq === syncSeq && syncEnabled) {
+          stopScrollSync = synchronizeScroll($("pdf-viewer-a"), $("pdf-viewer-b"));
+        }
+      })
+      .catch((e) => {
+        if (seq !== syncSeq) return;
+        setSyncScroll(false);
+        showErrorB(`Klarte ikke å starte synkronisert rulling: ${e}`);
+      });
+  }
 
   // Klargjør (eller gjenbruker) container for ref-en og gir genpdf-URL-en dit.
   // Ref-en slås opp på nytt hver gang, så nye commits på en gren plukkes opp.
@@ -107,6 +137,7 @@
   function setActive(on) {
     active = on;
     window.brevPreview.compareActive = on;
+    if (!on && syncEnabled) setSyncScroll(false);
     $("compare-rs").checked = on;
     $("compare-rs-controls").hidden = !on;
     $("figure-b").hidden = !on;
@@ -117,6 +148,7 @@
   }
 
   $("compare-rs").onchange = () => setActive($("compare-rs").checked);
+  $("compare-sync-scroll").onchange = () => setSyncScroll($("compare-sync-scroll").checked);
 
   window.brevPreview.onGenerate(async (template, body) => {
     if (!active) return;
@@ -127,5 +159,8 @@
     }
   });
 
-  if (localStorage.getItem("devtools-compare-rs") === "1") setActive(true);
+  if (localStorage.getItem("devtools-compare-rs") === "1") {
+    setActive(true);
+    if (localStorage.getItem("devtools-sync-scroll") === "1") setSyncScroll(true);
+  }
 })();

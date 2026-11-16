@@ -59,40 +59,30 @@ Felles hale for alle utgående vedtaksbrev — skal være identisk fra og med «
 Tekstene er fasit fra pdfgen (partials/klagerett.hbs, base.hbs og partials/sporsmal.hbs).
 */
 #let vedtaksinfo = body => [
-    #block(below: space-26)[
-        #h2("Du har rett til å klage")
-        #brødtekst[Hvis du mener vedtaket er feil, kan du klage innen 6 uker fra den datoen vedtaket har kommet fram til deg. Dette følger av arbeidsmarkedsloven § 17. Du finner skjema og informasjon på #navLenke("nav.no/klage")[nav.no/klage].]
+    #h2("Du har rett til å klage")
+    #brødtekst[Hvis du mener vedtaket er feil, kan du klage innen 6 uker fra den datoen vedtaket har kommet fram til deg. Dette følger av arbeidsmarkedsloven § 17. Du finner skjema og informasjon på #navLenke("nav.no/klage")[nav.no/klage].]
 
-        #brødtekst("Nav kan veilede deg på telefon om hvordan du sender en klage. Nav-kontoret ditt kan også hjelpe deg med å skrive en klage.")
+    #brødtekst("Nav kan veilede deg på telefon om hvordan du sender en klage. Nav-kontoret ditt kan også hjelpe deg med å skrive en klage.")
 
-        #brødtekst("Hvis du får medhold i klagen, kan du få dekket vesentlige utgifter som har vært nødvendige for å få endret vedtaket, for eksempel hjelp fra advokat. Du kan ha krav på fri rettshjelp etter rettshjelploven. Du kan få mer informasjon om denne ordningen hos advokater, statsforvalteren eller Nav.")
+    #brødtekst("Hvis du får medhold i klagen, kan du få dekket vesentlige utgifter som har vært nødvendige for å få endret vedtaket, for eksempel hjelp fra advokat. Du kan ha krav på fri rettshjelp etter rettshjelploven. Du kan få mer informasjon om denne ordningen hos advokater, statsforvalteren eller Nav.")
 
-        #brødtekst("Du kan lese om saksomkostninger i forvaltningsloven § 36.")
+    #brødtekst("Du kan lese om saksomkostninger i forvaltningsloven § 36.")
 
-        #brødtekst("Hvis du sender klage i posten, må du signere klagen.")
+    #brødtekst("Hvis du sender klage i posten, må du signere klagen.")
 
-        #brødtekst[Mer informasjon om klagerettigheter finner du på #navLenke("nav.no/klagerettigheter")[nav.no/klagerettigheter].]
-    ]
+    #brødtekst[Mer informasjon om klagerettigheter finner du på #navLenke("nav.no/klagerettigheter")[nav.no/klagerettigheter].]
 
-    #block(below: space-26)[
-        #h2("Du har rett til innsyn")
-        #brødtekst[Du har rett til å se dokumentene i saken din. Dette følger av forvaltningsloven § 18. Du kan kontakte saksbehandler på #navLenke("nav.no")[nav.no] eller på telefon om du vil se dokumentene i saken din. Du kan lese mer om innsynsretten på #navLenke("nav.no/personvernerklaering")[nav.no/personvernerklaering].]
-    ]
+    #h2("Du har rett til innsyn")
+    #brødtekst[Du har rett til å se dokumentene i saken din. Dette følger av forvaltningsloven § 18. Du kan kontakte saksbehandler på #navLenke("nav.no")[nav.no] eller på telefon om du vil se dokumentene i saken din. Du kan lese mer om innsynsretten på #navLenke("nav.no/personvernerklaering")[nav.no/personvernerklaering].]
 
-    #block(below: space-26)[
-        #h2("Du har rettigheter knyttet til personopplysningene dine")
-        #brødtekst[Du finner informasjon om hvordan Nav behandler personopplysningene dine, og hvilke rettigheter du har, på #navLenke("nav.no/personvernerklaering#hvordan")[nav.no/personvernerklaering\#hvordan].]
-    ]
+    #h2("Du har rettigheter knyttet til personopplysningene dine")
+    #brødtekst[Du finner informasjon om hvordan Nav behandler personopplysningene dine, og hvilke rettigheter du har, på #navLenke("nav.no/personvernerklaering#hvordan")[nav.no/personvernerklaering\#hvordan].]
 
-    #block(below: space-26)[
-        #h2("Du har rett til å få veiledning fra Nav")
-        #brødtekst("Vi har plikt til å veilede deg om dine rettigheter og plikter i saken din, både før, under og etter saksbehandlingen. Dette følger av forvaltningsloven § 11.")
-    ]
+    #h2("Du har rett til å få veiledning fra Nav")
+    #brødtekst("Vi har plikt til å veilede deg om dine rettigheter og plikter i saken din, både før, under og etter saksbehandlingen. Dette følger av forvaltningsloven § 11.")
 
-    #block(below: space-32)[
-        #h2("Har du spørsmål?")
-        #brødtekst[Du finner mer informasjon om tiltakspenger på #navLenke("nav.no/tiltakspenger")[nav.no/tiltakspenger]. På #navLenke("nav.no/kontakt")[nav.no/kontakt] kan du chatte eller skrive til oss. Hvis du ikke finner svar på #navLenke("nav.no")[nav.no], kan du ringe oss på telefon 55 55 33 33, hverdager 09.00–15.00.]
-    ]
+    #h2("Har du spørsmål?")
+    #brødtekst[Du finner mer informasjon om tiltakspenger på #navLenke("nav.no/tiltakspenger")[nav.no/tiltakspenger]. På #navLenke("nav.no/kontakt")[nav.no/kontakt] kan du chatte eller skrive til oss. Hvis du ikke finner svar på #navLenke("nav.no")[nav.no], kan du ringe oss på telefon 55 55 33 33, hverdager 09.00–15.00.]
     #body
 ]
 

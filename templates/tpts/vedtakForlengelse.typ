@@ -33,16 +33,12 @@
 
 #brødtekst[Du har ikke rett til tiltakspenger de dagene du ikke gjennomfører avtalt aktivitet, eller de dagene du har lønnet arbeid som en del av oppfølgingen i tiltaket ditt.]
 
-#block(above: space-26, below: space-26)[
 #if "tilleggstekst" in data and data.tilleggstekst != none and data.tilleggstekst != "" [
-    #block(above: space-26, below: space-6)[
-        #h2("Vurderingen vår")
-    ]
+    #h2("Vurderingen vår")
     #brødtekst[#data.tilleggstekst.split("\n").join(linebreak())]
 ]
 
 #brødtekst[Vedtaket er gjort etter arbeidsmarkedsloven § 13 første ledd og tiltakspengeforskriften §§ 2, 3 og 6.]
-]
 
 #show: meldekortinfo
 #show: vedtaksinfo

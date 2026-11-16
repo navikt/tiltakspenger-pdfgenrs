@@ -13,7 +13,7 @@ let lastGeneration = null; // {template, body} - så paneler som kobler seg på 
 const generateHooks = []; // kalles med (template, body) ved hver generering
 let mainTarget = null; // compare.js overstyrer hvor hovedpanelet genereres (async (template) -> url)
 
-const mainPanel = pdfPanel($("pdf"), showError);
+const mainPanel = pdfPanel($("pdf"), $("pdf-viewer-a"), showError);
 
 window.brevPreview = {
   get current() {
@@ -21,6 +21,9 @@ window.brevPreview = {
   },
   compareActive: false, // settes av compare.js
   setMainCaption,
+  setPdfViewerMode(mode) {
+    mainPanel.setMode(mode);
+  },
   setMainTarget(fn) {
     mainTarget = fn;
   },
