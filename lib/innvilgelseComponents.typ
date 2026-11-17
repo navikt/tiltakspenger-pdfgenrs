@@ -100,17 +100,12 @@
         h3([Fra og med #dato(p.periode.fraOgMed) til og med #dato(p.periode.tilOgMed)])
         letter-table(
             språkinnstillinger-nb,
-            columns: (1.8fr, 1fr, 1fr, 1fr),
-            column-align: (left, right, right, right),
-            [Periode], [Tiltakspenger], [Barnetillegg], [Totalt per dag],
+            columns: (1.2fr, 1.2fr, 1fr, 1fr, 1fr),
+            column-align: (left, left, right, right, right),
+            [Fra og med], [Til og med], [Tiltakspenger], [Barnetillegg], [Totalt per dag],
             ..p.beløp.map(b => (
-                [
-                    Fra og med #dato(b.periode.fraOgMed) \
-                    til og med #dato(b.periode.tilOgMed)
-                    #if sisteKjenteÅr != none and int(b.periode.fraOgMed.slice(0, 4)) > sisteKjenteÅr [\
-                        Med satsene for #sisteKjenteÅr
-                    ]
-                ],
+                [#dato(b.periode.fraOgMed)],
+                [#dato(b.periode.tilOgMed)],
                 [#kroner(b.tiltakspenger)],
                 [
                     #kroner(b.barnetilleggBeløp)
