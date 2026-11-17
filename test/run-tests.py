@@ -67,7 +67,8 @@ INNHOLDSKRAV = {
             "Du må sende meldekort",
             "Når får du pengene?",
             "Du må melde om endringer",
-            "Periode",
+            "Fra og med",
+            "Til og med",
             "Tiltakspenger",
             "Barnetillegg",
             "Totalt per dag",
@@ -127,11 +128,11 @@ INNHOLDSKRAV = {
             "368",
             "312",
             "Siden satsene for 2027 ikke er fastsatt, gjelder satsene for 2026.",
-            "Med satsene for 2026",
             "31. desember 2026",
             "1. januar 2027",
         ],
         "forbyr": [
+            "Med satsene for",
             "Tiltakspengene for 2025 er",
             "Vedtaket ditt gjelder også i",
             "blir beløpet justert automatisk",
@@ -140,7 +141,6 @@ INNHOLDSKRAV = {
     "vedtakInnvilgelse--ukjent-sats-kun-neste-aar": {
         "krever": [
             "Siden satsene for 2027 ikke er fastsatt, gjelder satsene for 2026.",
-            "Med satsene for 2026",
             "1. januar 2027",
             "31. januar 2027",
             "312",
@@ -148,7 +148,7 @@ INNHOLDSKRAV = {
             "368",
             "For ett barn",
         ],
-        "forbyr": ["blir beløpet justert automatisk", "Tiltakspengene for 2025 er"],
+        "forbyr": ["Med satsene for", "blir beløpet justert automatisk", "Tiltakspengene for 2025 er"],
     },
     "vedtakInnvilgelse--ukjent-sats-flere-perioder": {
         "krever": [
@@ -161,31 +161,28 @@ INNHOLDSKRAV = {
             "For ett barn",
             "For to barn",
             "Siden satsene for 2027 ikke er fastsatt, gjelder satsene for 2026.",
-            "Med satsene for 2026",
         ],
-        "forbyr": ["blir beløpet justert automatisk", "Tiltakspengene for 2025 er"],
+        "forbyr": ["Med satsene for", "blir beløpet justert automatisk", "Tiltakspengene for 2025 er"],
     },
     "revurderingInnvilgelse--ukjent-sats": {
         "krever": [
             "Vedtaket ditt om tiltakspenger er endret",
             "368",
             "Siden satsene for 2027 ikke er fastsatt, gjelder satsene for 2026.",
-            "Med satsene for 2026",
             "31. desember 2026",
             "1. januar 2027",
         ],
-        "forbyr": ["Tiltakspengene for 20", "Barnetillegget for"],
+        "forbyr": ["Med satsene for", "Tiltakspengene for 20", "Barnetillegget for"],
     },
     "vedtakForlengelse--ukjent-sats": {
         "krever": [
             "Tiltakspengene dine er forlenget",
             "368",
             "Siden satsene for 2027 ikke er fastsatt, gjelder satsene for 2026.",
-            "Med satsene for 2026",
             "31. desember 2026",
             "1. januar 2027",
         ],
-        "forbyr": ["Tiltakspengene for 20", "Barnetillegget for", "Barnetillegg gis for hvert barn"],
+        "forbyr": ["Med satsene for", "Tiltakspengene for 20", "Barnetillegget for", "Barnetillegg gis for hvert barn"],
     },
     # Samme personinfo og utsendingsdato som de andre vedtakene, uten klokkeslett.
     "meldekortvedtak": {"krever": ["Navn:", "Emil Aremark", "Fødselsnummer:", "18. november 2024"], "forbyr": ["Iverksatt", "14:36"]},
