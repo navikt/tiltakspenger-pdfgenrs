@@ -13,8 +13,8 @@
 // Da skriver saksbehandler periode og vedtaksdato i tilleggsteksten.
 #let innvilgetTiltakspenger(tidligereInnvilgelse) = if tidligereInnvilgelse == none {
     (
-        faktum: "Du er allerede innvilget tiltakspenger for denne perioden",
-        fordi: "du allerede er innvilget tiltakspenger for denne perioden",
+        faktum: "Du er allerede innvilget tiltakspenger",
+        fordi: "du allerede er innvilget tiltakspenger",
         forklaring: ("Utbetalingene dine følger vedtaket du allerede har fått.",),
     )
 } else {

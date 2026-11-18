@@ -484,7 +484,7 @@ def hjemmeltekstvarianter():
     # Teksten står her og ikke i fasiten, fordi fasiten er nøklet på avslagskoder.
     payload = dict(base, avslagsgrunner=["INNVILGET_TILTAKSPENGER"], harSøktMedBarn=False, tidligereInnvilgelse=None)
     yield "vedtakAvslag--koder-INNVILGET_TILTAKSPENGER-uten-tidligere-innvilgelse", "vedtakAvslag", payload, [
-        " fordi du allerede er innvilget tiltakspenger for denne perioden.\n\nUtbetalingene dine følger vedtaket du allerede har fått."
+        " fordi du allerede er innvilget tiltakspenger.\n\nUtbetalingene dine følger vedtaket du allerede har fått."
     ]
 
 
