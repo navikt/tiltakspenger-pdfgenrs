@@ -78,7 +78,7 @@
 }
 
 // Innvilgede perioder med dagsbeløp fra `data.perioder`, vist i én tabell per periode.
-// `data.innvilgelsesperioder.tiltak` er navnene på tiltakene det innvilges for, og gir «fordi du deltar på …».
+// `data.innvilgelsesperioder.tiltak` er navnene på tiltakstypene det innvilges for, og gir «fordi du deltar på …».
 // Flere tiltak vises som en punktliste.
 // Uten tiltak (eldre payload) står det «arbeidsmarkedstiltak».
 // `data.sisteKjenteSatsår` er året den siste kjente satsen trådte i kraft.
