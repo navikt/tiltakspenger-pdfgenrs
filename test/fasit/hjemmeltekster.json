@@ -99,6 +99,16 @@
         "alene": " fordi du har rett til dagpenger i denne perioden.\n\nDu har ikke rett til tiltakspenger og barnetillegg for samme periode som du har rett til dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger.",
         "blantFlere": "Du har rett til dagpenger i denne perioden.\n\nDu har ikke rett til tiltakspenger og barnetillegg for samme periode som du har rett til dagpenger.\n\nDette gjelder også enkeltdager og meldeperioder uten utbetaling av dagpenger, og når du har sanksjonsperiode eller tidsbegrenset bortfall av dagpenger."
       }
+    },
+    "INNVILGET_TILTAKSPENGER": {
+      "false": {
+        "alene": " fordi du allerede er innvilget tiltakspenger for perioden fra 1. januar 2025 til 31. mars 2025 i vedtak av 20. desember 2024.\n\nVi har derfor avslått søknaden din. Du vil motta tiltakspenger i henhold til vedtaket om tiltakspenger av 20. desember 2024.",
+        "blantFlere": "Du er allerede innvilget tiltakspenger for perioden fra 1. januar 2025 til 31. mars 2025 i vedtak av 20. desember 2024.\n\nVi har derfor avslått søknaden din. Du vil motta tiltakspenger i henhold til vedtaket om tiltakspenger av 20. desember 2024."
+      },
+      "true": {
+        "alene": " fordi du allerede er innvilget tiltakspenger for perioden fra 1. januar 2025 til 31. mars 2025 i vedtak av 20. desember 2024.\n\nVi har derfor avslått søknaden din. Du vil motta tiltakspenger og barnetillegg i henhold til vedtaket om tiltakspenger av 20. desember 2024.",
+        "blantFlere": "Du er allerede innvilget tiltakspenger for perioden fra 1. januar 2025 til 31. mars 2025 i vedtak av 20. desember 2024.\n\nVi har derfor avslått søknaden din. Du vil motta tiltakspenger og barnetillegg i henhold til vedtaket om tiltakspenger av 20. desember 2024."
+      }
     }
   },
   "stans": {

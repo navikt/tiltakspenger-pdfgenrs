@@ -17,7 +17,8 @@
     assert(data.at("hjemler", default: ()).len() > 0, message: "Avslagsbrevet mangler hjemler")
     let ytelse = ytelsen(data.harSøktMedBarn)
     let periode = [fra og med #dato(data.avslagFraOgMed) til og med #dato(data.avslagTilOgMed)]
-    let begrunnelser = data.avslagsgrunner.map(grunn => avslagsbegrunnelse(grunn, data.harSøktMedBarn))
+    let tidligereInnvilgelse = data.at("tidligereInnvilgelse", default: none)
+    let begrunnelser = data.avslagsgrunner.map(grunn => avslagsbegrunnelse(grunn, data.harSøktMedBarn, tidligereInnvilgelse: tidligereInnvilgelse))
     if begrunnelser.len() == 1 {
         let begrunnelse = begrunnelser.first()
         brødtekst[Du får ikke #ytelse #periode fordi #begrunnelse.fordi.]
