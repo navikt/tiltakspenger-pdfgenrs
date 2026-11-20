@@ -9,7 +9,8 @@
 #let ytelsen(medBarnetillegg) = "tiltakspenger" + if medBarnetillegg { " og barnetillegg" } else { "" }
 
 // Avslag fordi brukeren allerede er innvilget tiltakspenger for perioden.
-// tidligereInnvilgelse er none når saken har flere overlappende vedtak.
+// tidligereInnvilgelse er none når søknadsperioden ikke er lik hele perioden i ett innvilget vedtak.
+// Det gjelder også når vedtaket er stanset eller opphørt for en del av perioden, eller har opphold.
 // Da skriver saksbehandler periode og vedtaksdato i tilleggsteksten.
 #let innvilgetTiltakspenger(tidligereInnvilgelse) = if tidligereInnvilgelse == none {
     (
