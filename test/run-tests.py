@@ -459,8 +459,10 @@ def hjemmeltekstvarianter():
     fasit = json.loads(FASIT_HJEMMELTEKSTER.read_text())
     felt = {"avslag": ("vedtakAvslag", "avslagsgrunner"), "stans": ("stansvedtak", "stansgrunner"), "opphør": ("vedtakOpphør", "opphørsgrunner")}
     # Datoene i fasiten for INNVILGET_TILTAKSPENGER kommer herfra; barnetillegget følger flagget i fasiten.
+    # Backend sender bare tidligereInnvilgelse når den innvilgede perioden er lik avslagsperioden, så periodene er like her også.
+    avslag = json.loads((DATA_DIR / "vedtakAvslag.json").read_text())
     def tidligere_innvilgelse(flagg):
-        return {"fraOgMed": "2025-01-01", "tilOgMed": "2025-03-31", "vedtaksdato": "2024-12-20", "harBarnetillegg": flagg == "true"}
+        return {"fraOgMed": avslag["avslagFraOgMed"], "tilOgMed": avslag["avslagTilOgMed"], "vedtaksdato": "2024-12-20", "harBarnetillegg": flagg == "true"}
     for brevtype, (mal, kodefelt) in felt.items():
         base = json.loads((DATA_DIR / f"{mal}.json").read_text())
         for kode, tekster in fasit[brevtype].items():

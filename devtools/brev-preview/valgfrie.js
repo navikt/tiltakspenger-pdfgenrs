@@ -12,9 +12,9 @@ const VALGFRIE_FELT = {
     barnSomFyller16: { antall: 1, antallBarnIVedtaket: 2, sisteDagMedBarnetillegg: "2025-06-30" },
   },
   vedtakAvslag: {
-    // BrevSøknadAvslagDTO.kt: den gjeldende innvilgelsen ved avslagsgrunnen INNVILGET_TILTAKSPENGER.
-    // Null gir teksten «denne perioden»; se test/data/vedtakAvslag--innvilget-tiltakspenger-uten-tidligere-innvilgelse.json.
-    tidligereInnvilgelse: { fraOgMed: "2025-01-01", tilOgMed: "2025-03-31", vedtaksdato: "2024-12-20", harBarnetillegg: false },
+    // BrevSøknadAvslagDTO.kt: innvilgelsen med samme periode som avslaget ved avslagsgrunnen INNVILGET_TILTAKSPENGER.
+    // Null gir reserveteksten uten datoer; se test/data/vedtakAvslag--innvilget-tiltakspenger-uten-tidligere-innvilgelse.json.
+    tidligereInnvilgelse: { fraOgMed: "2025-01-01", tilOgMed: "2025-01-10", vedtaksdato: "2024-12-20", harBarnetillegg: false },
   },
 };
 
