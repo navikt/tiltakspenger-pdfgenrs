@@ -102,11 +102,9 @@
     },
     "INNVILGET_TILTAKSPENGER": {
       "false": {
-        "alene": " fordi du allerede er innvilget tiltakspenger for perioden fra 1. januar 2025 til 10. januar 2025 i vedtak av 20. desember 2024.\n\nVi har derfor avslått søknaden din. Du vil motta tiltakspenger i henhold til vedtaket om tiltakspenger av 20. desember 2024.",
         "blantFlere": "Du er allerede innvilget tiltakspenger for perioden fra 1. januar 2025 til 10. januar 2025 i vedtak av 20. desember 2024.\n\nVi har derfor avslått søknaden din. Du vil motta tiltakspenger i henhold til vedtaket om tiltakspenger av 20. desember 2024."
       },
       "true": {
-        "alene": " fordi du allerede er innvilget tiltakspenger for perioden fra 1. januar 2025 til 10. januar 2025 i vedtak av 20. desember 2024.\n\nVi har derfor avslått søknaden din. Du vil motta tiltakspenger og barnetillegg i henhold til vedtaket om tiltakspenger av 20. desember 2024.",
         "blantFlere": "Du er allerede innvilget tiltakspenger for perioden fra 1. januar 2025 til 10. januar 2025 i vedtak av 20. desember 2024.\n\nVi har derfor avslått søknaden din. Du vil motta tiltakspenger og barnetillegg i henhold til vedtaket om tiltakspenger av 20. desember 2024."
       }
     }

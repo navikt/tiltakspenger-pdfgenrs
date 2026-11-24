@@ -86,7 +86,8 @@ De står derfor i [`valgfrie.js`](valgfrie.js) med et eksempel, og får en check
 | `vedtakForlengelse` | `barnSomFyller16`      | `BrevForlengelseDTO.kt`  |
 | `vedtakAvslag`      | `tidligereInnvilgelse` | `BrevSøknadAvslagDTO.kt` |
 
-Eksemplene er kopier av variantene i `test/data`, siden demo-imaget ikke inneholder dem.
+Eksemplene er kopier av variantene i `test/data` og `test/run-tests.py`, siden demo-imaget ikke inneholder dem.
+Velg `INNVILGET_TILTAKSPENGER` som eneste avslagsgrunn og slå på `tidligereInnvilgelse` for å se avslaget med egen første del, med tiltakene i `tiltak`.
 
 ## Sammenligne versjoner (pdfgenrs mot pdfgenrs)
 

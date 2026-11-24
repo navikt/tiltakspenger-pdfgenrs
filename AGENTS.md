@@ -73,11 +73,14 @@ Saksbehandling-api sender bare kodene (`avslagsgrunner`, `stansgrunner`, `opphø
 Med én avslagsgrunn står grunnen i konklusjonen («Du får ikke … til og med … fordi …»), og forklaringen følger som egne avsnitt.
 Med flere grunner følger «Grunnene er:» konklusjonen, og hver grunn er et punkt med faktum i halvfet og forklaringen rett under.
 Begge varianter slutter med setningen med de samlede hjemlene.
+Unntaket er når `INNVILGET_TILTAKSPENGER` er eneste grunn: da har avslaget sin egen første del (`alleredeInnvilget` i `lib/avslagComponents.typ`) med perioden og tiltakene fra `tidligereInnvilgelse`, og resten av brevet er likt de andre avslagsbrevene.
+Ett tiltak står i setningen, flere står som punktliste, og uten `tidligereInnvilgelse` vises avslagsperioden (`avslagFraOgMed`–`avslagTilOgMed`) uten tiltak og vedtaksdato.
+Kombinert med andre grunner står `INNVILGET_TILTAKSPENGER` som et vanlig punkt i listen.
 Hver avslagsgrunn har derfor både `faktum` (hovedsetning) og `fordi` (leddsetning med riktig plassering av «ikke»).
 Setningen med de samlede hjemlene lages fra `hjemler` av `hjemmelsetning` i samme fil.
 Hver hjemmel har `rettskilde`, `paragraf`, `ledd` og valgfritt `punktum`; et punktum vises bare når ingen annen hjemmel viser til hele leddet.
 Setningen har ikke komma foran «og».
-Fasiten ligger i `test/fasit/`: `hjemmeltekster.json` for avslagsbegrunnelsene (`alene` når grunnen står i konklusjonen, `blantFlere` når den står i punktlisten) og tekstene for stans og opphør, og `hjemler.json` for setningen med hjemlene.
+Fasiten ligger i `test/fasit/`: `hjemmeltekster.json` for avslagsbegrunnelsene (`alene` når grunnen står i konklusjonen, `blantFlere` når den står i punktlisten; `INNVILGET_TILTAKSPENGER` har bare `blantFlere`) og tekstene for stans og opphør, og `hjemler.json` for setningen med hjemlene.
 Testene krever at brevet fra kodene inneholder teksten fra fasiten, så endrer du en tekst, må både malen og fasiten oppdateres.
 Datoene fra saksbehandling-api sendes som ISO og formateres med `dato` og `ukedagOgDato` i `lib/format.typ`; ferdig datotekst gir feil ved rendring.
 `tidspunkt` støtter fortsatt mottakstidspunkt fra meldekort-api på formatet `dd.mm.åååå tt:mm`.

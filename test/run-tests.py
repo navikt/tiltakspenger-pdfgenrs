@@ -197,6 +197,14 @@ INNHOLDSKRAV = {
     # Flere avslagsgrunner står som punktliste etter «Grunnene er:»; én grunn står i konklusjonen etter «fordi». Hjemlene samles til slutt.
     "vedtakAvslag": {"krever": ["1. januar 2025 til og med 10. januar 2025.", "Grunnene er:", "Du deltar ikke på arbeidsmarkedstiltak", "Du mottar en annen pengestøtte til livsopphold.", "Dette kommer frem av arbeidsmarkedsloven"], "forbyr": ["fordi"]},
     "vedtakAvslag--en-grunn": {"krever": ["Du får ikke tiltakspenger fra og med", "10. januar 2025 fordi", "Deltaker i arbeidsmarkedstiltak som har rett til å få dekket", "tiltakspengeforskriften § 8 andre ledd."], "forbyr": ["og barnetillegg fra og med", "Grunnen er", "Grunnene er"]},
+    # Med INNVILGET_TILTAKSPENGER som eneste grunn har avslaget sin egen første del, og resten av brevet er likt de andre avslagsbrevene.
+    # Den nøyaktige teksten sjekkes mot fasiten i hjemmeltekstvarianter(); her sjekkes at første del ikke blandes med den vanlige avslagsteksten.
+    "vedtakAvslag--allerede-innvilget": {"krever": ["Dette kommer frem av", "Slik har vi vurdert saken din"], "forbyr": ["Du får ikke", "Grunnene er", "tiltakene du har", "og barnetillegg i henhold"]},
+    "vedtakAvslag--allerede-innvilget-flere-tiltak": {"krever": ["Dette kommer frem av"], "forbyr": ["Du får ikke", "Grunnene er", "tiltaket du har"]},
+    "vedtakAvslag--allerede-innvilget-uten-tiltak": {"krever": ["Dette kommer frem av"], "forbyr": ["Du får ikke", "tiltaket du har", "tiltakene du har"]},
+    "vedtakAvslag--allerede-innvilget-uten-tidligere-innvilgelse": {"krever": ["Dette kommer frem av"], "forbyr": ["Du får ikke", "for perioden fra", "tiltaket du har", "Du vil motta"]},
+    # Samme tilfelle med payloaden fra saksbehandling-api, der saksbehandleren forklarer resten i tilleggsteksten.
+    "vedtakAvslag--innvilget-tiltakspenger-uten-tidligere-innvilgelse": {"krever": ["Du har allerede fått innvilget tiltakspenger", "1. januar 2025", "10. januar 2025", "avslår derfor søknaden", "Utbetalingene dine følger det som allerede er innvilget.", "Dette kommer frem av", "Slik har vi vurdert saken din"], "forbyr": ["Du får ikke", "Grunnene er", "for perioden fra", "tiltaket du har", "Du vil motta"]},
     # Begrunnelsene vises hver med sin overskrift; journalnotatet er ikke et brev og har verken klagerett-hale eller signatur.
     "journalnotat": {"krever": ["Notat om vedtak om tiltakspenger", "Begrunnelse for vilkårsvurderingen", "Begrunnelse for barnetillegg", "Notatsdato: 20. mai 2025"], "forbyr": ["Med vennlig hilsen", "Du har rett til å klage"]},
     "journalnotat--kun-barnetillegg": {"krever": ["Begrunnelse for barnetillegg"], "forbyr": ["Begrunnelse for vilkårsvurderingen"]},
@@ -462,7 +470,7 @@ def hjemmeltekstvarianter():
     # Backend sender bare tidligereInnvilgelse når den innvilgede perioden er lik avslagsperioden, så periodene er like her også.
     avslag = json.loads((DATA_DIR / "vedtakAvslag.json").read_text())
     def tidligere_innvilgelse(flagg):
-        return {"fraOgMed": avslag["avslagFraOgMed"], "tilOgMed": avslag["avslagTilOgMed"], "vedtaksdato": "2024-12-20", "harBarnetillegg": flagg == "true"}
+        return {"fraOgMed": avslag["avslagFraOgMed"], "tilOgMed": avslag["avslagTilOgMed"], "vedtaksdato": "2024-12-20", "harBarnetillegg": flagg == "true", "tiltak": ["Arbeidstrening"]}
     for brevtype, (mal, kodefelt) in felt.items():
         base = json.loads((DATA_DIR / f"{mal}.json").read_text())
         for kode, tekster in fasit[brevtype].items():
@@ -471,6 +479,9 @@ def hjemmeltekstvarianter():
                     continue
                 payload = dict(base, **{kodefelt: [kode]})
                 if brevtype == "avslag":
+                    # INNVILGET_TILTAKSPENGER alene har sin egen første del og egne innholdskrav (vedtakAvslag--allerede-innvilget*).
+                    if "alene" not in tekst:
+                        continue
                     payload["harSøktMedBarn"] = flagg == "true"
                     payload["tidligereInnvilgelse"] = tidligere_innvilgelse(flagg)
                     tekst = tekst["alene"]
@@ -482,11 +493,44 @@ def hjemmeltekstvarianter():
     for flagg in ("false", "true"):
         payload = dict(base, avslagsgrunner=koder, harSøktMedBarn=flagg == "true", tidligereInnvilgelse=tidligere_innvilgelse(flagg))
         yield f"vedtakAvslag--koder-flere-grunner-barnetillegg-{flagg}", "vedtakAvslag", payload, [fasit["avslag"][kode][flagg]["blantFlere"] for kode in koder]
-    # Uten tidligere innvilgelse faller INNVILGET_TILTAKSPENGER tilbake til en tekst uten datoer.
+    # Uten tidligere innvilgelse faller INNVILGET_TILTAKSPENGER blant flere grunner tilbake til en tekst uten datoer.
     # Teksten står her og ikke i fasiten, fordi fasiten er nøklet på avslagskoder.
-    payload = dict(base, avslagsgrunner=["INNVILGET_TILTAKSPENGER"], harSøktMedBarn=False, tidligereInnvilgelse=None)
-    yield "vedtakAvslag--koder-INNVILGET_TILTAKSPENGER-uten-tidligere-innvilgelse", "vedtakAvslag", payload, [
-        " fordi du allerede er innvilget tiltakspenger.\n\nUtbetalingene dine følger vedtaket du allerede har fått."
+    payload = dict(base, avslagsgrunner=["INNVILGET_TILTAKSPENGER", "RETT_TIL_DAGPENGER"], harSøktMedBarn=False, tidligereInnvilgelse=None)
+    yield "vedtakAvslag--koder-INNVILGET_TILTAKSPENGER-blant-flere-uten-tidligere-innvilgelse", "vedtakAvslag", payload, [
+        "Du er allerede innvilget tiltakspenger.\n\nUtbetalingene dine følger vedtaket du allerede har fått."
+    ]
+    # INNVILGET_TILTAKSPENGER alene har sin egen første del, og teksten avhenger av tiltakene i den tidligere innvilgelsen.
+    # Innholdskravene med samme navn sjekker at første del ikke blandes med den vanlige avslagsteksten.
+    periode = "for perioden fra og med 1. januar 2025 til og med 10. januar 2025 i vedtak av 20. desember 2024"
+    avslått = "Vi har derfor avslått søknaden din."
+    def motta(ytelse):
+        return f"Du vil motta {ytelse} i henhold til vedtaket om tiltakspenger av 20. desember 2024."
+    alene = dict(
+        base,
+        avslagsgrunner=["INNVILGET_TILTAKSPENGER"],
+        harSøktMedBarn=False,
+        hjemler=[{"rettskilde": "TILTAKSPENGEFORSKRIFTEN", "paragraf": "7", "ledd": 1}, {"rettskilde": "ARBEIDSMARKEDSLOVEN", "paragraf": "13", "ledd": 1}],
+        tilleggstekst="Du har søkt om tiltakspenger for den samme perioden som du allerede er innvilget.",
+        tidligereInnvilgelse=tidligere_innvilgelse("false"),
+    )
+    yield "vedtakAvslag--allerede-innvilget", "vedtakAvslag", alene, [
+        f"Du er allerede innvilget tiltakspenger {periode} fordi du deltar på Arbeidstrening.\n\n{avslått}\n\n{motta('tiltakspenger')}"
+    ]
+    flere_tiltak = dict(tidligere_innvilgelse("true"), tiltak=["Arbeidstrening", "Arbeidsforberedende trening"])
+    yield "vedtakAvslag--allerede-innvilget-flere-tiltak", "vedtakAvslag", dict(alene, harSøktMedBarn=True, tidligereInnvilgelse=flere_tiltak), [
+        f"Du er allerede innvilget tiltakspenger {periode} fordi du deltar på tiltakene:",
+        "Arbeidstrening",
+        "Arbeidsforberedende trening",
+        f"{avslått}\n\n{motta('tiltakspenger og barnetillegg')}",
+    ]
+    # Payload fra før saksbehandling-api sendte tiltakene.
+    uten_tiltak = {nøkkel: verdi for nøkkel, verdi in tidligere_innvilgelse("false").items() if nøkkel != "tiltak"}
+    yield "vedtakAvslag--allerede-innvilget-uten-tiltak", "vedtakAvslag", dict(alene, tidligereInnvilgelse=uten_tiltak), [
+        f"Du er allerede innvilget tiltakspenger {periode}.\n\n{avslått}\n\n{motta('tiltakspenger')}"
+    ]
+    # Uten tidligere innvilgelse vet vi ikke hvilket vedtak det gjelder, så teksten viser avslagsperioden og ikke vedtakets periode.
+    yield "vedtakAvslag--allerede-innvilget-uten-tidligere-innvilgelse", "vedtakAvslag", dict(alene, tidligereInnvilgelse=None), [
+        "Du har allerede fått innvilget tiltakspenger for hele eller deler av perioden fra og med 1. januar 2025 til og med 10. januar 2025, og vi avslår derfor søknaden din.\n\nUtbetalingene dine følger det som allerede er innvilget."
     ]
 
 

@@ -10,7 +10,11 @@
 
 = Du har fått avslag på din søknad om tiltakspenger
 
-#avslagsgrunner(data)
+#if erAlleredeInnvilget(data) {
+    alleredeInnvilget(data)
+} else {
+    avslagsgrunner(data)
+}
 
 // Blokken lages bare når det finnes tilleggstekst, ellers gir den tomme blokken ekstra luft før «Du har rett til å klage».
 #if "tilleggstekst" in data and data.tilleggstekst != none [
