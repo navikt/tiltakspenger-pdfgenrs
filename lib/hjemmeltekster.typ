@@ -8,14 +8,14 @@
 
 #let ytelsen(medBarnetillegg) = "tiltakspenger" + if medBarnetillegg { " og barnetillegg" } else { "" }
 
-// Avslag fordi brukeren allerede er innvilget tiltakspenger for perioden.
+// Avslag fordi brukeren allerede er innvilget tiltakspenger for perioden, blant flere grunner.
+// Står grunnen alene, har brevet sin egen første del (`alleredeInnvilget` i avslagComponents.typ), så den har ingen «fordi»-tekst.
 // tidligereInnvilgelse er none når søknadsperioden ikke er lik hele perioden i ett innvilget vedtak.
 // Det gjelder også når vedtaket er stanset eller opphørt for en del av perioden, eller har opphold.
 // Da skriver saksbehandler periode og vedtaksdato i tilleggsteksten.
 #let innvilgetTiltakspenger(tidligereInnvilgelse) = if tidligereInnvilgelse == none {
     (
         faktum: "Du er allerede innvilget tiltakspenger",
-        fordi: "du allerede er innvilget tiltakspenger",
         forklaring: ("Utbetalingene dine følger vedtaket du allerede har fått.",),
     )
 } else {
@@ -23,7 +23,6 @@
     let innvilgelse = "innvilget tiltakspenger for perioden fra " + dato(tidligereInnvilgelse.fraOgMed) + " til " + dato(tidligereInnvilgelse.tilOgMed) + " i vedtak av " + vedtaksdato
     (
         faktum: "Du er allerede " + innvilgelse,
-        fordi: "du allerede er " + innvilgelse,
         forklaring: ("Vi har derfor avslått søknaden din. Du vil motta " + ytelsen(tidligereInnvilgelse.harBarnetillegg) + " i henhold til vedtaket om tiltakspenger av " + vedtaksdato + ".",),
     )
 }

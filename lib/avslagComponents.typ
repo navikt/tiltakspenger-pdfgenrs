@@ -32,3 +32,37 @@
     }
     brødtekst[#hjemmelsetning(data.hjemler)]
 }
+
+// Avslaget har sin egen første del når eneste grunn er at brukeren allerede er innvilget tiltakspenger.
+// Kombinert med andre grunner står den i punktlisten i `avslagsgrunner` som før.
+#let erAlleredeInnvilget(data) = data.at("avslagsgrunner", default: ()) == ("INNVILGET_TILTAKSPENGER",)
+
+// Første del av avslagsbrevet når brukeren allerede er innvilget tiltakspenger for perioden.
+// Resten av brevet er likt de andre avslagsbrevene.
+// `tidligereInnvilgelse` er none når søknadsperioden ikke er lik hele perioden i ett innvilget vedtak.
+// Da vises avslagsperioden uten tiltak og vedtaksdato, og saksbehandler skriver detaljene i tilleggsteksten.
+// Ett tiltak står i setningen, flere tiltak står som punktliste etter setningen.
+// `tidligereInnvilgelse.tiltak` mangler i payload fra før saksbehandling-api sendte tiltakene, og da utelates tiltaket.
+#let alleredeInnvilget(data) = {
+    assert(data.at("hjemler", default: ()).len() > 0, message: "Avslagsbrevet mangler hjemler")
+    let tidligereInnvilgelse = data.at("tidligereInnvilgelse", default: none)
+    if tidligereInnvilgelse == none {
+        brødtekst[Du har allerede fått innvilget tiltakspenger for hele eller deler av perioden fra og med #dato(data.avslagFraOgMed) til og med #dato(data.avslagTilOgMed), og vi avslår derfor søknaden din.]
+        brødtekst[Utbetalingene dine følger det som allerede er innvilget.]
+    } else {
+        let vedtaksdato = dato(tidligereInnvilgelse.vedtaksdato)
+        let periodeOgVedtak = [for perioden fra og med #dato(tidligereInnvilgelse.fraOgMed) til og med #dato(tidligereInnvilgelse.tilOgMed) i vedtak av #vedtaksdato]
+        let tiltak = tidligereInnvilgelse.at("tiltak", default: ())
+        if tiltak.len() > 1 {
+            brødtekst[Du er allerede innvilget tiltakspenger #periodeOgVedtak fordi du deltar på tiltakene:]
+            list(..tiltak.map(navn => [#navn]))
+        } else if tiltak.len() == 1 {
+            brødtekst[Du er allerede innvilget tiltakspenger #periodeOgVedtak fordi du deltar på #tiltak.first().]
+        } else {
+            brødtekst[Du er allerede innvilget tiltakspenger #periodeOgVedtak.]
+        }
+        brødtekst[Vi har derfor avslått søknaden din.]
+        brødtekst[Du vil motta #ytelsen(tidligereInnvilgelse.harBarnetillegg) i henhold til vedtaket om tiltakspenger av #vedtaksdato.]
+    }
+    brødtekst[#hjemmelsetning(data.hjemler)]
+}
