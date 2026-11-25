@@ -65,7 +65,7 @@ Testene rendrer alle datasett i `testdata/tpts/` og kanttilfellevariantene i `te
 De sjekker også at alle URL-er i brevtekst er klikkbare `navLenke`-lenker med `https://`-URI, og at ingen tegn rendres oppå hverandre (layoutkollisjoner).
 Nye brev og nye kanttilfeller skal ha testdata: standarddatasett i `testdata/tpts/<mal>.json`, varianter i `test/data/<mal>--<variant>.json`.
 Testdataene bruker en fast, virkelighetsnær testfamilie — ingen tulleord/tullenavn, og syntetiske identer (+40 på måned) så ingen privatpersoner kan treffes.
-Kanoniske verdier: bruker Emil Aremark (fnr `25508631114`), barn Nora/Jakob/Oskar Johan Aremark, saksbehandler Ingrid Bakke, beslutter Martin Holm, saksnummer `202501011001`, tiltaksarrangør Aremark Snekkerverksted AS.
+Kanoniske verdier: bruker Emil Aremark (fødselsnummeret står i `testdata/tpts/soknad.json`), barn Nora/Jakob/Oskar Johan Aremark, saksbehandler Ingrid Bakke, beslutter Martin Holm, saksnummer `202501011001`, tiltaksarrangør Aremark Snekkerverksted AS.
 Datasettene i `testdata/tpts/` er også defaultene i brev-preview (både lokalt og i demoen i dev), så de skal vise et **helt, normalt brev**: ingen forhåndsvisningsvannmerke, ingen plassholdertekst og datoer som henger sammen.
 Kanttilfellene — forhåndsvisning, manglende saksbehandler, automatisk behandling — hører hjemme som varianter i `test/data/`.
 Avslagsbegrunnelsene og standardtekstene for stans og opphør bor i `lib/hjemmeltekster.typ`.
